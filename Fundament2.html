@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ритмология - Наука о времени</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Header */
+        .header {
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00ffff, #0080ff, #00ffff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient 5s ease infinite;
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header p {
+            font-size: 1.25rem;
+            color: #a0a0a0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Progress indicator */
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ffff, #0080ff);
+            border-radius: 2px;
+            width: 15%;
+            position: relative;
+            transition: width 0.5s ease;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        /* Modules grid */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            padding-bottom: 4rem;
+        }
+
+        /* Module card */
+        .module-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(0, 255, 255, 0.15), transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .module-card:hover::before {
+            opacity: 1;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 255, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 255, 255, 0.1);
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .module-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00ffff, #0080ff);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-right: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-number::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s ease-in-out infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .module-title {
+            flex: 1;
+        }
+
+        .module-title h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .module-title .lesson-count {
+            font-size: 0.875rem;
+            color: #00ffff;
+        }
+
+        .module-content {
+            margin-bottom: 1.5rem;
+        }
+
+        .module-content p {
+            color: #a0a0a0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .module-topics {
+            margin-top: 1rem;
+        }
+
+        .module-topics h4 {
+            font-size: 0.875rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .topic-list {
+            list-style: none;
+        }
+
+        .topic-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #e0e0e0;
+            font-size: 0.95rem;
+        }
+
+        .topic-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #00ffff;
+            transition: transform 0.3s ease;
+        }
+
+        .module-card:hover .topic-list li::before {
+            transform: translateX(5px);
+        }
+
+        /* Practice materials indicator */
+        .practice-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #ffd700;
+        }
+
+        .practice-indicator::before {
+            content: '📚';
+        }
+
+        .module-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .module-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #666;
+        }
+
+        .status-dot.active {
+            background: #00ff00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+
+        .module-action {
+            padding: 0.75rem 2rem;
+            background: transparent;
+            border: 1px solid rgba(0, 255, 255, 0.5);
+            color: #00ffff;
+            border-radius: 30px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .module-action:hover {
+            background: rgba(0, 255, 255, 0.1);
+            border-color: #00ffff;
+            transform: scale(1.05);
+        }
+
+        /* Coming soon modules */
+        .coming-soon {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .coming-soon .module-action {
+            border-color: #666;
+            color: #666;
+        }
+
+        /* Modal for module details */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: #1a1a2e;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .modal-header h2 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #00ffff, #0080ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .tab-navigation {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-button {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            color: #00ffff;
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #00ffff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .practice-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .practice-section h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+
+        .practice-section ul {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .practice-section li {
+            padding: 0.5rem 0;
+            color: #e0e0e0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .practice-section li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #00ff00;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .modules-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .module-card {
+                padding: 1.5rem;
+            }
+
+            .modal-content {
+                margin: 1rem;
+            }
+
+            .tab-button {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+
+        /* Mouse follower effect */
+        .mouse-follower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            transition: transform 0.1s ease;
+            z-index: 9999;
+            mix-blend-mode: difference;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="mouse-follower"></div>
+
+    <div class="container">
+        <header class="header">
+            <h1>Ритмология</h1>
+            <p>Наука о времени и ритмах жизни</p>
+        </header>
+
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <div class="progress-info">
+            <span>Пройдено: 3 из 20 модулей</span>
+            <span>15% завершено</span>
+        </div>
+
+        <div class="modules-grid" id="modulesGrid">
+            <!-- Модули будут добавлены через JavaScript -->
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="moduleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Загрузка...</h2>
+                <div class="close-modal" id="closeModalBtn">✕</div>
+            </div>
+            <div class="modal-body">
+                <div class="tab-navigation">
+                    <button class="tab-button active" data-tab="overview">Обзор</button>
+                    <button class="tab-button" data-tab="practice">Практические материалы</button>
+                    <button class="tab-button" data-tab="resources">Ресурсы</button>
+                </div>
+                
+                <div id="overview" class="tab-content active">
+                    <!-- Содержимое будет загружаться динамически -->
+                </div>
+                
+                <div id="practice" class="tab-content">
+                    <!-- Практические материалы будут загружаться динамически -->
+                </div>
+                
+                <div id="resources" class="tab-content">
+                    <!-- Ресурсы будут загружаться динамически -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Данные модулей
+        const modulesData = [
+            {
+                id: 1,
+                title: "Модуль 1",
+                lessons: 7,
+                description: "Основы взаимодействия с клиентом",
+                topics: [
+                    "Введение в ритмологию",
+                    "Базовые принципы работы",
+                    "Установление контакта",
+                    "Первичная диагностика",
+                    "Этика консультанта",
+                    "Инструменты коммуникации",
+                    "Практические упражнения"
+                ],
+                hasPractice: true,
+                isAvailable: true,
+                details: {
+                    overview: `
+                        <h3>Основы взаимодействия с клиентом</h3>
+                        <p>В этом модуле вы изучите фундаментальные принципы работы с клиентами в ритмологии.</p>
+                        <h4>Что вы изучите:</h4>
+                        <ul>
+                            <li>Введение в ритмологию и её основные концепции</li>
+                            <li>Базовые принципы работы с клиентами</li>
+                            <li>Техники установления контакта</li>
+                            <li>Методы первичной диагностики</li>
+                            <li>Этические принципы консультанта</li>
+                            <li>Инструменты эффективной коммуникации</li>
+                            <li>Практические упражнения для развития навыков</li>
+                        </ul>
+                    `,
+                    practice: `
+                        <div class="practice-section">
+                            <h3>📋 Алгоритм диагностики наружного времени</h3>
+                            <p>Структурированный подход к проведению беседы для определения типа времени клиента.</p>
+                            <h4>Основные этапы (30 минут):</h4>
+                            <ul>
+                                <li>Приветствие и установление контакта (4 минуты)</li>
+                                <li>Вопросы о воспоминаниях и возрастных периодах (10 минут)</li>
+                                <li>Выявление приоритетной области (2 минуты)</li>
+                                <li>Чтение книги Розеточного узла (4 минуты)</li>
+                                <li>Проверка предположений (3 минуты)</li>
+                                <li>Выполнение полотна (5 минут)</li>
+                                <li>Осознание изменений и завершение (2-3 минуты)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="practice-section">
+                            <h3>🔄 Этапы консультирования</h3>
+                            <p>Семь ключевых этапов профессионального консультирования:</p>
+                            <ul>
+                                <li>Знакомство с клиентом</li>
+                                <li>Выслушивание и сбор первичной информации</li>
+                                <li>Выявление цикла</li>
+                                <li>Выстраивание ритмологической цепочки</li>
+                                <li>Выбор способов коррекции</li>
+                                <li>Контроль выполнения рекомендаций</li>
+                                <li>Фиксация результата</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="practice-section">
+                            <h3>💬 13 советов для грамотной коммуникации</h3>
+                            <p>Профессиональные рекомендации для эффективного общения в мессенджерах:</p>
+                            <ul>
+                                <li>Правильное приветствие (не используйте "Доброго времени суток")</li>
+                                <li>Персонализация в общении</li>
+                                <li>Выражение благодарности</li>
+                                <li>Оптимальный объём текста</li>
+                                <li>Избегание капслока и излишних восклицаний</li>
+                                <li>Учёт часовых поясов</li>
+                                <li>Согласование голосовых сообщений</li>
+                                <li>Умеренное использование эмодзи</li>
+                                <li>Правильная форма обращения</li>
+                                <li>Форматирование текста</li>
+                                <li>Проверка на ошибки</li>
+                                <li>Согласование созвонов</li>
+                                <li>Тактичность при отсутствии ответа</li>
+                            </ul>
+                        </div>
+                    `,
+                    resources: `
+                        <h3>Дополнительные ресурсы</h3>
+                        <ul>
+                            <li>📄 Алгоритм проведения беседы (PDF)</li>
+                            <li>📄 Этапы консультирования (PDF)</li>
+                            <li>📄 Правила коммуникации (PDF)</li>
+                            <li>🎥 Видео-примеры консультаций</li>
+                            <li>📝 Шаблоны для практики</li>
+                        </ul>
+                    `
+                }
+            },
+            {
+                id: 2,
+                title: "Модуль 2",
+                lessons: 5,
+                description: "Ритмологический подход. Диагностика и считывание клиента",
+                topics: [
+                    "Основы ритмологической диагностики",
+                    "Методы считывания информации",
+                    "Анализ ритмических паттернов",
+                    "Интерпретация результатов",
+                    "Составление ритмологической карты"
+                ],
+                hasPractice: false,
+                isAvailable: true,
+                details: {
+                    overview: `
+                        <h3>Ритмологический подход. Диагностика и считывание клиента</h3>
+                        <p>Углубленное изучение методов диагностики в ритмологии.</p>
+                    `,
+                    practice: `
+                        <h3>Практические материалы</h3>
+                        <p>Материалы будут добавлены после предоставления информации.</p>
+                    `,
+                    resources: `
+                        <h3>Ресурсы</h3>
+                        <p>Ресурсы будут добавлены позже.</p>
+                    `
+                }
+            },
+            {
+                id: 3,
+                title: "Модуль 3",
+                lessons: 4,
+                description: "Основы ритмологического мышления. Наблюдатель и безоценочность",
+                topics: [
+                    "Позиция наблюдателя",
+                    "Принципы безоценочного восприятия",
+                    "Развитие ритмологического мышления",
+                    "Практики осознанности"
+                ],
+                hasPractice: false,
+                isAvailable: true,
+                details: {
+                    overview: `
+                        <h3>Основы ритмологического мышления. Наблюдатель и безоценочность</h3>
+                        <p>Развитие особого типа мышления для работы в ритмологии.</p>
+                    `,
+                    practice: `
+                        <h3>Практические материалы</h3>
+                        <p>Материалы будут добавлены после предоставления информации.</p>
+                    `,
+                    resources: `
+                        <h3>Ресурсы</h3>
+                        <p>Ресурсы будут добавлены позже.</p>
+                    `
+                }
+            },
+            {
+                id: 4,
+                title: "Модуль 4",
+                lessons: 0,
+                description: "Содержание модуля будет доступно в ближайшее время",
+                topics: [],
+                hasPractice: false,
+                isAvailable: false,
+                details: null
+            }
+        ];
+
+        // Функция создания карточки модуля
+        function createModuleCard(module) {
+            const card = document.createElement('div');
+            card.className = `module-card ${!module.isAvailable ? 'coming-soon' : ''}`;
+            
+            card.innerHTML = `
+                <div class="module-header">
+                    <div class="module-number">${module.id}</div>
+                    <div class="module-title">
+                        <h3>${module.title}</h3>
+                        <span class="lesson-count">${module.lessons > 0 ? module.lessons + ' уроков' : 'Скоро'}</span>
+                    </div>
+                </div>
+                <div class="module-content">
+                    <p>${module.description}</p>
+                    ${module.topics.length > 0 ? `
+                        <div class="module-topics">
+                            <h4>Темы модуля:</h4>
+                            <ul class="topic-list">
+                                ${module.topics.map(topic => `<li>${topic}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+                    ${module.hasPractice ? '<div class="practice-indicator">Доступны практические материалы</div>' : ''}
+                </div>
+                <div class="module-footer">
+                    <div class="module-status">
+                        <div class="status-dot ${module.isAvailable ? 'active' : ''}"></div>
+                        <span>${module.isAvailable ? 'Доступен' : 'Недоступен'}</span>
+                    </div>
+                    <button class="module-action" ${!module.isAvailable ? 'disabled' : `data-module-id="${module.id}"`}>
+                        ${module.isAvailable ? 'Начать обучение' : 'Скоро'}
+                    </button>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // Функция открытия модального окна
+        function openModal(moduleId) {
+            const module = modulesData.find(m => m.id === moduleId);
+            if (!module || !module.details) return;
+            
+            const modal = document.getElementById('moduleModal');
+            const modalTitle = document.getElementById('modalTitle');
+            
+            modalTitle.textContent = `${module.title}: ${module.description}`;
+            
+            document.getElementById('overview').innerHTML = module.details.overview;
+            document.getElementById('practice').innerHTML = module.details.practice;
+            document.getElementById('resources').innerHTML = module.details.resources;
+            
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // Сброс вкладок
+            showTab('overview');
+        }
+
+        // Функция закрытия модального окна
+        function closeModal() {
+            const modal = document.getElementById('moduleModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Функция переключения вкладок
+        function showTab(tabName) {
+            // Скрыть все вкладки
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Убрать активный класс у всех кнопок
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Показать выбранную вкладку
+            document.getElementById(tabName).classList.add('active');
+            
+            // Активировать соответствующую кнопку
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Создание карточек модулей
+            const modulesGrid = document.getElementById('modulesGrid');
+            modulesData.forEach(module => {
+                modulesGrid.appendChild(createModuleCard(module));
+            });
+            
+            // Обработчики для кнопок модулей
+            document.querySelectorAll('.module-action[data-module-id]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const moduleId = parseInt(this.getAttribute('data-module-id'));
+                    openModal(moduleId);
+                });
+            });
+            
+            // Обработчик закрытия модального окна
+            document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+            
+            // Закрытие по клику вне окна
+            document.getElementById('moduleModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+            
+            // Обработчики для вкладок
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    showTab(tabName);
+                });
+            });
+            
+            // Mouse follower effect
+            const mouseFollower = document.querySelector('.mouse-follower');
+            let mouseX = 0;
+            let mouseY = 0;
+            let followerX = 0;
+            let followerY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function animateFollower() {
+                followerX += (mouseX - followerX) * 0.1;
+                followerY += (mouseY - followerY) * 0.1;
+                
+                if (mouseFollower) {
+                    mouseFollower.style.transform = `translate(${followerX - 20}px, ${followerY - 20}px)`;
+                }
+                
+                requestAnimationFrame(animateFollower);
+            }
+            animateFollower();
+
+            // Card hover effect
+            document.addEventListener('mousemove', function(e) {
+                const cards = document.querySelectorAll('.module-card');
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    if (e.clientX >= rect.left && e.clientX <= rect.right && 
+                        e.clientY >= rect.top && e.clientY <= rect.bottom) {
+                        const x = ((e.clientX - rect.left) / rect.width) * 100;
+                        const y = ((e.clientY - rect.top) / rect.height) * 100;
+                        card.style.setProperty('--x', x + '%');
+                        card.style.setProperty('--y', y + '%');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+                }
