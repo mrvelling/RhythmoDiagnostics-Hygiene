@@ -407,8 +407,10 @@
             <button class="nav-btn active" onclick="showSection('client')">О клиенте</button>
             <button class="nav-btn" onclick="showSection('diagnosis')">Диагностика</button>
             <button class="nav-btn" onclick="showSection('module1')">Модуль 1</button>
-            <button class="nav-btn" onclick="showSection('modules23')">Модули 2-3</button>
-            <button class="nav-btn" onclick="showSection('modules45')">Модули 4-5</button>
+            <button class="nav-btn" onclick="showSection('module2')">Модуль 2</button>
+            <button class="nav-btn" onclick="showSection('module3')">Модуль 3</button>
+            <button class="nav-btn" onclick="showSection('module4')">Модуль 4</button>
+            <button class="nav-btn" onclick="showSection('module5')">Модуль 5</button>
             <button class="nav-btn" onclick="showSection('rhythm')">Ритм</button>
             <button class="nav-btn" onclick="showSection('results')">Результаты</button>
         </div>
@@ -602,19 +604,12 @@
             </div>
         </div>
 
-        <!-- МОДУЛИ 2-3 -->
-        <div id="modules23" class="content-section">
-            <h2 class="section-title"><span class="step-indicator">2</span>Модули 2-3: Мост/Солнце</h2>
+        <!-- МОДУЛЬ 2 -->
+        <div id="module2" class="content-section">
+            <h2 class="section-title"><span class="step-indicator">2</span>Модуль 2: Совместные цели и разуплотнение</h2>
             
-            <div class="progress-timeline">
-                <div class="timeline-point completed">2</div>
-                <div class="timeline-point completed">3</div>
-                <div class="timeline-point">4</div>
-                <div class="timeline-point">5</div>
-            </div>
-
             <div class="module-header">
-                Модуль 2: Совместные цели и разуплотнение
+                К каким целям вы стремились вместе с теми людьми, которые вас предали?
             </div>
 
             <div class="info-grid">
@@ -625,21 +620,33 @@
                         <span class="editable" contenteditable="true">[к каким целям стремился с теми, кто предал]</span>
                     </div>
                     <div class="form-field">
-                        <strong>Принуждение других:</strong><br>
-                        <span class="editable" contenteditable="true">[признал ли моменты принуждения к продолжению пути]</span>
+                        <strong>Желание вернуть покинувшего:</strong><br>
+                        <span class="editable" contenteditable="true">[было ли желание заставить допройти путь до конца]</span>
                     </div>
                     <div class="form-field">
-                        <strong>Процесс разуплотнения:</strong><br>
-                        <span class="editable" contenteditable="true">[как происходило разуплотнение болезненных переживаний]</span>
+                        <strong>Принуждение других:</strong><br>
+                        <span class="editable" contenteditable="true">[заставлял ли продолжать путь, когда человек не хотел]</span>
                     </div>
                 </div>
 
                 <div class="info-card">
-                    <h3>Выбор линии преодоления</h3>
+                    <h3>Процесс разуплотнения</h3>
+                    <div class="form-field">
+                        <strong>Как происходило разуплотнение:</strong><br>
+                        <span class="editable" contenteditable="true">[процесс разуплотнения болезненных переживаний]</span>
+                    </div>
+                    <div class="form-field">
+                        <strong>Реакция клиента:</strong><br>
+                        <span class="editable" contenteditable="true">[как клиент воспринимал процесс]</span>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>Выбор линии преодоления предательства</h3>
                     <div class="form-field">
                         <strong>Выбранная линия:</strong><br>
-                        <input type="radio" name="choice1"> Проживание других событий с имеющимися носителями<br>
-                        <input type="radio" name="choice1"> Продолжение того же события с другим спутником
+                        <input type="radio" name="choice_module2" id="choice2_1"> <label for="choice2_1">Проживание других событий с имеющимися носителями</label><br>
+                        <input type="radio" name="choice_module2" id="choice2_2"> <label for="choice2_2">Продолжение того же события с другим спутником</label>
                     </div>
                     <div class="form-field">
                         <strong>Обоснование выбора:</strong><br>
@@ -648,76 +655,224 @@
                 </div>
             </div>
 
+            <div class="highlight">
+                <h3>Изменения в состоянии клиента</h3>
+                <div class="form-field">
+                    <strong>Внешние изменения:</strong><br>
+                    <span class="editable" contenteditable="true">[изменения во внешнем виде, манере держаться]</span>
+                </div>
+                <div class="form-field">
+                    <strong>Эмоциональные сдвиги:</strong><br>
+                    <span class="editable" contenteditable="true">[изменения в настроении, открытости]</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- МОДУЛЬ 3 -->
+        <div id="module3" class="content-section">
+            <h2 class="section-title"><span class="step-indicator">3</span>Модуль 3: Выбор пути исцеления</h2>
+            
             <div class="module-header">
-                Модуль 3: Выбор пути исцеления
+                Выбор линии: Как залечить боль от утраты любви ИЛИ Как догнать того, кто меня опередил
             </div>
 
             <div class="info-grid">
                 <div class="info-card">
-                    <h3>Линия работы</h3>
+                    <h3>Выбор направления работы</h3>
                     <div class="form-field">
-                        <strong>Выбранное направление:</strong><br>
-                        <input type="radio" name="choice2"> Как залечить боль от утраты любви<br>
-                        <input type="radio" name="choice2"> Как догнать того, кто меня опередил
+                        <strong>Выбранная линия:</strong><br>
+                        <input type="radio" name="choice_module3" id="choice3_1"> <label for="choice3_1">Как залечить боль от утраты любви</label><br>
+                        <input type="radio" name="choice_module3" id="choice3_2"> <label for="choice3_2">Как догнать того, кто меня опередил</label>
                     </div>
                     <div class="form-field">
-                        <strong>Обсуждаемые темы:</strong><br>
-                        <span class="editable" contenteditable="true">[что конкретно обсуждалось по выбранной линии]</span>
+                        <strong>Причины выбора:</strong><br>
+                        <span class="editable" contenteditable="true">[почему клиент выбрал именно эту линию]</span>
                     </div>
                 </div>
 
                 <div class="info-card">
-                    <h3>Изменения ко второй встрече</h3>
+                    <h3>Работа по выбранной линии</h3>
                     <div class="form-field">
-                        <strong>Внешние изменения:</strong><br>
-                        <span class="editable" contenteditable="true">[изменения во внешнем виде, манере держаться]</span>
+                        <strong>Обсуждаемые темы:</strong><br>
+                        <span class="editable" contenteditable="true">[что конкретно обсуждалось по выбранному направлению]</span>
                     </div>
                     <div class="form-field">
-                        <strong>Открытость в общении:</strong><br>
-                        <span class="editable" contenteditable="true">[стал ли более открытым]</span>
+                        <strong>Эмоциональные реакции:</strong><br>
+                        <span class="editable" contenteditable="true">[как клиент реагировал на работу]</span>
                     </div>
                     <div class="form-field">
-                        <strong>События между встречами:</strong><br>
-                        <span class="editable" contenteditable="true">[что произошло в жизни клиента]</span>
+                        <strong>Инсайты и открытия:</strong><br>
+                        <span class="editable" contenteditable="true">[какие понимания пришли к клиенту]</span>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>События между встречами</h3>
+                    <div class="form-field">
+                        <strong>Произошедшие изменения:</strong><br>
+                        <span class="editable" contenteditable="true">[что изменилось в жизни клиента после модуля 2]</span>
+                    </div>
+                    <div class="form-field">
+                        <strong>Новые осознания:</strong><br>
+                        <span class="editable" contenteditable="true">[какие понимания пришли между встречами]</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="betrayal-pattern">
+                <h3>Готовность к глубокой работе</h3>
+                <div class="form-field">
+                    <strong>Готовность клиента:</strong><br>
+                    <span class="editable" contenteditable="true">[насколько клиент был готов к следующему этапу]</span>
+                </div>
+                <div class="form-field">
+                    <strong>Сопротивления:</strong><br>
+                    <span class="editable" contenteditable="true">[какие страхи или сопротивления проявились]</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- МОДУЛЬ 4 -->
+        <div id="module4" class="content-section">
+            <h2 class="section-title"><span class="step-indicator">4</span>Модуль 4: Интеллектуальное предательство</h2>
+            
+            <div class="module-header">
+                Интеллектуальное предательство и предательство в трудовом коллективе
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Выбор линии работы</h3>
+                    <div class="form-field">
+                        <strong>Направление:</strong><br>
+                        <input type="radio" name="choice_module4" id="choice4_1"> <label for="choice4_1">Интеллектуальное предательство и предательство в трудовом коллективе</label><br>
+                        <input type="radio" name="choice_module4" id="choice4_2"> <label for="choice4_2">Вы вместе шли к общей цели, и потом вдруг кто-то вас отправил к своей цели</label>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>Конкретные ситуации</h3>
+                    <div class="form-field">
+                        <strong>Случаи из жизни клиента:</strong><br>
+                        <span class="editable" contenteditable="true">[конкретные примеры предательства в профессиональной сфере]</span>
+                    </div>
+                    <div class="form-field">
+                        <strong>Роль клиента в ситуациях:</strong><br>
+                        <span class="editable" contenteditable="true">[как клиент понимал свое участие]</span>
+                    </div>
+                    <div class="form-field">
+                        <strong>Паттерны поведения:</strong><br>
+                        <span class="editable" contenteditable="true">[повторяющиеся схемы в профессиональных отношениях]</span>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>Процесс осознания</h3>
+                    <div class="form-field">
+                        <strong>Инсайты клиента:</strong><br>
+                        <span class="editable" contenteditable="true">[что понял клиент о своих паттернах]</span>
+                    </div>
+                    <div class="form-field">
+                        <strong>Эмоциональные реакции:</strong><br>
+                        <span class="editable" contenteditable="true">[как клиент реагировал на осознания]</span>
+                    </div>
+                    <div class="form-field">
+                        <strong>Готовность к изменениям:</strong><br>
+                        <span class="editable" contenteditable="true">[появилось ли желание менять паттерны]</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- МОДУЛИ 4-5 -->
-        <div id="modules45" class="content-section">
-            <h2 class="section-title"><span class="step-indicator">3</span>Модули 4-5: Протягивание нити</h2>
+        <!-- МОДУЛЬ 5 -->
+        <div id="module5" class="content-section">
+            <h2 class="section-title"><span class="step-indicator">5</span>Модуль 5: Предательство активизирует деловую активность</h2>
             
             <div class="module-header">
-                Модуль 4: Интеллектуальное предательство
+                Предательство активизирует деловую активность. Предательство и воровство.
             </div>
 
             <div class="info-grid">
                 <div class="info-card">
-                    <h3>Выбранная линия работы</h3>
+                    <h3>Активизация деловой энергии</h3>
                     <div class="form-field">
-                        <strong>Направление:</strong><br>
-                        <input type="radio" name="choice3"> Предательство в трудовом коллективе<br>
-                        <input type="radio" name="choice3"> "Шли к общей цели, но отправили к своей"
+                        <strong>Как проявилась активизация:</strong><br>
+                        <span class="editable" contenteditable="true">[как предательство повлияло на деловую активность клиента]</span>
                     </div>
                     <div class="form-field">
-                        <strong>Обсуждаемые ситуации:</strong><br>
-                        <span class="editable" contenteditable="true">[конкретные примеры из жизни клиента]</span>
+                        <strong>Новые проекты и инициативы:</strong><br>
+                        <span class="editable" contenteditable="true">[какие новые дела появились у клиента]</span>
                     </div>
                     <div class="form-field">
-                        <strong>Осознание своей роли:</strong><br>
-                        <span class="editable" contenteditable="true">[как клиент понимал свое участие в подобных ситуациях]</span>
+                        <strong>Изменение отношения к работе:</strong><br>
+                        <span class="editable" contenteditable="true">[как изменился подход к профессиональной деятельности]</span>
                     </div>
                 </div>
 
                 <div class="info-card">
-                    <h3>Модуль 5: Деловая активность</h3>
+                    <h3>Связь предательства и воровства</h3>
                     <div class="form-field">
-                        <strong>Активизация деловой энергии:</strong><br>
-                        <span class="editable" contenteditable="true">[как проявилась связь предательства и деловой активности]</span>
+                        <strong>Понимание связи:</strong><br>
+                        <span class="editable" contenteditable="true">[как клиент понял связь предательства и воровства]</span>
                     </div>
                     <div class="form-field">
-                        <strong>Связь предательства и воровства:</strong><br>
+                        <strong>Личный опыт:</strong><br>
+                        <span class="editable" contenteditable="true">[примеры из жизни клиента, где проявилась эта связь]</span>
+                    </div>
+                    <div class="form-field">
+                        <strong>Трансформация понимания:</strong><br>
+                        <span class="editable" contenteditable="true">[как изменилось восприятие этих тем]</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="betrayal-pattern">
+                <h3>Выявленная проблемная нить предательства</h3>
+                <div class="form-field">
+                    <strong>Основной паттерн:</strong><br>
+                    <span class="editable" contenteditable="true">[какой главный паттерн предательства выявлен за все модули]</span>
+                </div>
+                <div class="form-field">
+                    <strong>Тип нити:</strong><br>
+                    <input type="radio" name="thread_type"> Струнная (по кристаллу)
+                    <input type="radio" name="thread_type"> Струйная (по кораллу)
+                </div>
+                <div class="form-field">
+                    <strong>Тип травмы:</strong><br>
+                    <input type="radio" name="trauma_type"> Телесная
+                    <input type="radio" name="trauma_type"> Душевная  
+                    <input type="radio" name="trauma_type"> Духовная
+                </div>
+                <div class="form-field">
+                    <strong>Используемые субстанции:</strong><br>
+                    <span class="editable" contenteditable="true">[какие субстанции применялись для работы с нитью]</span>
+                </div>
+                <div class="form-field">
+                    <strong>Реакция на протягивание нити:</strong><br>
+                    <span class="editable" contenteditable="true">[как клиент реагировал на процесс протягивания нити]</span>
+                </div>
+            </div>
+
+            <div class="highlight">
+                <h3>Динамика изменений к концу модульной работы</h3>
+                <div class="form-field">
+                    <strong>Доверие в общении:</strong><br>
+                    <span class="editable" contenteditable="true">[стал ли клиент более доверчивым]</span>
+                </div>
+                <div class="form-field">
+                    <strong>Выражение потребностей:</strong><br>
+                    <span class="editable" contenteditable="true">[появилась ли способность открыто выражать потребности]</span>
+                </div>
+                <div class="form-field">
+                    <strong>Отношение к близким:</strong><br>
+                    <span class="editable" contenteditable="true">[как изменилось отношение к близким людям]</span>
+                </div>
+                <div class="form-field">
+                    <strong>Практические изменения:</strong><br>
+                    <span class="editable" contenteditable="true">[какие конкретные изменения произошли в жизни]</span>
+                </div>
+            </div>
+        </div></strong><br>
                         <span class="editable" contenteditable="true">[понимание клиентом связи предательства и воровства]</span>
                     </div>
                     <div class="form-field">
@@ -1077,8 +1232,10 @@
                 { id: 'client', title: 'О КЛИЕНТЕ' },
                 { id: 'diagnosis', title: 'ДИАГНОСТИКА' },
                 { id: 'module1', title: 'МОДУЛЬ 1' },
-                { id: 'modules23', title: 'МОДУЛИ 2-3' },
-                { id: 'modules45', title: 'МОДУЛИ 4-5' },
+                { id: 'module2', title: 'МОДУЛЬ 2' },
+                { id: 'module3', title: 'МОДУЛЬ 3' },
+                { id: 'module4', title: 'МОДУЛЬ 4' },
+                { id: 'module5', title: 'МОДУЛЬ 5' },
                 { id: 'rhythm', title: 'РИТМ' },
                 { id: 'results', title: 'РЕЗУЛЬТАТЫ' }
             ];
