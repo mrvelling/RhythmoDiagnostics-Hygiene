@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Адаптивный тест цветовых струн ритмометода</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #ff0000, #ff8000, #ffff00, #00ff00, #0080ff, #0000ff, #8000ff);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff0000, #ff8000, #ffff00, #00ff00, #0080ff, #0000ff, #8000ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .progress-container {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #ff0000, #ff8000, #ffff00, #00ff00, #0080ff, #0000ff, #8000ff);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease infinite;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .strings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .string-card {
+            border-radius: 15px;
+            padding: 25px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .string-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .red { background: linear-gradient(135deg, #ff4444, #cc0000); }
+        .orange { background: linear-gradient(135deg, #ff8844, #ff4400); }
+        .yellow { background: linear-gradient(135deg, #ffdd44, #ffaa00); color: #333 !important; }
+        .green { background: linear-gradient(135deg, #44ff44, #008800); }
+        .blue { background: linear-gradient(135deg, #4488ff, #0044cc); }
+        .dark-blue { background: linear-gradient(135deg, #2244cc, #001188); }
+        .violet { background: linear-gradient(135deg, #8844ff, #4400cc); }
+
+        .string-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .string-info {
+            font-size: 0.9em;
+            text-align: center;
+            opacity: 0.9;
+        }
+
+        .questionnaire {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            border-left: 5px solid;
+            display: none;
+        }
+
+        .question.active {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question h3 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            color: #333;
+        }
+
+        .question-red { border-left-color: #ff0000; }
+        .question-orange { border-left-color: #ff8000; }
+        .question-yellow { border-left-color: #ffaa00; }
+        .question-green { border-left-color: #00aa00; }
+        .question-blue { border-left-color: #0080ff; }
+        .question-dark-blue { border-left-color: #0000ff; }
+        .question-violet { border-left-color: #8000ff; }
+
+        .options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option {
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            background: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+
+        .option:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateX(5px);
+            border-color: #007bff;
+        }
+
+        .option.selected {
+            background: rgba(0, 123, 255, 0.1);
+            border-color: #007bff;
+            transform: translateX(5px);
+        }
+
+        .option input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .analysis-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 25px;
+            border: 2px solid #007bff;
+            display: none;
+        }
+
+        .analysis-panel.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        .analysis-text {
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .continue-btn {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: block;
+            margin: 15px auto;
+        }
+
+        .continue-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .results {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            display: none;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .results.show {
+            display: block;
+            animation: slideIn 0.8s ease;
+        }
+
+        .score-visualization {
+            display: grid;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .score-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .score-label {
+            min-width: 120px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .score-fill {
+            height: 20px;
+            border-radius: 10px;
+            flex: 1;
+            position: relative;
+            background: #e0e0e0;
+            overflow: hidden;
+        }
+
+        .score-value {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .score-text {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        @media (max-width: 768px) {
+            .strings-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>АДАПТИВНЫЙ ТЕСТ ЦВЕТОВЫХ СТРУН</h1>
+            <p>Интеллектуальная система определения доминирующей струны</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-info">
+                <span id="progress-text">Вопрос 1 из 7</span>
+                <span id="stage-info">(Базовая диагностика)</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="strings-grid">
+            <div class="string-card red">
+                <div class="string-title">КРАСНАЯ</div>
+                <div class="string-info">Струна жизнестойкости<br>Здоровье • Сила • Радость</div>
+            </div>
+            <div class="string-card orange">
+                <div class="string-title">ОРАНЖЕВАЯ</div>
+                <div class="string-info">Струна плодотворной жизни<br>Творчество • Семья • Любовь</div>
+            </div>
+            <div class="string-card yellow">
+                <div class="string-title">ЖЁЛТАЯ</div>
+                <div class="string-info">Струна жизнедостижений<br>Деньги • Карьера • Мысли</div>
+            </div>
+            <div class="string-card green">
+                <div class="string-title">ЗЕЛЁНАЯ</div>
+                <div class="string-info">Струна жизнелюбия<br>Самопознание • Сердце • Мудрость</div>
+            </div>
+            <div class="string-card blue">
+                <div class="string-title">ГОЛУБАЯ</div>
+                <div class="string-info">Струна полноценной жизни<br>Общение • Слово • Языки</div>
+            </div>
+            <div class="string-card dark-blue">
+                <div class="string-title">СИНЯЯ</div>
+                <div class="string-info">Струна жизнеоткровений<br>Знание • Изобретения • Ум</div>
+            </div>
+            <div class="string-card violet">
+                <div class="string-title">ФИОЛЕТОВАЯ</div>
+                <div class="string-info">Струна наслаждения жизнью<br>Мудрость • Единение • Гармония</div>
+            </div>
+        </div>
+
+        <div class="questionnaire">
+            <h2>Адаптивная диагностика</h2>
+            <p id="intro-text">Система автоматически определит количество вопросов, необходимых для точного результата.</p>
+
+            <!-- Базовые вопросы -->
+            <div class="question question-red active" data-question="1">
+                <h3>1. Что для вас является основой жизни?</h3>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q1" value="red"> Крепкое здоровье и физическая сила
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="orange"> Любящая семья и творческое самовыражение
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="yellow"> Финансовая стабильность и карьерный рост
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="green"> Внутренняя гармония и самопознание
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="blue"> Способность общаться и передавать знания
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="dark-blue"> Возможность изобретать и создавать новое
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="violet"> Мудрость и умение наслаждаться жизнью
+                    </label>
+                </div>
+            </div>
+
+            <div class="question question-orange" data-question="2">
+                <h3>2. Как вы предпочитаете проводить выходные?</h3>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q2" value="red"> Активный отдых: спорт, фитнес, природа
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="orange"> С семьей: творчество, домашние дела, дети
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="yellow"> Планирование: бизнес-идеи, финансы, цели
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="green"> Уединение: медитация, чтение, размышления
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="blue"> Общение: встречи с друзьями, изучение языков
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="dark-blue"> Изобретательство: конструирование, моделирование
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="violet"> Наслаждение: вкусная еда, красота, покой
+                    </label>
+                </div>
+            </div>
+
+            <div class="question question-yellow" data-question="3">
+                <h3>3. Какая работа вам ближе всего?</h3>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q3" value="red"> Спорт, медицина, физический труд
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="orange"> Искусство, дизайн, работа с детьми
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="yellow"> Бизнес, финансы, управление
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="green"> Психология, философия, консультирование
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="blue"> Образование, журналистика, переводы
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="dark-blue"> Наука, IT, изобретательство
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="violet"> Кулинария, мудрость, духовное наставничество
+                    </label>
+                </div>
+            </div>
+
+            <div class="question question-green" data-question="4">
+                <h3>4. Как вы принимаете важные решения?</h3>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q4" value="red"> Слушаю тело и интуицию
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="orange"> Советуюсь с близкими людьми
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="yellow"> Анализирую выгоды и риски
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="green"> Полагаюсь только на свой внутренний голос
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="blue"> Изучаю информацию и мнения экспертов
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="dark-blue"> Моделирую различные сценарии
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="violet"> Медленно обдумываю, опираясь на опыт
+                    </label>
+                </div>
+            </div>
+
+            <div class="question question-blue" data-question="5">
+                <h3>5. Что вас больше всего вдохновляет?</h3>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q5" value="red"> Физические достижения и здоровье
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="orange"> Счастье близких и творческие успехи
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="yellow"> Материальный успех и влияние
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="green"> Самопознание и духовный рост
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="blue"> Возможность учить и делиться знаниями
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="dark-blue"> Создание чего-то принципиально нового
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="violet"> Глубокое понимание жизни и мудрость
+                    </label>
+                </div>
+            </div>
+
+            <div class="question question-dark-blue" data-question="6">
+                <h3>6. Какой у вас стиль мышления?</h3>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q6" value="red"> Конкретный и практичный
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q6" value="orange"> Образный и эмоциональный
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q6" value="yellow"> Стратегический и расчетливый
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q6" value="green"> Интуитивный и глубокий
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q6" value="blue"> Коммуникативный и структурированный
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q6" value="dark-blue"> Аналитический и творческий
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q6" value="violet"> Философский и созерцательный
+                    </label>
+                </div>
+            </div>
+
+            <div class="question question-violet" data-question="7">
+                <h3>7. Что приносит вам наибольшее удовлетворение?</h3>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q7" value="red"> Ощущение силы и энергии
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7" value="orange"> Радость творчества и семейное тепло
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7" value="yellow"> Достижение целей и финансовый успех
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7" value="green"> Понимание себя и внутренний покой
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7" value="blue"> Интересное общение и обучение других
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7" value="dark-blue"> Решение сложных задач и открытия
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7" value="violet"> Мудрость и гармония с миром
+                    </label>
+                </div>
+            </div>
+
+            <!-- Дополнительные вопросы будут добавляться динамически -->
+
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" id="prev-btn" onclick="previousQuestion()" disabled>Назад</button>
+                <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">Далее</button>
+            </div>
+
+            <div class="analysis-panel" id="analysis-panel">
+                <div class="analysis-text" id="analysis-text"></div>
+                <button class="continue-btn" id="continue-btn" onclick="continueTest()">Продолжить углубленную диагностику</button>
+            </div>
+
+            <div class="results" id="results">
+                <h3>Результаты анализа</h3>
+                <div class="score-visualization" id="score-visualization"></div>
+                <div id="result-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        let totalQuestions = 7;
+        let answers = {};
+        let isAdaptivePhase = false;
+        let additionalQuestions = [];
+        let testComplete = false;
+
+        const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'dark-blue', 'violet'];
+        const colorNames = {
+            'red': 'Красная струна жизнестойкости',
+            'orange': 'Оранжевая струна плодотворной жизни',
+            'yellow': 'Жёлтая струна жизнедостижений',
+            'green': 'Зелёная струна жизнелюбия',
+            'blue': 'Голубая струна полноценной жизни',
+            'dark-blue': 'Синяя струна жизнеоткровений',
+            'violet': 'Фиолетовая струна наслаждения жизнью'
+        };
+
+        const colorValues = {
+            'red': '#ff0000',
+            'orange': '#ff8000',
+            'yellow': '#ffaa00',
+            'green': '#00aa00',
+            'blue': '#0080ff',
+            'dark-blue': '#0000ff',
+            'violet': '#8000ff'
+        };
+
+        function updateProgress() {
+            const progressFill = document.getElementById('progress-fill');
+            const progressText = document.getElementById('progress-text');
+            const stageInfo = document.getElementById('stage-info');
+            
+            const progress = (currentQuestion / totalQuestions) * 100;
+            progressFill.style.width = progress + '%';
+            
+            progressText.textContent = `Вопрос ${currentQuestion} из ${totalQuestions}`;
+            
+            if (isAdaptivePhase) {
+                stageInfo.textContent = '(Углубленная диагностика)';
+            } else {
+                stageInfo.textContent = '(Базовая диагностика)';
+            }
+        }
+
+        function showQuestion(questionNum) {
+            document.querySelectorAll('.question').forEach(q => {
+                q.classList.remove('active');
+            });
+            
+            const currentQ = document.querySelector(`[data-question="${questionNum}"]`);
+            if (currentQ) {
+                currentQ.classList.add('active');
+            }
+            
+            updateProgress();
+            updateNavigationButtons();
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            prevBtn.disabled = currentQuestion === 1;
+            
+            const currentAnswer = getCurrentAnswer();
+            nextBtn.disabled = !currentAnswer;
+            
+            if (currentQuestion === totalQuestions && !isAdaptivePhase) {
+                nextBtn.textContent = 'Анализировать';
+            } else if (currentQuestion === totalQuestions && isAdaptivePhase) {
+                nextBtn.textContent = 'Завершить тест';
+            } else {
+                nextBtn.textContent = 'Далее';
+            }
+        }
+
+        function getCurrentAnswer() {
+            const currentQ = document.querySelector(`[data-question="${currentQuestion}"]`);
+            if (!currentQ) return null;
+            
+            const inputs = currentQ.querySelectorAll('input[type="radio"]');
+            for (let input of inputs) {
+                if (input.checked) {
+                    return input.value;
+                }
+            }
+            return null;
+        }
+
+        function saveCurrentAnswer() {
+            const answer = getCurrentAnswer();
+            if (answer) {
+                answers[`q${currentQuestion}`] = answer;
+            }
+        }
+
+        function nextQuestion() {
+            saveCurrentAnswer();
+            
+            if (currentQuestion === 7 && !isAdaptivePhase) {
+                analyzeBasicResults();
+                return;
+            }
+            
+            if (currentQuestion === totalQuestions) {
+                if (isAdaptivePhase) {
+                    showFinalResults();
+                } else {
+                    analyzeBasicResults();
+                }
+                return;
+            }
+            
+            currentQuestion++;
+            showQuestion(currentQuestion);
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 1) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function analyzeBasicResults() {
+            const scores = {};
+            colors.forEach(color => scores[color] = 0);
+            
+            // Подсчитываем базовые результаты
+            Object.values(answers).forEach(answer => {
+                if (scores.hasOwnProperty(answer)) {
+                    scores[answer]++;
+                }
+            });
+            
+            // Анализ четкости результата
+            const sortedScores = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+            const leader = sortedScores[0];
+            const runnerUp = sortedScores[1];
+            
+            const leaderScore = leader[1];
+            const runnerUpScore = runnerUp[1];
+            const totalAnswers = Object.keys(answers).length;
+            
+            // Логика принятия решения
+            const analysisPanel = document.getElementById('analysis-panel');
+            const analysisText = document.getElementById('analysis-text');
+            const continueBtn = document.getElementById('continue-btn');
+            
+            if (leaderScore >= 4) {
+                // Четкий результат - 57%+ от всех ответов
+                analysisText.innerHTML = `
+                    <strong>✅ Результат определен!</strong><br>
+                    Ваша доминирующая струна выявлена с высокой точностью (${Math.round(leaderScore/totalAnswers*100)}%).
+                `;
+                continueBtn.textContent = 'Показать результаты';
+                continueBtn.onclick = () => showFinalResults();
+                
+            } else if (leaderScore - runnerUpScore <= 1) {
+                // Спорный результат - нужны уточняющие вопросы
+                const competitors = sortedScores.filter(([color, score]) => score >= runnerUpScore).map(([color]) => color);
+                
+                analysisText.innerHTML = `
+                    <strong>🤔 Требуется уточнение</strong><br>
+                    Обнаружена конкуренция между ${competitors.length} струнами. 
+                    Система рекомендует дополнительные вопросы для точного определения.
+                `;
+                continueBtn.textContent = 'Продолжить диагностику';
+                continueBtn.onclick = () => startAdaptivePhase(competitors);
+                
+            } else {
+                // Относительно четкий результат
+                analysisText.innerHTML = `
+                    <strong>📊 Результат получен</strong><br>
+                    Доминирующая струна определена (${Math.round(leaderScore/totalAnswers*100)}% уверенности).
+                    Хотите уточнить результат дополнительными вопросами?
+                `;
+                continueBtn.textContent = 'Показать результаты';
+                continueBtn.onclick = () => showFinalResults();
+                
+                // Добавляем кнопку для дополнительной диагностики
+                const extraBtn = document.createElement('button');
+                extraBtn.className = 'continue-btn';
+                extraBtn.textContent = 'Углубленная диагностика';
+                extraBtn.style.background = 'linear-gradient(45deg, #6c757d, #495057)';
+                extraBtn.onclick = () => startAdaptivePhase([leader[0], runnerUp[0]]);
+                continueBtn.parentNode.appendChild(extraBtn);
+            }
+            
+            analysisPanel.classList.add('show');
+        }
+
+        function startAdaptivePhase(competingColors) {
+            isAdaptivePhase = true;
+            document.getElementById('analysis-panel').classList.remove('show');
+            
+            // Генерируем дополнительные вопросы для спорных струн
+            generateAdditionalQuestions(competingColors);
+            
+            // Обновляем общее количество вопросов
+            totalQuestions = 7 + additionalQuestions.length;
+            currentQuestion = 8;
+            
+            // Показываем первый дополнительный вопрос
+            showQuestion(currentQuestion);
+        }
+
+        function generateAdditionalQuestions(competingColors) {
+            const additionalQuestionBank = {
+                'red': [
+                    {
+                        question: "Как вы относитесь к физическим нагрузкам?",
+                        options: [
+                            { value: 'red', text: 'Обожаю! Это дает мне энергию и силу' },
+                            { value: 'orange', text: 'Предпочитаю творческие занятия' },
+                            { value: 'yellow', text: 'Занимаюсь, если это помогает карьере' },
+                            { value: 'green', text: 'Практикую йогу и медитативные практики' },
+                            { value: 'blue', text: 'Предпочитаю интеллектуальные игры' },
+                            { value: 'dark-blue', text: 'Интересуюсь спортивными технологиями' },
+                            { value: 'violet', text: 'Наслаждаюсь неспешными прогулками' }
+                        ]
+                    }
+                ],
+                'orange': [
+                    {
+                        question: "Что для вас семья?",
+                        options: [
+                            { value: 'red', text: 'Команда для достижения общих целей' },
+                            { value: 'orange', text: 'Источник любви и творческого вдохновения' },
+                            { value: 'yellow', text: 'Важный актив для жизненного успеха' },
+                            { value: 'green', text: 'Место для личностного роста' },
+                            { value: 'blue', text: 'Круг для обмена идеями и знаниями' },
+                            { value: 'dark-blue', text: 'Лаборатория для экспериментов' },
+                            { value: 'violet', text: 'Источник мудрости и гармонии' }
+                        ]
+                    }
+                ],
+                'yellow': [
+                    {
+                        question: "Как вы относитесь к деньгам?",
+                        options: [
+                            { value: 'red', text: 'Средство для поддержания здоровья' },
+                            { value: 'orange', text: 'Ресурс для семьи и творчества' },
+                            { value: 'yellow', text: 'Инструмент власти и независимости' },
+                            { value: 'green', text: 'Не главное в жизни' },
+                            { value: 'blue', text: 'Возможность получать знания' },
+                            { value: 'dark-blue', text: 'Средство для исследований' },
+                            { value: 'violet', text: 'Способ обеспечить комфорт' }
+                        ]
+                    }
+                ],
+                'green': [
+                    {
+                        question: "Как вы познаете себя?",
+                        options: [
+                            { value: 'red', text: 'Через физические ощущения' },
+                            { value: 'orange', text: 'Через творчество и отношения' },
+                            { value: 'yellow', text: 'Через достижения и цели' },
+                            { value: 'green', text: 'Через медитацию и внутренний диалог' },
+                            { value: 'blue', text: 'Через общение с мудрыми людьми' },
+                            { value: 'dark-blue', text: 'Через анализ и эксперименты' },
+                            { value: 'violet', text: 'Через жизненный опыт и мудрость' }
+                        ]
+                    }
+                ],
+                'blue': [
+                    {
+                        question: "Что значит для вас хорошее общение?",
+                        options: [
+                            { value: 'red', text: 'Энергичное и мотивирующее' },
+                            { value: 'orange', text: 'Теплое и творческое' },
+                            { value: 'yellow', text: 'Продуктивное и полезное' },
+                            { value: 'green', text: 'Глубокое и искреннее' },
+                            { value: 'blue', text: 'Информативное и структурированное' },
+                            { value: 'dark-blue', text: 'Интеллектуальное и новаторское' },
+                            { value: 'violet', text: 'Мудрое и спокойное' }
+                        ]
+                    }
+                ],
+                'dark-blue': [
+                    {
+                        question: "Что вас привлекает в изобретательстве?",
+                        options: [
+                            { value: 'red', text: 'Создание полезных инструментов' },
+                            { value: 'orange', text: 'Воплощение творческих идей' },
+                            { value: 'yellow', text: 'Коммерческий потенциал новинок' },
+                            { value: 'green', text: 'Решение экологических проблем' },
+                            { value: 'blue', text: 'Обучающие и коммуникативные технологии' },
+                            { value: 'dark-blue', text: 'Сам процесс открытия нового' },
+                            { value: 'violet', text: 'Создание красоты и гармонии' }
+                        ]
+                    }
+                ],
+                'violet': [
+                    {
+                        question: "В чем для вас проявляется мудрость?",
+                        options: [
+                            { value: 'red', text: 'В заботе о здоровье и силе' },
+                            { value: 'orange', text: 'В создании красоты и любви' },
+                            { value: 'yellow', text: 'В умном управлении ресурсами' },
+                            { value: 'green', text: 'В понимании внутренней природы' },
+                            { value: 'blue', text: 'В способности научить других' },
+                            { value: 'dark-blue', text: 'В постижении законов вселенной' },
+                            { value: 'violet', text: 'В принятии жизни такой, как она есть' }
+                        ]
+                    }
+                ]
+            };
+
+            // Создаем дополнительные вопросы только для конкурирующих струн
+            additionalQuestions = [];
+            competingColors.forEach((color, index) => {
+                if (additionalQuestionBank[color]) {
+                    const questionData = additionalQuestionBank[color][0];
+                    const questionNum = 8 + index;
+                    
+                    const questionElement = document.createElement('div');
+                    questionElement.className = `question question-${color}`;
+                    questionElement.setAttribute('data-question', questionNum);
+                    
+                    questionElement.innerHTML = `
+                        <h3>${questionNum}. ${questionData.question}</h3>
+                        <div class="options">
+                            ${questionData.options.map(option => `
+                                <label class="option">
+                                    <input type="radio" name="q${questionNum}" value="${option.value}"> ${option.text}
+                                </label>
+                            `).join('')}
+                        </div>
+                    `;
+                    
+                    document.querySelector('.questionnaire').insertBefore(
+                        questionElement, 
+                        document.querySelector('.nav-buttons')
+                    );
+                    
+                    additionalQuestions.push(questionNum);
+                }
+            });
+        }
+
+        function showFinalResults() {
+            const scores = {};
+            colors.forEach(color => scores[color] = 0);
+            
+            // Подсчитываем все ответы
+            Object.values(answers).forEach(answer => {
+                if (scores.hasOwnProperty(answer)) {
+                    scores[answer]++;
+                }
+            });
+            
+            // Находим доминирующую струну
+            const sortedScores = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+            const [dominantColor, dominantScore] = sortedScores[0];
+            const totalAnswers = Object.keys(answers).length;
+            
+            // Создаем визуализацию результатов
+            const scoreVisualization = document.getElementById('score-visualization');
+            scoreVisualization.innerHTML = '';
+            
+            sortedScores.forEach(([color, score]) => {
+                const percentage = Math.round((score / totalAnswers) * 100);
+                const scoreBar = document.createElement('div');
+                scoreBar.className = 'score-bar';
+                scoreBar.innerHTML = `
+                    <div class="score-label" style="color: ${colorValues[color]}">
+                        ${colorNames[color].replace(' струна', '')}
+                    </div>
+                    <div class="score-fill">
+                        <div class="score-value" style="background: ${colorValues[color]}; width: ${percentage}%">
+                            <span class="score-text">${percentage}%</span>
+                        </div>
+                    </div>
+                `;
+                scoreVisualization.appendChild(scoreBar);
+            });
+            
+            // Описания струн
+            const descriptions = {
+                'red': 'Вы обладаете мощной жизненной энергией и отличным здоровьем. Красная струна дарит вам состояние радости и наполненности жизни. Вы цените физическую силу и активность.',
+                'orange': 'Вы творческая личность, ценящая семейные отношения и нежную любовь. Оранжевая струна помогает раскрыть ваши скрытые и проявленные таланты.',
+                'yellow': 'Вы прирожденный лидер в финансовых вопросах. "Рекою денег управляю" - это ваш девиз. Жёлтая струна развивает ваше стратегическое мышление.',
+                'green': 'Вы самостоятельная и уверенная личность. Зелёная струна способствует познанию себя и развитию щедрого сердца, которое вмещает весь мир.',
+                'blue': 'Вы прекрасный собеседник и рассказчик с грамотной речью. Голубая струна развивает вашу способность к общению и передаче знаний.',
+                'dark-blue': 'Вы обладаете ясным мышлением и безграничной фантазией. Синяя струна развивает ваши способности к изобретательству и моделированию.',
+                'violet': 'Вы мудрый человек, умеющий наслаждаться жизнью. Фиолетовая струна помогает вам обрести глубокую мудрость и правильно выстроить планы.'
+            };
+            
+            const recommendations = {
+                'red': [
+                    'Регулярно занимайтесь физическими упражнениями',
+                    'Следите за правильным питанием и режимом дня',
+                    'Развивайте выносливость и силу воли',
+                    'Проводите время на природе для восстановления энергии'
+                ],
+                'orange': [
+                    'Развивайте свои творческие способности',
+                    'Уделяйте больше времени семье и близким',
+                    'Занимайтесь любимым хобби',
+                    'Создавайте что-то новое своими руками'
+                ],
+                'yellow': [
+                    'Изучайте основы финансовой грамотности',
+                    'Ставьте четкие цели и планируйте их достижение',
+                    'Развивайте аналитическое мышление',
+                    'Будьте внимательны к своим мыслям - они материализуются'
+                ],
+                'green': [
+                    'Практикуйте медитацию и самоанализ',
+                    'Развивайте самостоятельность в принятии решений',
+                    'Изучайте философию и психологию',
+                    'Работайте над развитием эмпатии и сердечных связей'
+                ],
+                'blue': [
+                    'Совершенствуйте навыки общения',
+                    'Изучайте иностранные языки',
+                    'Развивайте ораторское мастерство',
+                    'Делитесь знаниями с другими людьми'
+                ],
+                'dark-blue': [
+                    'Развивайте логическое и аналитическое мышление',
+                    'Занимайтесь изобретательством и моделированием',
+                    'Изучайте точные науки и новые технологии',
+                    'Не ограничивайте свою фантазию - она безгранична'
+                ],
+                'violet': [
+                    'Практикуйте осознанное питание и "разговор" с едой',
+                    'Развивайте мудрость через жизненный опыт',
+                    'Учитесь наслаждаться простыми вещами',
+                    'Работайте с управлением временем и пространством'
+                ]
+            };
+            
+            // Формируем результат
+            const resultContent = document.getElementById('result-content');
+            resultContent.innerHTML = `
+                <div style="text-align: center; margin: 20px 0;">
+                    <h2 style="color: ${colorValues[dominantColor]}; font-size: 2em; margin-bottom: 15px;">
+                        ${colorNames[dominantColor]}
+                    </h2>
+                    <div style="background: linear-gradient(135deg, ${colorValues[dominantColor]}22, ${colorValues[dominantColor]}11); 
+                                padding: 25px; border-radius: 15px; margin: 20px 0;">
+                        <h4 style="color: #333; margin-bottom: 15px;">Точность определения: ${Math.round(dominantScore/totalAnswers*100)}%</h4>
+                        <p style="font-size: 1.1em; line-height: 1.6; color: #444;">
+                            ${descriptions[dominantColor]}
+                        </p>
+                    </div>
+                    
+                    <div style="background: rgba(255, 255, 255, 0.8); padding: 25px; border-radius: 15px; margin-top: 25px; text-align: left;">
+                        <h4 style="color: ${colorValues[dominantColor]}; margin-bottom: 15px; text-align: center;">
+                            🎯 Рекомендации для развития вашей струны:
+                        </h4>
+                        <ul style="list-style: none; padding: 0;">
+                            ${recommendations[dominantColor].map(rec => 
+                                `<li style="padding: 8px 0; border-left: 3px solid ${colorValues[dominantColor]}; padding-left: 15px; margin: 5px 0;">
+                                    ✨ ${rec}
+                                </li>`
+                            ).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-top: 25px; font-size: 0.9em; color: #666; font-style: italic;">
+                        Тест пройден за ${totalAnswers} вопросов${isAdaptivePhase ? ' (с углубленной диагностикой)' : ''}
+                    </div>
+                </div>
+            `;
+            
+            // Скрываем панель анализа и показываем результаты
+            document.getElementById('analysis-panel').classList.remove('show');
+            document.getElementById('results').classList.add('show');
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function continueTest() {
+            document.getElementById('analysis-panel').classList.remove('show');
+        }
+
+        // Обработка выбора ответов
+        document.addEventListener('change', function(e) {
+            if (e.target.type === 'radio') {
+                // Убираем выделение со всех опций в текущем вопросе
+                const currentQ = e.target.closest('.question');
+                currentQ.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                
+                // Выделяем выбранную опцию
+                e.target.closest('.option').classList.add('selected');
+                
+                // Обновляем кнопки навигации
+                updateNavigationButtons();
+            }
+        });
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            showQuestion(1);
+        });
+    </script>
+</body>
+</html>
