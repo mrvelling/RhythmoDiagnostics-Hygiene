@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔴 Красная Струна Здоровья</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Dancing+Script:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cinzel', serif;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            min-height: 100vh;
+            color: #f4f1e8;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 193, 7, 0.1) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 2s ease-out;
+        }
+
+        .header h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #ff6b6b, #4caf50, #ffeb3b, #ff6b6b);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textShimmer 4s ease-in-out infinite;
+        }
+
+        .intro-text {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 107, 107, 0.3);
+            line-height: 1.8;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        }
+
+        .quest-container {
+            display: none;
+        }
+
+        .quest-container.active {
+            display: block;
+            animation: slideInUp 1s ease-out;
+        }
+
+        .question-card {
+            background: rgba(255,255,255,0.15);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(76, 175, 80, 0.3);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+        }
+
+        .question-title {
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+            font-weight: 600;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .color-option {
+            height: 120px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            border: 3px solid transparent;
+            position: relative;
+        }
+
+        .color-option:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: rgba(255, 215, 0, 0.8);
+        }
+
+        .color-option.selected {
+            border-color: #ffd700;
+            transform: translateY(-12px) scale(1.1);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+            animation: selectedGlow 2s ease-in-out infinite;
+        }
+
+        .color-option.selected::after {
+            content: '🌟';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5rem;
+            animation: starTwinkle 1s ease-in-out infinite;
+        }
+
+        .part4 { 
+            background: linear-gradient(135deg, #ffcccb, #ffa0a0, #ff69b4);
+            box-shadow: inset 0 0 20px rgba(255, 105, 180, 0.3);
+        }
+        .part3 { 
+            background: linear-gradient(135deg, #ff8a80, #ff5722, #e64a19);
+            box-shadow: inset 0 0 20px rgba(255, 87, 34, 0.3);
+        }
+        .part2 { 
+            background: linear-gradient(135deg, #f44336, #d32f2f, #b71c1c);
+            box-shadow: inset 0 0 20px rgba(244, 67, 54, 0.3);
+        }
+        .part1 { 
+            background: linear-gradient(135deg, #c62828, #b71c1c, #8d1e1e);
+            box-shadow: inset 0 0 20px rgba(183, 28, 28, 0.3);
+        }
+        .matrix { 
+            background: linear-gradient(135deg, #8d6e63, #6d4c41, #5d4037, #3e2723);
+            box-shadow: inset 0 0 20px rgba(93, 64, 55, 0.3);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .option-btn {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(76, 175, 80, 0.4);
+            color: #f4f1e8;
+            padding: 25px;
+            border-radius: 18px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-size: 1.1rem;
+            text-align: left;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .option-btn:hover {
+            background: rgba(76, 175, 80, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(76, 175, 80, 0.3);
+            border-color: rgba(255, 215, 0, 0.6);
+        }
+
+        .option-btn.selected {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.4), rgba(76, 175, 80, 0.4));
+            border-color: #ffd700;
+            transform: scale(1.03);
+            box-shadow: 0 12px 30px rgba(255, 215, 0, 0.4);
+        }
+
+        .start-btn, .next-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff8a80, #ff6b6b);
+            background-size: 400% 400%;
+            border: none;
+            color: white;
+            padding: 20px 50px;
+            border-radius: 30px;
+            font-size: 1.3rem;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            display: block;
+            margin: 40px auto;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+            animation: buttonPulse 3s ease-in-out infinite;
+        }
+
+        .start-btn {
+            font-size: 1.5rem;
+            padding: 25px 60px;
+        }
+
+        .start-btn:hover, .next-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.6);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 6px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #4caf50, #ffeb3b);
+            transition: width 1s ease;
+            border-radius: 6px;
+        }
+
+        .results {
+            display: none;
+            text-align: center;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .result-card {
+            background: rgba(255,255,255,0.15);
+            border-radius: 25px;
+            padding: 50px;
+            margin: 30px 0;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+        }
+
+        .book-recommendation {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(76, 175, 80, 0.2));
+            padding: 35px;
+            border-radius: 20px;
+            margin: 30px 0;
+            border: 2px solid rgba(255, 215, 0, 0.4);
+        }
+
+        .answers-list {
+            text-align: left;
+            margin: 30px 0;
+            line-height: 2;
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .question-counter {
+            text-align: center;
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            font-weight: 600;
+            color: #ffeb3b;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Анимации */
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes textShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes selectedGlow {
+            0%, 100% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.8); }
+            50% { box-shadow: 0 0 60px rgba(255, 215, 0, 1); }
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.2rem; }
+            .color-palette { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .options-grid { grid-template-columns: 1fr; }
+            .container { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header" id="header">
+            <h1>🔴 КРАСНАЯ СТРУНА ЗДОРОВЬЯ 🔴</h1>
+            <div class="intro-text">
+                <p><strong>🌸 Женщины всегда всё сначала обдумывают, чувствуют, а только затем проживают. А мужчина, наоборот, сначала набегается, а потом останавливается и начинает анализировать. Таким образом нашим поведением управляют цветовые струны. 🌸</strong></p>
+                <br>
+                <p>🌿 Струны могут находиться в разном состоянии – у кого-то они натянуты, у кого-то порваны, у кого-то длинные, у кого-то короткие. Если все струны в человеке звучат идеально, то человека можно назвать здоровым. 🌿</p>
+                <br>
+                <p><strong>🌺 Первая струна (красная) отвечает за костную систему, за ваш скелет, сюда же относятся органы плотного выделения, и если там какие-то аномалии, то вы проводите эту струну. 🌺</strong></p>
+                <br>
+                <p><strong>🔥 Красный – это цвет здоровья. Если вы хотите иметь красивое тело, крепкое здоровье, красная струна вам просто необходима! А ещё красный цвет дарит состояние радости и наполненности жизни. 🔥</strong></p>
+            </div>
+            <button class="start-btn" id="startBtn">🔴 СТАРТ 🔴</button>
+        </div>
+
+        <div class="quest-container" id="questContainer">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="question-counter" id="questionCounter"></div>
+            <div id="questionContent"></div>
+        </div>
+
+        <div class="results" id="results">
+            <div class="result-card">
+                <h2>🌺 Результаты Диагностики 🌺</h2>
+                <div id="intersectionsText"></div>
+                <div class="book-recommendation" id="bookRecommendation"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 0;
+        let answers = {};
+        let intersections = 0;
+
+        const questions = [
+            {
+                id: 'color',
+                title: '🌈 Выберите цвет струны, который резонирует с вашей душой:',
+                type: 'color',
+                colors: [
+                    { class: 'part4', value: 'part4' },
+                    { class: 'part3', value: 'part3' },
+                    { class: 'part2', value: 'part2' },
+                    { class: 'part1', value: 'part1' },
+                    { class: 'matrix', value: 'matrix' }
+                ]
+            },
+            {
+                id: 'month',
+                title: '🍂 В каком месяце вы родились?',
+                type: 'options',
+                options: [
+                    { text: '🍁 Ноябрь', value: 'november', intersects: true },
+                    { text: '🌸 Другой месяц', value: 'other', intersects: false }
+                ]
+            },
+            {
+                id: 'weekday',
+                title: '☀️ Какой день недели для вас особенно важен?',
+                type: 'options',
+                options: [
+                    { text: '🌞 Воскресенье', value: 'sunday', intersects: true },
+                    { text: '🌙 Другой день', value: 'other', intersects: false }
+                ]
+            },
+            {
+                id: 'names',
+                title: '🌿 Есть ли в вашем окружении люди с именами Елена или Дмитрий?',
+                type: 'options',
+                options: [
+                    { text: '✨ Да, есть', value: 'yes', intersects: true },
+                    { text: '🍃 Нет', value: 'no', intersects: false }
+                ]
+            },
+            {
+                id: 'support',
+                title: '🌳 На кого вы больше опираетесь в жизни?',
+                type: 'options',
+                options: [
+                    { text: '🌲 На маму и папу (на обоих)', value: 'both', intersects: true },
+                    { text: '🌸 Только на маму', value: 'mother', intersects: false },
+                    { text: '🌰 Только на папу', value: 'father', intersects: false },
+                    { text: '🌱 Только на себя', value: 'self', intersects: false }
+                ]
+            },
+            {
+                id: 'trajectory',
+                title: '🦋 Какая траектория общения вам ближе?',
+                type: 'options',
+                options: [
+                    { text: '🧘‍♀️ Личная - люблю побыть один, поразмышлять', value: 'personal', intersects: true },
+                    { text: '🏡 С близкими - общение с семьей, друзьями', value: 'close', intersects: false },
+                    { text: '🤝 Коллективная - работа в команде', value: 'team', intersects: false },
+                    { text: '🌍 Общественная - среди большого количества людей', value: 'public', intersects: false }
+                ]
+            },
+            {
+                id: 'earth',
+                title: '🌍 Чувствуете ли вы связь с землей, природой?',
+                type: 'options',
+                options: [
+                    { text: '🌿 Да, очень сильную связь', value: 'strong', intersects: true },
+                    { text: '🍀 Иногда чувствую', value: 'sometimes', intersects: false },
+                    { text: '🌾 Редко', value: 'rare', intersects: false },
+                    { text: '🏙️ Не чувствую', value: 'no', intersects: false }
+                ]
+            },
+            {
+                id: 'work',
+                title: '🌻 Ваша работа направлена на:',
+                type: 'options',
+                options: [
+                    { text: '🤲 Помощь другим людям, работу для кого-то', value: 'others', intersects: true },
+                    { text: '🏆 Личные достижения', value: 'personal', intersects: false },
+                    { text: '🎨 Творческую самореализацию', value: 'creative', intersects: false },
+                    { text: '💰 Материальную выгоду', value: 'profit', intersects: false }
+                ]
+            },
+            {
+                id: 'health',
+                title: '💪 Как вы оцениваете свое здоровье?',
+                type: 'options',
+                options: [
+                    { text: '🌊 Крепкое здоровье, полон сил и энергии', value: 'strong', intersects: true },
+                    { text: '🏞️ Хорошее, но иногда бывает усталость', value: 'good', intersects: false },
+                    { text: '🌧️ Среднее, есть проблемы', value: 'average', intersects: false },
+                    { text: '🏜️ Слабое, часто болею', value: 'weak', intersects: false }
+                ]
+            },
+            {
+                id: 'movement',
+                title: '🌪️ Ваше отношение к движению:',
+                type: 'options',
+                options: [
+                    { text: '💃 Движение - это жизнь! Люблю быть активным', value: 'active', intersects: true },
+                    { text: '🚶‍♀️ Умеренная активность', value: 'moderate', intersects: false },
+                    { text: '🧘‍♂️ Предпочитаю спокойный образ жизни', value: 'calm', intersects: false },
+                    { text: '🛋️ Малоподвижный образ жизни', value: 'sedentary', intersects: false }
+                ]
+            }
+        ];
+
+        function init() {
+            const startBtn = document.getElementById('startBtn');
+            startBtn.addEventListener('click', startQuest);
+        }
+
+        function startQuest() {
+            document.getElementById('header').style.display = 'none';
+            document.getElementById('questContainer').classList.add('active');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            const questionContent = document.getElementById('questionContent');
+            const progressFill = document.getElementById('progressFill');
+            const questionCounter = document.getElementById('questionCounter');
+            
+            progressFill.style.width = ((currentQuestion + 1) / questions.length * 100) + '%';
+            questionCounter.innerHTML = `🌟 Настройка ${currentQuestion + 1} из ${questions.length} 🌟`;
+            
+            let html = `<div class="question-card">
+                <div class="question-title">${question.title}</div>`;
+            
+            if (question.type === 'color') {
+                html += '<div class="color-palette">';
+                question.colors.forEach(color => {
+                    html += `<div class="color-option ${color.class}" onclick="selectColor('${color.value}')" data-value="${color.value}"></div>`;
+                });
+                html += '</div>';
+            } else {
+                html += '<div class="options-grid">';
+                question.options.forEach(option => {
+                    html += `<button class="option-btn" onclick="selectOption('${option.value}', ${option.intersects})" data-value="${option.value}">
+                        ${option.text}
+                    </button>`;
+                });
+                html += '</div>';
+            }
+            
+            html += `<button class="next-btn" onclick="nextQuestion()" id="nextBtn" style="display: none;">🌸 Далее 🌸</button>
+                </div>`;
+            
+            questionContent.innerHTML = html;
+        }
+
+        function selectColor(value) {
+            answers[questions[currentQuestion].id] = value;
+            
+            document.querySelectorAll('.color-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            document.querySelector(`[data-value="${value}"]`).classList.add('selected');
+            
+            document.getElementById('nextBtn').style.display = 'block';
+        }
+
+        function selectOption(value, intersects) {
+            answers[questions[currentQuestion].id] = value;
+            
+            if (intersects) {
+                intersections++;
+            }
+            
+            document.querySelectorAll('.option-btn').forEach(el => {
+                el.classList.remove('selected');
+            });
+            document.querySelector(`[data-value="${value}"]`).classList.add('selected');
+            
+            document.getElementById('nextBtn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('questContainer').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const intersectionsText = document.getElementById('intersectionsText');
+            const bookRecommendation = document.getElementById('bookRecommendation');
+            
+            let resultsHTML = '<div class="answers-list"><h3>🌺 Ваши Ответы 🌺</h3><br>';
+            
+            questions.forEach((question, index) => {
+                const answer = answers[question.id];
+                let answerText = '';
+                
+                if (question.type === 'color') {
+                    switch(answer) {
+                        case 'part4':
+                            answerText = '🌸 Светло-розовый цвет';
+                            break;
+                        case 'part3':
+                            answerText = '🌺 Розово-красный цвет';
+                            break;
+                        case 'part2':
+                            answerText = '🔥 Красный цвет';
+                            break;
+                        case 'part1':
+                            answerText = '🍂 Темно-красный цвет';
+                            break;
+                        case 'matrix':
+                            answerText = '🌰 Коричневый цвет';
+                            break;
+                    }
+                } else {
+                    const selectedOption = question.options.find(opt => opt.value === answer);
+                    answerText = selectedOption ? selectedOption.text : answer;
+                }
+                
+                resultsHTML += `<strong>🌿 ${question.title}</strong><br>`;
+                resultsHTML += `🎵 ${answerText}<br><br>`;
+            });
+            
+            resultsHTML += '</div>';
+            intersectionsText.innerHTML = resultsHTML;
+            
+            const colorChoice = answers.color;
+            let bookTitle = '';
+            
+            switch(colorChoice) {
+                case 'part4':
+                    bookTitle = 'Откровенное Знакомство - Часть 4';
+                    break;
+                case 'part3':
+                    bookTitle = 'Откровенное Знакомство - Часть 3';
+                    break;
+                case 'part2':
+                    bookTitle = 'Откровенное Знакомство - Часть 2';
+                    break;
+                case 'part1':
+                    bookTitle = 'Откровенное Знакомство - Часть 1';
+                    break;
+                case 'matrix':
+                    bookTitle = 'Матрица Здоровья';
+                    break;
+            }
+            
+            bookRecommendation.innerHTML = `
+                <h3>📚 Рекомендуемая книга:</h3>
+                <h4>🌿 ${bookTitle} 🌿</h4>
+                <br>
+                <div style="background: rgba(255,215,0,0.2); padding: 20px; border-radius: 15px; border: 2px solid rgba(255,215,0,0.5);">
+                    <p><strong>🌸 Пересечений с красной струной: ${intersections} из 9</strong></p>
+                </div>
+                <br>
+                <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px; border: 2px solid rgba(255,107,107,0.4); line-height: 1.8; text-align: left;">
+                    <p>Посмотри, какой интересный мальчик, что же он там делает? Оказывается, он берёт большие щипцы, укладывает раскалённое железо и начинает бить по нему большим молотком. Потом получаются железные детали. Этот мальчик называется «кузнец». И он будет ковать собственные цепи. Надо ему объяснить, что нельзя самого себя привязывать, иначе ты попадёшь в цикл, а нужно доходить до Ритма. А сейчас он и так находится в самом жёстком цикле, в самом плотном цикле.</p>
+                    <br>
+                    <p>Объяснили, и мальчик начинает ковать себе подковы. Подковы — это разомкнутое кольцо, поэтому у многих на домиках на счастье висят подковы. А что может быть счастливее разомкнутого цикла?</p>
+                    <br>
+                    <p>На этой улице можно разомкнуть только третью часть цикла, две остальные не размыкаются, от этого страшна улица, что на ней никогда не дойти до Ритма, но можно приблизиться, можно разомкнуть цикл.</p>
+                    <br>
+                    <p>Тебе повезёт, и ты окажешься на более щедрой улице, где нет таких жёстких и жестоких законов.</p>
+                    <br>
+                    <p>Здесь каждый пытается постоянно работать, и здесь нельзя останавливать движение.</p>
+                    <br>
+                    <p><strong>На красной улице нельзя ни лежать, отдыхая, ни сидеть, отдыхая.</strong></p>
+                </div>
+            `;
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
