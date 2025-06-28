@@ -414,6 +414,7 @@
                 <div class="string-state" id="stringState"></div>
                 <div class="state-description" id="stateDescription"></div>
                 <div class="book-recommendation" id="bookRecommendation"></div>
+                <button class="restart-btn" id="showAnswersBtn" onclick="showAnswers()">📝 Просмотреть ответы</button>
                 <button class="restart-btn" id="restartBtn">🔄 Пройти еще раз</button>
             </div>
         </div>
@@ -809,6 +810,58 @@
                 '<br><div style="background: rgba(52,152,219,0.2); padding: 20px; border-radius: 15px; border: 1px solid rgba(52,152,219,0.3);">' +
                 '<p style="font-size: 1.1rem; font-style: italic;">💡 Для более точного определения состояния струны рекомендую обратиться к Ритмологу</p>' +
                 '</div>';
+        }
+
+        function showAnswers() {
+            var answersHtml = '<div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 20px; margin: 20px 0; border: 2px solid rgba(52,152,219,0.3);">';
+            answersHtml += '<h3 style="color: #3498db; margin-bottom: 20px;">📝 Ваши ответы:</h3>';
+            
+            // Цвет
+            var colorNames = {
+                'part4': 'Светло-розовый (Часть 4)',
+                'part3': 'Розово-красный (Часть 3)', 
+                'part2': 'Красный (Часть 2)',
+                'part1': 'Темно-красный (Часть 1)',
+                'matrix': 'Коричневый (Матрица)'
+            };
+            answersHtml += '<p><strong>🎨 Выбранный цвет:</strong> ' + (colorNames[answers.color] || 'Не выбран') + '</p>';
+            
+            // Остальные ответы
+            var questionTexts = {
+                'movement': '🏃‍♂️ Физическая активность',
+                'health': '💪 Здоровье', 
+                'names': '👥 Имена в окружении',
+                'redcolor': '🔴 Отношение к красному',
+                'providing': '💰 Обеспечение жизни',
+                'support': '🌳 Опора в жизни',
+                'month': '🍂 Месяц рождения',
+                'myname': '😊 Ваше имя',
+                'weekday': '☀️ День недели рождения'
+            };
+            
+            for (var key in answers) {
+                if (key !== 'color' && questionTexts[key]) {
+                    var selectedOption = getSelectedOptionText(key, answers[key]);
+                    answersHtml += '<p><strong>' + questionTexts[key] + ':</strong> ' + selectedOption + '</p>';
+                }
+            }
+            
+            answersHtml += '</div>';
+            
+            document.getElementById('bookRecommendation').innerHTML += answersHtml;
+            document.getElementById('showAnswersBtn').style.display = 'none';
+        }
+        
+        function getSelectedOptionText(questionId, value) {
+            var question = questions.find(function(q) { return q.id === questionId; });
+            if (!question) return value;
+            
+            if (question.options) {
+                var option = question.options.find(function(opt) { return opt.value === value; });
+                return option ? option.text : value;
+            }
+            
+            return value;
         }
 
         function restartTest() {
