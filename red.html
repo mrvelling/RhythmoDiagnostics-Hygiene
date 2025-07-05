@@ -25,62 +25,6 @@
             line-height: 1.7;
         }
 
-        /* Glassmorphism Background Effects */
-        .bg-orbs {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-            backdrop-filter: blur(20px);
-            animation: float 20s infinite ease-in-out;
-        }
-
-        /* Отключаем анимации на мобильных устройствах */
-        @media (max-width: 768px) {
-            .orb {
-                animation: none;
-                transform: none;
-            }
-        }
-
-        .orb:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .orb:nth-child(2) {
-            width: 200px;
-            height: 200px;
-            top: 60%;
-            right: 15%;
-            animation-delay: -7s;
-        }
-
-        .orb:nth-child(3) {
-            width: 400px;
-            height: 400px;
-            bottom: 10%;
-            left: 20%;
-            animation-delay: -14s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(180deg); }
-        }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -102,20 +46,9 @@
             overflow: hidden;
         }
 
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-        }
-
         .header {
             text-align: center;
             margin-bottom: 60px;
-            animation: slideDown 1.2s ease-out;
         }
 
         .header h1 {
@@ -128,24 +61,10 @@
             background-clip: text;
             letter-spacing: -0.02em;
             text-transform: uppercase;
-            animation: glow 3s ease-in-out infinite alternate;
             text-shadow: 0 6px 12px rgba(0,0,0,0.5);
             filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.8));
             word-wrap: break-word;
             hyphens: auto;
-        }
-
-        /* Отключаем анимацию свечения на мобильных */
-        @media (max-width: 768px) {
-            .header h1 {
-                animation: none;
-                filter: none;
-            }
-        }
-
-        @keyframes glow {
-            from { filter: drop-shadow(0 0 20px rgba(220, 38, 38, 0.8)); }
-            to { filter: drop-shadow(0 0 30px rgba(239, 68, 68, 1)); }
         }
 
         .intro-text {
@@ -170,53 +89,38 @@
         }
 
         .bento-item {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(20px);
             border-radius: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.6);
             padding: 45px;
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
             font-size: 1.5rem;
-            font-weight: 600;
+            font-weight: 700;
             color: #ffffff;
-            text-shadow: 3px 3px 12px rgba(0,0,0,1);
+            text-shadow: 2px 2px 8px rgba(0,0,0,1);
             line-height: 1.6;
-            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4));
-        }
-
-        .bento-item::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.6s;
-        }
-
-        .bento-item:hover::after {
-            left: 100%;
+            text-align: center;
         }
 
         .bento-item:hover {
             transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.35);
+            background: rgba(0, 0, 0, 0.8);
             box-shadow: 0 25px 50px rgba(31, 38, 135, 0.6);
-            border-color: rgba(255, 255, 255, 0.6);
+            border-color: rgba(255, 255, 255, 0.8);
         }
 
         .bento-item.selected {
-            background: rgba(239, 68, 68, 0.4);
-            border-color: rgba(239, 68, 68, 0.8);
+            background: rgba(220, 38, 38, 0.8);
+            border-color: rgba(220, 38, 38, 1);
             transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 30px 60px rgba(239, 68, 68, 0.5);
+            box-shadow: 0 30px 60px rgba(220, 38, 38, 0.7);
         }
 
-        /* Color Palette Glassmorphism */
+        /* Color Palette */
         .color-palette {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -233,23 +137,6 @@
             position: relative;
             backdrop-filter: blur(10px);
             overflow: hidden;
-        }
-
-        .color-option::before {
-            content: '';
-            position: absolute;
-            top: -3px;
-            left: -3px;
-            right: -3px;
-            bottom: -3px;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.6), transparent);
-            border-radius: 24px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .color-option:hover::before {
-            opacity: 1;
         }
 
         .color-option:hover {
@@ -269,7 +156,7 @@
         .part1 { background: linear-gradient(135deg, #c0392b, #922b21, #8b0000); }
         .matrix { background: linear-gradient(135deg, #8d6e63, #5d4037, #3e2723); }
 
-        /* 3D Buttons */
+        /* Buttons */
         .neo-btn {
             background: linear-gradient(145deg, #dc2626, #991b1b);
             border: none;
@@ -293,29 +180,10 @@
             box-shadow: 0 8px 32px rgba(220, 38, 38, 0.4);
         }
 
-        .neo-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.6s;
-        }
-
-        .neo-btn:hover::before {
-            left: 100%;
-        }
-
         .neo-btn:hover {
             transform: translateY(-4px);
             box-shadow: 0 20px 45px rgba(220, 38, 38, 0.8);
             background: linear-gradient(145deg, #ef4444, #dc2626);
-        }
-
-        .neo-btn:active {
-            transform: translateY(-2px);
         }
 
         /* Progress Bar */
@@ -336,22 +204,6 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
-        }
-
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
         }
 
         /* Question Styles */
@@ -446,27 +298,14 @@
 
         .test-container.active {
             display: block;
-            animation: fadeInUp 0.8s ease-out;
         }
 
         .results {
             display: none;
-            animation: fadeInUp 1s ease-out;
         }
 
         .results.show {
             display: block;
-        }
-
-        /* Animations */
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         /* State Colors */
@@ -477,18 +316,7 @@
 
         /* Mobile Optimization */
         @media (max-width: 768px) {
-            body { 
-                font-size: 18px;
-                /* Отключаем все анимации для производительности */
-                animation: none !important;
-            }
-            
-            * {
-                animation-duration: 0s !important;
-                animation-delay: 0s !important;
-                transition-duration: 0.1s !important;
-            }
-            
+            body { font-size: 18px; }
             .container { padding: 20px 15px; }
             .header h1 { 
                 font-size: 2.8rem; 
@@ -525,6 +353,9 @@
                 padding: 20px; 
                 font-size: 1.1rem;
                 line-height: 1.4;
+                font-weight: 700;
+                background: rgba(0, 0, 0, 0.8);
+                border: 2px solid rgba(255, 255, 255, 0.8);
             }
             .neo-btn { 
                 padding: 18px 36px; 
@@ -580,6 +411,9 @@
                 padding: 15px; 
                 font-size: 1rem;
                 line-height: 1.3;
+                font-weight: 700;
+                background: rgba(0, 0, 0, 0.85);
+                border: 2px solid rgba(255, 255, 255, 0.9);
             }
             .neo-btn { 
                 padding: 15px 30px; 
@@ -605,13 +439,6 @@
     </style>
 </head>
 <body>
-    <!-- Background Orbs -->
-    <div class="bg-orbs">
-        <div class="orb"></div>
-        <div class="orb"></div>
-        <div class="orb"></div>
-    </div>
-
     <div class="container">
         <div class="header" id="header">
             <div class="glass-card">
@@ -644,10 +471,10 @@
     </div>
 
     <script>
-        var currentQuestion = 0;
-        var answers = {};
+        let currentQuestion = 0;
+        let answers = {};
 
-        var questions = [
+        const questions = [
             {
                 id: 'color',
                 title: 'Выберите цвет, который вас притягивает',
@@ -722,27 +549,15 @@
                 ]
             },
             {
-                id: 'support',
-                title: 'На кого вы больше опираетесь в жизни?',
-                subtitle: 'Выбор опор влияет на состояние струны',
-                type: 'options',
-                options: [
-                    { text: 'Только на маму', value: 'tense' },
-                    { text: 'Только на папу', value: 'slack' },
-                    { text: 'На маму и папу (на обоих)', value: 'normal' },
-                    { text: 'Только на себя', value: 'broken' }
-                ]
-            },
-            {
                 id: 'month',
                 title: 'В каком месяце вы родились?',
                 subtitle: 'Ноябрь - месяц красной струны',
                 type: 'options',
                 options: [
-                    { text: 'Ноябрь', value: 'normal' },
-                    { text: 'Весенние месяцы (март, апрель, май)', value: 'tense' },
-                    { text: 'Летние месяцы (июнь, июль, август)', value: 'slack' },
-                    { text: 'Другие осенне-зимние месяцы', value: 'broken' }
+                    { text: 'Ноябрь', value: 'november' },
+                    { text: 'Весенние месяцы (март, апрель, май)', value: 'spring' },
+                    { text: 'Летние месяцы (июнь, июль, август)', value: 'summer' },
+                    { text: 'Другие осенне-зимние месяцы', value: 'other' }
                 ]
             },
             {
@@ -763,7 +578,7 @@
                 subtitle: 'Воскресенье - день красной струны',
                 type: 'options',
                 options: [
-                    { text: 'Воскресенье', value: 'normal' },
+                    { text: 'Воскресенье', value: 'sunday' },
                     { text: 'Понедельник', value: 'monday' },
                     { text: 'Вторник', value: 'tuesday' },
                     { text: 'Среда', value: 'wednesday' },
@@ -775,7 +590,7 @@
             }
         ];
 
-        var stringStates = {
+        const stringStates = {
             tense: {
                 name: 'НАТЯНУТАЯ СТРУНА',
                 description: 'Ваша красная струна натянута. Проявляется тем, что у вас начинаются потери и резкое сокращение движений. Вы чувствуете скованность, ограничения, но при этом сохраняете стабильность.'
@@ -811,91 +626,48 @@
         }
 
         function showQuestion() {
-            var question = questions[currentQuestion];
-            var questionContent = document.getElementById('questionContent');
-            var progressFill = document.getElementById('progressFill');
-            var questionCounter = document.getElementById('questionCounter');
+            const question = questions[currentQuestion];
+            const questionContent = document.getElementById('questionContent');
+            const progressFill = document.getElementById('progressFill');
+            const questionCounter = document.getElementById('questionCounter');
             
             progressFill.style.width = ((currentQuestion + 1) / questions.length * 100) + '%';
             questionCounter.innerHTML = 'Вопрос ' + (currentQuestion + 1) + ' из ' + questions.length;
             
-            var html = '<div class="glass-card">';
+            let html = '<div class="glass-card">';
             html += '<div class="question-title">' + question.title + '</div>';
             html += '<div class="question-subtitle">' + question.subtitle + '</div>';
             
             if (question.type === 'color') {
                 html += '<div class="color-palette">';
-                for (var i = 0; i < question.colors.length; i++) {
-                    var color = question.colors[i];
-                    html += '<div class="color-option ' + color.class + '" data-value="' + color.value + '"></div>';
-                }
+                question.colors.forEach(color => {
+                    html += `<div class="color-option ${color.class}" onclick="selectAnswer('${color.value}')"></div>`;
+                });
                 html += '</div>';
             } else {
                 html += '<div class="bento-grid">';
-                for (var i = 0; i < question.options.length; i++) {
-                    var option = question.options[i];
-                    html += '<div class="bento-item" data-value="' + option.value + '">';
-                    html += option.text;
-                    html += '</div>';
-                }
+                question.options.forEach(option => {
+                    html += `<div class="bento-item" onclick="selectAnswer('${option.value}')">${option.text}</div>`;
+                });
                 html += '</div>';
             }
             
-            html += '<button class="neo-btn" id="nextBtn" style="display: none;">Следующий вопрос</button>';
+            html += '<button class="neo-btn" id="nextBtn" style="display: none;" onclick="nextQuestion()">Следующий вопрос</button>';
             html += '</div>';
             
             questionContent.innerHTML = html;
-            
-            // Добавляем обработчики событий после создания элементов
-            if (question.type === 'color') {
-                document.querySelectorAll('.color-option').forEach(function(el) {
-                    el.addEventListener('click', function() {
-                        selectColor(this.getAttribute('data-value'));
-                    });
-                });
-            } else {
-                document.querySelectorAll('.bento-item').forEach(function(el) {
-                    el.addEventListener('click', function() {
-                        selectOption(this.getAttribute('data-value'));
-                    });
-                });
-            }
-            
-            document.getElementById('nextBtn').addEventListener('click', nextQuestion);
         }
 
-        function selectColor(value) {
-            answers[questions[currentQuestion].id] = value;
-            
-            // Убираем выделение со всех цветов
-            var allColors = document.querySelectorAll('.color-option');
-            for (var i = 0; i < allColors.length; i++) {
-                allColors[i].classList.remove('selected');
-            }
-            
-            // Находим и выделяем выбранный цвет
-            var selectedColors = document.querySelectorAll('.color-option[data-value="' + value + '"]');
-            for (var i = 0; i < selectedColors.length; i++) {
-                selectedColors[i].classList.add('selected');
-            }
-            
-            document.getElementById('nextBtn').style.display = 'block';
-        }
-
-        function selectOption(value) {
+        function selectAnswer(value) {
             answers[questions[currentQuestion].id] = value;
             
             // Убираем выделение со всех элементов
-            var allItems = document.querySelectorAll('.bento-item');
-            for (var i = 0; i < allItems.length; i++) {
-                allItems[i].classList.remove('selected');
-            }
+            const allItems = document.querySelectorAll('.bento-item, .color-option');
+            allItems.forEach(item => item.classList.remove('selected'));
             
-            // Находим и выделяем выбранный элемент
-            var selectedItems = document.querySelectorAll('.bento-item[data-value="' + value + '"]');
-            for (var i = 0; i < selectedItems.length; i++) {
-                selectedItems[i].classList.add('selected');
-            }
+            // Выделяем выбранный элемент
+            const selectedElement = event.target;
+            selectedElement.classList.add('selected');
             
             document.getElementById('nextBtn').style.display = 'block';
         }
@@ -911,70 +683,58 @@
         }
 
         function analyzeStringState() {
-            var movement = answers.movement;
-            var health = answers.health;
-            var names = answers.names;
-            var support = answers.support;
-            var month = answers.month;
-            var weekday = answers.weekday;
-            var myname = answers.myname;
-            
             // Подсчет совпадений с красной струной (ведущая)
-            var redStringMatches = 0;
-            var totalRedChecks = 5;
+            let redStringMatches = 0;
+            const totalRedChecks = 4;
             
-            if (month === 'normal') redStringMatches++;
-            if (weekday === 'normal') redStringMatches++;
-            if (health === 'normal') redStringMatches++;
-            if (myname === 'elena' || myname === 'dmitry') redStringMatches++;
-            if (support === 'normal') redStringMatches++;
+            if (answers.month === 'november') redStringMatches++;
+            if (answers.weekday === 'sunday') redStringMatches++;
+            if (answers.health === 'normal') redStringMatches++;
+            if (answers.myname === 'elena' || answers.myname === 'dmitry') redStringMatches++;
             
-            // Анализ по ключевым признакам состояния струны
-            var tenseSigns = 0;
-            var slackSigns = 0;
-            var brokenSigns = 0;
-            var normalSigns = 0;
+            // Подсчет ответов по состояниям струны
+            let tenseCount = 0;
+            let slackCount = 0;
+            let brokenCount = 0;
+            let normalCount = 0;
             
-            if (movement === 'tense') tenseSigns += 2;
-            if (movement === 'slack') slackSigns += 2;
-            if (movement === 'broken') brokenSigns += 2;
-            if (movement === 'normal') normalSigns += 2;
+            // Движение - главный критерий (считается за 2)
+            if (answers.movement === 'tense') tenseCount += 2;
+            if (answers.movement === 'slack') slackCount += 2;
+            if (answers.movement === 'broken') brokenCount += 2;
+            if (answers.movement === 'normal') normalCount += 2;
             
-            if (health === 'tense') tenseSigns++;
-            if (health === 'slack') slackSigns++;
-            if (health === 'broken') brokenSigns += 2;
-            if (health === 'normal') normalSigns++;
+            // Здоровье - "болею" считается за 2
+            if (answers.health === 'tense') tenseCount++;
+            if (answers.health === 'slack') slackCount++;
+            if (answers.health === 'broken') brokenCount += 2;
+            if (answers.health === 'normal') normalCount++;
             
-            if (names === 'tense') tenseSigns++;
-            if (names === 'slack') slackSigns++;
-            if (names === 'normal') normalSigns++;
-            if (names === 'few') normalSigns++; // "мало имен" = нормально
+            // Имена в окружении
+            if (answers.names === 'tense') tenseCount++;
+            if (answers.names === 'slack') slackCount++;
+            if (answers.names === 'normal' || answers.names === 'few') normalCount++;
             
-            if (support === 'tense') tenseSigns++;
-            if (support === 'slack') slackSigns++;
-            if (support === 'normal') normalSigns++;
-            if (support === 'broken') brokenSigns++;
+            // Отношение к красному
+            if (answers.redcolor === 'tense') tenseCount++;
+            if (answers.redcolor === 'slack') slackCount++;
+            if (answers.redcolor === 'broken') brokenCount++;
+            if (answers.redcolor === 'normal') normalCount++;
             
-            if (month === 'normal') normalSigns++;
-            if (weekday === 'normal') normalSigns++;
+            // Обеспечение жизни
+            if (answers.providing === 'tense') tenseCount++;
+            if (answers.providing === 'slack') slackCount++;
+            if (answers.providing === 'broken') brokenCount++;
+            if (answers.providing === 'normal') normalCount++;
             
-            var maxSigns = Math.max(tenseSigns, slackSigns, brokenSigns, normalSigns);
+            // Определяем состояние с максимальным количеством ответов
+            const maxCount = Math.max(tenseCount, slackCount, brokenCount, normalCount);
             
-            // Проверка на противоречия
-            var hasContradictions = false;
-            if (movement === 'normal' && health === 'broken') hasContradictions = true;
-            if (movement === 'broken' && health === 'normal') hasContradictions = true;
-            if (movement === 'slack' && health === 'tense') hasContradictions = true;
-            
-            if (hasContradictions) {
-                return { state: 'contradiction', redMatches: redStringMatches, totalChecks: totalRedChecks };
-            }
-            
-            var state = 'normal';
-            if (normalSigns === maxSigns) state = 'normal';
-            else if (brokenSigns === maxSigns) state = 'broken';
-            else if (slackSigns === maxSigns) state = 'slack';
-            else if (tenseSigns === maxSigns) state = 'tense';
+            let state = 'normal';
+            if (brokenCount === maxCount) state = 'broken';
+            else if (slackCount === maxCount) state = 'slack';
+            else if (tenseCount === maxCount) state = 'tense';
+            else if (normalCount === maxCount) state = 'normal';
             
             return { state: state, redMatches: redStringMatches, totalChecks: totalRedChecks };
         }
@@ -983,27 +743,16 @@
             document.getElementById('testContainer').style.display = 'none';
             document.getElementById('results').classList.add('show');
             
-            var analysis = analyzeStringState();
-            var stateResult = analysis.state;
-            var redMatches = analysis.redMatches;
-            var totalChecks = analysis.totalChecks;
+            const analysis = analyzeStringState();
+            const stateResult = analysis.state;
+            const redMatches = analysis.redMatches;
+            const totalChecks = analysis.totalChecks;
             
-            if (stateResult === 'contradiction') {
-                document.getElementById('stringState').innerHTML = 'ПРОТИВОРЕЧИВЫЕ ОТВЕТЫ';
-                document.getElementById('stringState').className = 'result-title';
-                document.getElementById('stateDescription').innerHTML = 
-                    'Ваши ответы расходятся между собой. Для получения точного результата просим быть честным в ответах и пройти тест еще раз.';
-                document.getElementById('bookRecommendation').innerHTML = 
-                    '<h3>Рекомендация</h3>' +
-                    '<p>Пройдите тест повторно, отвечая максимально честно на каждый вопрос.</p>';
-                return;
-            }
-            
-            var resultState = stringStates[stateResult];
+            const resultState = stringStates[stateResult];
             
             // Определяем книгу по выбранному цвету
-            var colorChoice = answers.color;
-            var bookTitle = '';
+            const colorChoice = answers.color;
+            let bookTitle = '';
             
             switch(colorChoice) {
                 case 'part4':
@@ -1026,7 +775,7 @@
             }
             
             // Проверка на ведущую струну
-            var dominantInfo = '';
+            let dominantInfo = '';
             if (redMatches >= 1) {
                 dominantInfo = '<div style="background: rgba(220,38,38,0.3); backdrop-filter: blur(20px); padding: 30px; border-radius: 16px; border: 2px solid rgba(220,38,38,0.6); margin: 30px 0;">' +
                     '<h3 style="color: #ffffff; margin-bottom: 15px; text-transform: uppercase; font-size: 1.6rem; font-weight: 700; text-shadow: 2px 2px 6px rgba(0,0,0,0.7);">Красная струна ведущая</h3>' +
@@ -1047,11 +796,11 @@
         }
 
         function showAnswers() {
-            var answersHtml = '<div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(20px); padding: 40px; border-radius: 20px; margin: 40px 0; border: 2px solid rgba(255,255,255,0.25);">';
+            let answersHtml = '<div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(20px); padding: 40px; border-radius: 20px; margin: 40px 0; border: 2px solid rgba(255,255,255,0.25);">';
             answersHtml += '<h3 style="margin-bottom: 30px; text-transform: uppercase; font-size: 1.8rem; color: #ffffff; font-weight: 700; text-shadow: 2px 2px 6px rgba(0,0,0,0.7);">Ваши ответы</h3>';
             
             // Цвет
-            var colorNames = {
+            const colorNames = {
                 'part4': 'Светло-розовый (Часть 4)',
                 'part3': 'Розово-красный (Часть 3)', 
                 'part2': 'Красный (Часть 2)',
@@ -1061,21 +810,20 @@
             answersHtml += '<p style="margin: 20px 0; font-size: 1.4rem; color: #ffffff; font-weight: 600; text-shadow: 2px 2px 6px rgba(0,0,0,0.5);"><strong>Выбранный цвет:</strong> ' + (colorNames[answers.color] || 'Не выбран') + '</p>';
             
             // Остальные ответы
-            var questionTexts = {
+            const questionTexts = {
                 'movement': 'Физическая активность',
                 'health': 'Здоровье', 
                 'names': 'Имена в окружении',
                 'redcolor': 'Отношение к красному',
                 'providing': 'Обеспечение жизни',
-                'support': 'Опора в жизни',
                 'month': 'Месяц рождения',
                 'myname': 'Ваше имя',
                 'weekday': 'День недели рождения'
             };
             
-            for (var key in answers) {
+            for (const key in answers) {
                 if (key !== 'color' && questionTexts[key]) {
-                    var selectedOption = getSelectedOptionText(key, answers[key]);
+                    const selectedOption = getSelectedOptionText(key, answers[key]);
                     answersHtml += '<p style="margin: 20px 0; font-size: 1.4rem; color: #ffffff; font-weight: 600; text-shadow: 2px 2px 6px rgba(0,0,0,0.5);"><strong>' + questionTexts[key] + ':</strong> ' + selectedOption + '</p>';
                 }
             }
@@ -1087,11 +835,11 @@
         }
         
         function getSelectedOptionText(questionId, value) {
-            var question = questions.find(function(q) { return q.id === questionId; });
+            const question = questions.find(q => q.id === questionId);
             if (!question) return value;
             
             if (question.options) {
-                var option = question.options.find(function(opt) { return opt.value === value; });
+                const option = question.options.find(opt => opt.value === value);
                 return option ? option.text : value;
             }
             
