@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔴 Диагностика Состояния Красной Струны</title>
+    <title>Диагностика Красной Струны</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Dancing+Script:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         
         * {
             margin: 0;
@@ -14,15 +14,19 @@
         }
 
         body {
-            font-family: 'Cinzel', serif;
-            background: linear-gradient(135deg, #2c3e50, #34495e, #2c3e50);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #dc2626;
+            background-image: linear-gradient(135deg, #dc2626 0%, #991b1b 30%, #7f1d1d 60%, #450a0a 100%);
             min-height: 100vh;
-            color: #ecf0f1;
+            color: #ffffff;
             overflow-x: hidden;
             position: relative;
+            font-size: 22px;
+            line-height: 1.7;
         }
 
-        .floating-particles {
+        /* Glassmorphism Background Effects */
+        .bg-orbs {
             position: fixed;
             top: 0;
             left: 0;
@@ -32,376 +36,595 @@
             z-index: 1;
         }
 
-        .particle {
+        .orb {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #e74c3c;
             border-radius: 50%;
-            animation: float 15s infinite linear;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            backdrop-filter: blur(20px);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        /* Отключаем анимации на мобильных устройствах */
+        @media (max-width: 768px) {
+            .orb {
+                animation: none;
+                transform: none;
+            }
+        }
+
+        .orb:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .orb:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            right: 15%;
+            animation-delay: -7s;
+        }
+
+        .orb:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            bottom: 10%;
+            left: 20%;
+            animation-delay: -14s;
         }
 
         @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 30px;
+            padding: 40px 20px;
             position: relative;
             z-index: 10;
         }
 
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(25px);
+            border-radius: 24px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
+            padding: 60px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+        }
+
         .header {
             text-align: center;
-            margin-bottom: 50px;
-            animation: fadeInDown 2s ease-out;
+            margin-bottom: 60px;
+            animation: slideDown 1.2s ease-out;
         }
 
         .header h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 4.5rem;
-            margin-bottom: 30px;
-            text-shadow: 3px 3px 8px rgba(0,0,0,0.7);
-            color: #e74c3c;
+            font-size: 5.5rem;
+            font-weight: 800;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #ffffff, #fecaca, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            animation: glow 3s ease-in-out infinite alternate;
+            text-shadow: 0 6px 12px rgba(0,0,0,0.5);
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.8));
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        /* Отключаем анимацию свечения на мобильных */
+        @media (max-width: 768px) {
+            .header h1 {
+                animation: none;
+                filter: none;
+            }
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(220, 38, 38, 0.8)); }
+            to { filter: drop-shadow(0 0 30px rgba(239, 68, 68, 1)); }
         }
 
         .intro-text {
-            background: rgba(255,255,255,0.1);
-            padding: 40px;
-            border-radius: 25px;
-            margin-bottom: 40px;
-            border: 2px solid rgba(231, 76, 60, 0.4);
+            font-size: 2rem;
             line-height: 1.8;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
-            font-size: 1.4rem;
+            color: #ffffff;
+            text-align: center;
+            font-weight: 600;
+            text-shadow: 3px 3px 12px rgba(0,0,0,1);
+            background: rgba(0,0,0,0.6);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
+        /* Bento Box Layout */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 28px;
+            margin: 50px 0;
+        }
+
+        .bento-item {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            padding: 45px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
+            text-shadow: 3px 3px 12px rgba(0,0,0,1);
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4));
+        }
+
+        .bento-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .bento-item:hover::after {
+            left: 100%;
+        }
+
+        .bento-item:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.35);
+            box-shadow: 0 25px 50px rgba(31, 38, 135, 0.6);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .bento-item.selected {
+            background: rgba(239, 68, 68, 0.4);
+            border-color: rgba(239, 68, 68, 0.8);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(239, 68, 68, 0.5);
+        }
+
+        /* Color Palette Glassmorphism */
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 35px;
+            margin: 50px 0;
+        }
+
+        .color-option {
+            height: 200px;
+            border-radius: 24px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            position: relative;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .color-option::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.6), transparent);
+            border-radius: 24px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .color-option:hover::before {
+            opacity: 1;
+        }
+
+        .color-option:hover {
+            transform: translateY(-12px) scale(1.05);
+            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.4);
+        }
+
+        .color-option.selected {
+            border-color: rgba(255, 255, 255, 1);
+            transform: translateY(-12px) scale(1.05);
+            box-shadow: 0 0 60px rgba(255, 255, 255, 0.6);
+        }
+
+        .part4 { background: linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef); }
+        .part3 { background: linear-gradient(135deg, #ff6b6b, #ee5a52, #ff9a9e); }
+        .part2 { background: linear-gradient(135deg, #e74c3c, #c0392b, #e74c3c); }
+        .part1 { background: linear-gradient(135deg, #c0392b, #922b21, #8b0000); }
+        .matrix { background: linear-gradient(135deg, #8d6e63, #5d4037, #3e2723); }
+
+        /* 3D Buttons */
+        .neo-btn {
+            background: linear-gradient(145deg, #dc2626, #991b1b);
+            border: none;
+            color: white;
+            padding: 28px 56px;
+            border-radius: 20px;
+            font-size: 1.8rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 50px auto;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+            box-shadow: 0 8px 32px rgba(220, 38, 38, 0.4);
+        }
+
+        .neo-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .neo-btn:hover::before {
+            left: 100%;
+        }
+
+        .neo-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 45px rgba(220, 38, 38, 0.8);
+            background: linear-gradient(145deg, #ef4444, #dc2626);
+        }
+
+        .neo-btn:active {
+            transform: translateY(-2px);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
+            border-radius: 50px;
+            padding: 8px;
+            margin-bottom: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .progress-fill {
+            height: 20px;
+            background: linear-gradient(90deg, #dc2626, #ef4444, #f87171);
+            border-radius: 50px;
+            transition: width 1s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Question Styles */
+        .question-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+            text-shadow: 4px 4px 16px rgba(0,0,0,1);
+            background: rgba(0,0,0,0.7);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .question-subtitle {
+            font-size: 1.7rem;
+            margin-bottom: 50px;
+            text-align: center;
+            color: #ffffff;
+            font-weight: 600;
+            text-shadow: 3px 3px 12px rgba(0,0,0,1);
+            background: rgba(0,0,0,0.6);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .question-counter {
+            text-align: center;
+            font-size: 1.6rem;
+            margin-bottom: 40px;
+            font-weight: 700;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 3px 3px 12px rgba(0,0,0,1);
+            background: rgba(0,0,0,0.7);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        /* Results */
+        .result-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 40px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            text-shadow: 4px 4px 16px rgba(0,0,0,1);
+            background: rgba(0,0,0,0.7);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .result-description {
+            font-size: 1.8rem;
+            line-height: 1.9;
+            margin: 40px 0;
+            color: #ffffff;
+            text-align: center;
+            font-weight: 600;
+            text-shadow: 3px 3px 12px rgba(0,0,0,1);
+            background: rgba(0,0,0,0.6);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .recommendation-box {
+            background: rgba(239, 68, 68, 0.3);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            border: 2px solid rgba(239, 68, 68, 0.6);
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+            color: #ffffff;
+        }
+
+        /* Test Container */
         .test-container {
             display: none;
         }
 
         .test-container.active {
             display: block;
-            animation: slideInUp 1s ease-out;
-        }
-
-        .question-card {
-            background: rgba(255,255,255,0.12);
-            border-radius: 25px;
-            padding: 50px;
-            margin-bottom: 40px;
-            border: 2px solid rgba(231, 76, 60, 0.4);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-        }
-
-        .question-title {
-            font-size: 2.2rem;
-            margin-bottom: 35px;
-            font-weight: 600;
-            text-align: center;
-            text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
-            color: #ecf0f1;
-        }
-
-        .question-subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            text-align: center;
-            color: #bdc3c7;
-            font-style: italic;
-        }
-
-        .color-palette {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 25px;
-            margin: 40px 0;
-        }
-
-        .color-option {
-            height: 120px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            border: 3px solid transparent;
-            position: relative;
-        }
-
-        .color-option:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            border-color: #3498db;
-        }
-
-        .color-option.selected {
-            border-color: #3498db;
-            transform: translateY(-12px) scale(1.1);
-            box-shadow: 0 0 40px rgba(52, 152, 219, 0.8);
-            animation: selectedGlow 2s ease-in-out infinite;
-        }
-
-        .color-option.selected::after {
-            content: '🌟';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2.5rem;
-            animation: starTwinkle 1s ease-in-out infinite;
-        }
-
-        .part4 { 
-            background: linear-gradient(135deg, #ffb3ba, #ff8a95, #ff6b7a);
-            box-shadow: inset 0 0 20px rgba(255, 107, 122, 0.3);
-        }
-        .part3 { 
-            background: linear-gradient(135deg, #ff6b7a, #e74c3c, #dc3545);
-            box-shadow: inset 0 0 20px rgba(231, 76, 60, 0.3);
-        }
-        .part2 { 
-            background: linear-gradient(135deg, #e74c3c, #c0392b, #a93226);
-            box-shadow: inset 0 0 20px rgba(192, 57, 43, 0.3);
-        }
-        .part1 { 
-            background: linear-gradient(135deg, #c0392b, #a93226, #922b21);
-            box-shadow: inset 0 0 20px rgba(169, 50, 38, 0.3);
-        }
-        .matrix { 
-            background: linear-gradient(135deg, #8d6e63, #6d4c41, #5d4037, #3e2723);
-            box-shadow: inset 0 0 20px rgba(93, 64, 55, 0.3);
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            margin: 40px 0;
-        }
-
-        .option-btn {
-            background: rgba(255,255,255,0.1);
-            border: 2px solid rgba(255,255,255,0.3);
-            color: #ecf0f1;
-            padding: 25px 30px;
-            border-radius: 18px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            font-size: 1.2rem;
-            text-align: left;
-            position: relative;
-            font-family: 'Cinzel', serif;
-        }
-
-        .option-btn:hover {
-            background: rgba(231, 76, 60, 0.2);
-            transform: translateX(10px);
-            box-shadow: 0 15px 40px rgba(231, 76, 60, 0.3);
-            border-color: #e74c3c;
-        }
-
-        .option-btn.selected {
-            background: rgba(231, 76, 60, 0.4);
-            border-color: #e74c3c;
-            transform: scale(1.02);
-            box-shadow: 0 15px 40px rgba(231, 76, 60, 0.5);
-        }
-
-        .option-btn.selected::after {
-            content: '🔴';
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.5rem;
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-
-        .start-btn, .next-btn {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
-            border: none;
-            color: white;
-            padding: 30px 70px;
-            border-radius: 35px;
-            font-size: 1.6rem;
-            font-family: 'Cinzel', serif;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            display: block;
-            margin: 50px auto;
-            box-shadow: 0 15px 40px rgba(231, 76, 60, 0.4);
-        }
-
-        .start-btn:hover, .next-btn:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 25px 60px rgba(231, 76, 60, 0.6);
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 15px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 8px;
-            margin-bottom: 40px;
-            overflow: hidden;
-            box-shadow: inset 0 3px 6px rgba(0,0,0,0.3);
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #e74c3c, #c0392b, #e74c3c);
-            transition: width 1s ease;
-            border-radius: 8px;
+            animation: fadeInUp 0.8s ease-out;
         }
 
         .results {
             display: none;
-            text-align: center;
-            animation: fadeIn 2s ease-out;
+            animation: fadeInUp 1s ease-out;
         }
 
         .results.show {
             display: block;
         }
 
-        .result-card {
-            background: rgba(255,255,255,0.12);
-            border-radius: 30px;
-            padding: 60px;
-            margin: 40px 0;
-            border: 3px solid rgba(231, 76, 60, 0.5);
-            box-shadow: 0 25px 80px rgba(0,0,0,0.4);
-        }
-
-        .string-state {
-            font-size: 3rem;
-            margin-bottom: 30px;
-            font-weight: 600;
-            text-shadow: 3px 3px 8px rgba(0,0,0,0.7);
-        }
-
-        .state-description {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            margin: 30px 0;
-            padding: 30px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 20px;
-            border: 1px solid rgba(231, 76, 60, 0.3);
-        }
-
-        .book-recommendation {
-            background: rgba(231, 76, 60, 0.2);
-            padding: 30px;
-            border-radius: 20px;
-            margin: 30px 0;
-            border: 2px solid rgba(231, 76, 60, 0.4);
-            font-size: 1.2rem;
-        }
-
-        .question-counter {
-            text-align: center;
-            font-size: 1.6rem;
-            margin-bottom: 30px;
-            font-weight: 600;
-            color: #e74c3c;
-            text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
-        }
-
-        .restart-btn {
-            background: linear-gradient(45deg, #3498db, #2980b9);
-            border: none;
-            color: white;
-            padding: 20px 50px;
-            border-radius: 25px;
-            font-size: 1.3rem;
-            font-family: 'Cinzel', serif;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            margin: 30px auto;
-            display: block;
-            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.4);
-        }
-
-        .restart-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 20px 50px rgba(52, 152, 219, 0.6);
-        }
-
-        /* Анимации */
-        @keyframes fadeInDown {
+        /* Animations */
+        @keyframes slideDown {
             from { opacity: 0; transform: translateY(-50px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes slideInUp {
+        @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        /* State Colors */
+        .tense { color: #ffa726; text-shadow: 0 0 25px #ffa726; }
+        .slack { color: #42a5f5; text-shadow: 0 0 25px #42a5f5; }
+        .broken { color: #ef5350; text-shadow: 0 0 25px #ef5350; }
+        .normal { color: #66bb6a; text-shadow: 0 0 25px #66bb6a; }
 
-        @keyframes pulse {
-            0%, 100% { transform: translateY(-50%) scale(1); }
-            50% { transform: translateY(-50%) scale(1.2); }
-        }
-
-        @keyframes selectedGlow {
-            0%, 100% { box-shadow: 0 0 40px rgba(52, 152, 219, 0.8); }
-            50% { box-shadow: 0 0 60px rgba(52, 152, 219, 1); }
-        }
-
-        @keyframes starTwinkle {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.2); }
-        }
-
-        /* Состояния струн */
-        .tense { color: #f39c12; text-shadow: 0 0 20px #f39c12; }
-        .slack { color: #3498db; text-shadow: 0 0 20px #3498db; }
-        .broken { color: #e74c3c; text-shadow: 0 0 20px #e74c3c; }
-        .normal { color: #27ae60; text-shadow: 0 0 20px #27ae60; }
-
-        /* Адаптивность */
+        /* Mobile Optimization */
         @media (max-width: 768px) {
-            .header h1 { font-size: 3.5rem; }
-            .intro-text { font-size: 1.2rem; padding: 30px; }
-            .question-title { font-size: 1.8rem; }
-            .option-btn { font-size: 1.1rem; padding: 20px; }
-            .container { padding: 20px; }
-            .question-card { padding: 30px; }
-            .result-card { padding: 40px; }
+            body { 
+                font-size: 18px;
+                /* Отключаем все анимации для производительности */
+                animation: none !important;
+            }
+            
+            * {
+                animation-duration: 0s !important;
+                animation-delay: 0s !important;
+                transition-duration: 0.1s !important;
+            }
+            
+            .container { padding: 20px 15px; }
+            .header h1 { 
+                font-size: 2.8rem; 
+                line-height: 1.1;
+                word-break: break-word;
+                hyphens: auto;
+            }
+            .intro-text { 
+                font-size: 1.4rem; 
+                padding: 20px; 
+                line-height: 1.5;
+            }
+            .question-title { 
+                font-size: 2rem; 
+                padding: 15px;
+                line-height: 1.2;
+                word-break: break-word;
+            }
+            .question-subtitle { 
+                font-size: 1.2rem; 
+                padding: 15px; 
+                line-height: 1.4;
+            }
+            .question-counter { 
+                font-size: 1.1rem; 
+                padding: 10px; 
+                letter-spacing: 1px;
+            }
+            .glass-card { padding: 25px; }
             .color-palette { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .color-option { height: 120px; }
+            .bento-grid { grid-template-columns: 1fr; gap: 15px; }
+            .bento-item { 
+                padding: 20px; 
+                font-size: 1.1rem;
+                line-height: 1.4;
+            }
+            .neo-btn { 
+                padding: 18px 36px; 
+                font-size: 1.3rem;
+                margin: 30px auto;
+            }
+            .result-title { 
+                font-size: 2.2rem; 
+                padding: 20px;
+                line-height: 1.2;
+                word-break: break-word;
+            }
+            .result-description { 
+                font-size: 1.3rem; 
+                padding: 20px; 
+                line-height: 1.5;
+            }
+            .recommendation-box { 
+                padding: 25px; 
+                font-size: 1.2rem;
+                line-height: 1.5;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body { font-size: 16px; }
+            .header h1 { 
+                font-size: 2.2rem;
+                line-height: 1.1;
+            }
+            .intro-text { 
+                font-size: 1.2rem; 
+                padding: 15px;
+                line-height: 1.4;
+            }
+            .question-title { 
+                font-size: 1.6rem; 
+                padding: 12px;
+                line-height: 1.2;
+            }
+            .question-subtitle { 
+                font-size: 1rem; 
+                padding: 12px;
+                line-height: 1.3;
+            }
+            .question-counter { 
+                font-size: 0.9rem; 
+                padding: 8px;
+                letter-spacing: 0.5px;
+            }
+            .glass-card { padding: 20px; }
+            .bento-item { 
+                padding: 15px; 
+                font-size: 1rem;
+                line-height: 1.3;
+            }
+            .neo-btn { 
+                padding: 15px 30px; 
+                font-size: 1.1rem;
+                margin: 25px auto;
+            }
+            .result-title { 
+                font-size: 1.8rem; 
+                padding: 15px;
+                line-height: 1.1;
+            }
+            .result-description { 
+                font-size: 1.1rem; 
+                padding: 15px;
+                line-height: 1.4;
+            }
+            .recommendation-box { 
+                padding: 20px; 
+                font-size: 1rem;
+                line-height: 1.4;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="floating-particles" id="particles"></div>
-    
+    <!-- Background Orbs -->
+    <div class="bg-orbs">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+
     <div class="container">
         <div class="header" id="header">
-            <h1>🔴 ДИАГНОСТИКА СОСТОЯНИЯ КРАСНОЙ СТРУНЫ 🔴</h1>
-            <div class="intro-text">
-                <p><strong>🌸 Женщины всегда всё сначала обдумывают, чувствуют, а только затем проживают. А мужчина, наоборот, сначала набегается, а потом останавливается и начинает анализировать. Таким образом нашим поведением управляют цветовые струны. 🌸</strong></p>
-                <br>
-                <p>🌿 Струны могут находиться в разном состоянии – у кого-то они натянуты, у кого-то порваны, у кого-то длинные, у кого-то короткие. Если все струны в человеке звучат идеально, то человека можно назвать здоровым. 🌿</p>
-                <br>
-                <p><strong>🔥 Определите текущее состояние своей красной струны здоровья через уникальную диагностику на основе науки о времени! 🔥</strong></p>
+            <div class="glass-card">
+                <h1>Диагностика Красной Струны</h1>
+                <div class="intro-text">
+                    <p><strong>Определите текущее состояние своей красной струны здоровья через уникальную диагностику на основе науки о времени.</strong></p>
+                </div>
+                <button class="neo-btn" id="startBtn">Начать диагностику</button>
             </div>
-            <button class="start-btn" id="startBtn">🔴 СТАРТ 🔴</button>
         </div>
 
         <div class="test-container" id="testContainer">
-            <div class="progress-bar">
+            <div class="progress-container">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
             <div class="question-counter" id="questionCounter"></div>
@@ -409,13 +632,13 @@
         </div>
 
         <div class="results" id="results">
-            <div class="result-card">
-                <h2>🎯 Результат Диагностики 🎯</h2>
-                <div class="string-state" id="stringState"></div>
-                <div class="state-description" id="stateDescription"></div>
-                <div class="book-recommendation" id="bookRecommendation"></div>
-                <button class="restart-btn" id="showAnswersBtn" onclick="showAnswers()">📝 Просмотреть ответы</button>
-                <button class="restart-btn" id="restartBtn">🔄 Пройти еще раз</button>
+            <div class="glass-card">
+                <h2 class="result-title">Результат диагностики</h2>
+                <div class="result-title" id="stringState"></div>
+                <div class="result-description" id="stateDescription"></div>
+                <div class="recommendation-box" id="bookRecommendation"></div>
+                <button class="neo-btn" id="showAnswersBtn">Просмотреть ответы</button>
+                <button class="neo-btn" id="restartBtn">Пройти еще раз</button>
             </div>
         </div>
     </div>
@@ -427,7 +650,7 @@
         var questions = [
             {
                 id: 'color',
-                title: '🌈 Выберите цвет, который вас притягивает:',
+                title: 'Выберите цвет, который вас притягивает',
                 subtitle: 'Цветовая диагностика красной струны',
                 type: 'color',
                 colors: [
@@ -439,155 +662,142 @@
                 ]
             },
             {
-                id: 'weekday',
-                title: '☀️ В какой день недели вы родились?',
-                subtitle: 'Воскресенье - день красной струны',
-                type: 'options',
-                options: [
-                    { text: '🌞 Воскресенье', value: 'normal' },
-                    { text: '🌙 Понедельник', value: 'other' },
-                    { text: '🔥 Вторник', value: 'other' },
-                    { text: '🌿 Среда', value: 'other' },
-                    { text: '💙 Четверг', value: 'other' },
-                    { text: '💜 Пятница', value: 'other' },
-                    { text: '🎉 Суббота', value: 'other' },
-                    { text: '🤷‍♀️ Не знаю', value: 'other' }
-                ]
-            },
-            {
                 id: 'movement',
-                title: '🏃‍♂️ Как вы оцениваете свою физическую активность?',
+                title: 'Как вы оцениваете свою физическую активность?',
                 subtitle: 'Красная струна отвечает за движения',
                 type: 'options',
                 options: [
-                    { text: '🎯 Мои движения четкие, целенаправленные, но иногда чувствую ограничения', value: 'tense' },
-                    { text: '💨 Двигаюсь много, но хаотично, без системы и порядка', value: 'slack' },
-                    { text: '🛌 Движений очень мало, часто чувствую слабость и усталость', value: 'broken' },
-                    { text: '✨ Мои движения гармоничны, чувствую радость от активности', value: 'normal' }
+                    { text: 'Мои движения четкие, целенаправленные, но иногда чувствую ограничения', value: 'tense' },
+                    { text: 'Двигаюсь много, но хаотично, без системы и порядка', value: 'slack' },
+                    { text: 'Движений очень мало, часто чувствую слабость и усталость', value: 'broken' },
+                    { text: 'Мои движения гармоничны, чувствую радость от активности', value: 'normal' }
                 ]
             },
             {
                 id: 'health',
-                title: '💪 Как вы характеризуете свое здоровье?',
+                title: 'Как вы характеризуете свое здоровье?',
                 subtitle: 'Красная струна - цвет здоровья',
                 type: 'options',
                 options: [
-                    { text: '⚡ Здоровье хорошее, но чувствую некоторую скованность', value: 'tense' },
-                    { text: '🌪️ Энергии много, но она нестабильна, скачет', value: 'slack' },
-                    { text: '🚨 Часто болею, чувствую упадок сил', value: 'broken' },
-                    { text: '🌟 Доволен здоровьем, активно занимаюсь телом', value: 'normal' }
+                    { text: 'Здоровье хорошее, но чувствую некоторую скованность', value: 'tense' },
+                    { text: 'Энергии много, но она нестабильна, скачет', value: 'slack' },
+                    { text: 'Часто болею, чувствую упадок сил', value: 'broken' },
+                    { text: 'Доволен здоровьем, активно занимаюсь телом', value: 'normal' }
                 ]
             },
             {
                 id: 'names',
-                title: '👥 Сколько людей с именами Елена и Дмитрий в вашем окружении?',
+                title: 'Сколько людей с именами Елена и Дмитрий в вашем окружении?',
                 subtitle: 'Имена Елена-Дмитрий звучат на красной струне',
                 type: 'options',
                 options: [
-                    { text: '🌸 Много Елен вокруг меня', value: 'tense' },
-                    { text: '🔧 Много Дмитриев в окружении', value: 'slack' },
-                    { text: '⚖️ И Елены, и Дмитрии примерно поровну', value: 'normal' },
-                    { text: '🤷‍♀️ Мало таких имен или не обращаю внимания', value: 'normal' }
+                    { text: 'Много Елен вокруг меня', value: 'tense' },
+                    { text: 'Много Дмитриев в окружении', value: 'slack' },
+                    { text: 'И Елены, и Дмитрии примерно поровну', value: 'normal' },
+                    { text: 'Мало таких имен или не обращаю внимания', value: 'few' }
                 ]
             },
             {
                 id: 'redcolor',
-                title: '🔴 Какое у вас отношение к красному цвету?',
+                title: 'Какое у вас отношение к красному цвету?',
                 subtitle: 'Красный - цвет здоровья и красной струны',
                 type: 'options',
                 options: [
-                    { text: '❤️ Нравится, но использую дозированно', value: 'tense' },
-                    { text: '🌶️ Обожаю красный, часто его выбираю', value: 'slack' },
-                    { text: '🚫 Избегаю красного цвета', value: 'broken' },
-                    { text: '🎨 Нравится красный, использую гармонично', value: 'normal' }
+                    { text: 'Нравится, но использую дозированно', value: 'tense' },
+                    { text: 'Обожаю красный, часто его выбираю', value: 'slack' },
+                    { text: 'Избегаю красного цвета', value: 'broken' },
+                    { text: 'Нравится красный, использую гармонично', value: 'normal' }
                 ]
             },
             {
                 id: 'providing',
-                title: '💰 Как вы обеспечиваете себя необходимым для жизни?',
+                title: 'Как вы обеспечиваете себя необходимым для жизни?',
                 subtitle: 'Красная струна связана с обеспечением жизни',
                 type: 'options',
                 options: [
-                    { text: '🎯 Обеспечиваю стабильно, но с большими усилиями', value: 'tense' },
-                    { text: '🔄 То густо, то пусто - очень нестабильно', value: 'slack' },
-                    { text: '📉 С трудом обеспечиваю базовые потребности', value: 'broken' },
-                    { text: '✅ Легко обеспечиваю себя всем необходимым', value: 'normal' }
+                    { text: 'Обеспечиваю стабильно, но с большими усилиями', value: 'tense' },
+                    { text: 'То густо, то пусто - очень нестабильно', value: 'slack' },
+                    { text: 'С трудом обеспечиваю базовые потребности', value: 'broken' },
+                    { text: 'Легко обеспечиваю себя всем необходимым', value: 'normal' }
                 ]
             },
             {
                 id: 'support',
-                title: '🌳 На кого вы больше опираетесь в жизни?',
+                title: 'На кого вы больше опираетесь в жизни?',
                 subtitle: 'Выбор опор влияет на состояние струны',
                 type: 'options',
                 options: [
-                    { text: '🌸 Только на маму', value: 'tense' },
-                    { text: '🌰 Только на папу', value: 'slack' },
-                    { text: '🌲 На маму и папу (на обоих)', value: 'normal' },
-                    { text: '🌱 Только на себя', value: 'broken' }
+                    { text: 'Только на маму', value: 'tense' },
+                    { text: 'Только на папу', value: 'slack' },
+                    { text: 'На маму и папу (на обоих)', value: 'normal' },
+                    { text: 'Только на себя', value: 'broken' }
                 ]
             },
             {
                 id: 'month',
-                title: '🍂 В каком месяце вы родились?',
+                title: 'В каком месяце вы родились?',
                 subtitle: 'Ноябрь - месяц красной струны',
                 type: 'options',
                 options: [
-                    { text: '🍁 Ноябрь', value: 'normal' },
-                    { text: '🌸 Весенние месяцы (март, апрель, май)', value: 'tense' },
-                    { text: '☀️ Летние месяцы (июнь, июль, август)', value: 'slack' },
-                    { text: '🍂 Другие осенне-зимние месяцы', value: 'broken' }
+                    { text: 'Ноябрь', value: 'normal' },
+                    { text: 'Весенние месяцы (март, апрель, май)', value: 'tense' },
+                    { text: 'Летние месяцы (июнь, июль, август)', value: 'slack' },
+                    { text: 'Другие осенне-зимние месяцы', value: 'broken' }
                 ]
             },
             {
                 id: 'myname',
-                title: '😊 Как вас зовут?',
+                title: 'Как вас зовут?',
                 subtitle: 'Ваше собственное имя влияет на красную струну',
                 type: 'options',
                 options: [
-                    { text: '✨ Меня зовут Елена', value: 'elena' },
-                    { text: '👨 Меня зовут Дмитрий', value: 'dmitry' },
-                    { text: '👤 Другое имя', value: 'other' },
-                    { text: '🤷‍♀️ Предпочитаю не говорить', value: 'private' }
+                    { text: 'Меня зовут Елена', value: 'elena' },
+                    { text: 'Меня зовут Дмитрий', value: 'dmitry' },
+                    { text: 'Другое имя', value: 'other' },
+                    { text: 'Предпочитаю не говорить', value: 'private' }
                 ]
             },
+            {
+                id: 'weekday',
+                title: 'В какой день недели вы родились?',
+                subtitle: 'Воскресенье - день красной струны',
+                type: 'options',
+                options: [
+                    { text: 'Воскресенье', value: 'normal' },
+                    { text: 'Понедельник', value: 'monday' },
+                    { text: 'Вторник', value: 'tuesday' },
+                    { text: 'Среда', value: 'wednesday' },
+                    { text: 'Четверг', value: 'thursday' },
+                    { text: 'Пятница', value: 'friday' },
+                    { text: 'Суббота', value: 'saturday' },
+                    { text: 'Не знаю', value: 'unknown' }
+                ]
+            }
         ];
 
         var stringStates = {
             tense: {
-                name: '🎯 НАТЯНУТАЯ СТРУНА',
+                name: 'НАТЯНУТАЯ СТРУНА',
                 description: 'Ваша красная струна натянута. Проявляется тем, что у вас начинаются потери и резкое сокращение движений. Вы чувствуете скованность, ограничения, но при этом сохраняете стабильность.'
             },
             slack: {
-                name: '🌊 ПРОВИСШАЯ СТРУНА', 
+                name: 'ПРОВИСШАЯ СТРУНА', 
                 description: 'Ваша красная струна провисла. Эти струны слишком ослаблены. Если вы много и беспорядочно двигаетесь – провисла красная струна. Энергия есть, но она неуправляема.'
             },
             broken: {
-                name: '💔 ПОРВАННАЯ СТРУНА',
+                name: 'ПОРВАННАЯ СТРУНА',
                 description: 'Ваша красная струна порвана. Это самая крайняя степень деформации. Если у человека рвётся красная струна, он начинает болеть. Вы теряете опору и выпадаете из знаковой системы этого мира.'
             },
             normal: {
-                name: '✅ СТРУНА В ПОРЯДКЕ',
+                name: 'СТРУНА В ПОРЯДКЕ',
                 description: 'Ваша красная струна в порядке! Вы чувствуете гармонию в движениях, здоровье в норме, энергия течет свободно. У вас есть баланс между активностью и покоем. Красный цвет дарит вам состояние радости и наполненности жизни.'
             }
         };
 
         function init() {
-            createParticles();
             document.getElementById('startBtn').addEventListener('click', startTest);
             document.getElementById('restartBtn').addEventListener('click', restartTest);
-        }
-
-        function createParticles() {
-            var particles = document.getElementById('particles');
-            particles.innerHTML = '';
-            for (var i = 0; i < 50; i++) {
-                var particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                particles.appendChild(particle);
-            }
+            document.getElementById('showAnswersBtn').addEventListener('click', showAnswers);
         }
 
         function startTest() {
@@ -607,9 +817,9 @@
             var questionCounter = document.getElementById('questionCounter');
             
             progressFill.style.width = ((currentQuestion + 1) / questions.length * 100) + '%';
-            questionCounter.innerHTML = '🌟 Вопрос ' + (currentQuestion + 1) + ' из ' + questions.length + ' 🌟';
+            questionCounter.innerHTML = 'Вопрос ' + (currentQuestion + 1) + ' из ' + questions.length;
             
-            var html = '<div class="question-card">';
+            var html = '<div class="glass-card">';
             html += '<div class="question-title">' + question.title + '</div>';
             html += '<div class="question-subtitle">' + question.subtitle + '</div>';
             
@@ -617,33 +827,57 @@
                 html += '<div class="color-palette">';
                 for (var i = 0; i < question.colors.length; i++) {
                     var color = question.colors[i];
-                    html += '<div class="color-option ' + color.class + '" onclick="selectColor(\'' + color.value + '\')" data-value="' + color.value + '"></div>';
+                    html += '<div class="color-option ' + color.class + '" data-value="' + color.value + '"></div>';
                 }
                 html += '</div>';
             } else {
-                html += '<div class="options-grid">';
+                html += '<div class="bento-grid">';
                 for (var i = 0; i < question.options.length; i++) {
                     var option = question.options[i];
-                    html += '<button class="option-btn" onclick="selectOption(\'' + option.value + '\')" data-value="' + option.value + '">';
+                    html += '<div class="bento-item" data-value="' + option.value + '">';
                     html += option.text;
-                    html += '</button>';
+                    html += '</div>';
                 }
                 html += '</div>';
             }
             
-            html += '<button class="next-btn" onclick="nextQuestion()" id="nextBtn" style="display: none;">🌸 Следующий вопрос 🌸</button>';
+            html += '<button class="neo-btn" id="nextBtn" style="display: none;">Следующий вопрос</button>';
             html += '</div>';
             
             questionContent.innerHTML = html;
+            
+            // Добавляем обработчики событий после создания элементов
+            if (question.type === 'color') {
+                document.querySelectorAll('.color-option').forEach(function(el) {
+                    el.addEventListener('click', function() {
+                        selectColor(this.getAttribute('data-value'));
+                    });
+                });
+            } else {
+                document.querySelectorAll('.bento-item').forEach(function(el) {
+                    el.addEventListener('click', function() {
+                        selectOption(this.getAttribute('data-value'));
+                    });
+                });
+            }
+            
+            document.getElementById('nextBtn').addEventListener('click', nextQuestion);
         }
 
         function selectColor(value) {
             answers[questions[currentQuestion].id] = value;
             
-            document.querySelectorAll('.color-option').forEach(function(el) {
-                el.classList.remove('selected');
-            });
-            document.querySelector('[data-value="' + value + '"]').classList.add('selected');
+            // Убираем выделение со всех цветов
+            var allColors = document.querySelectorAll('.color-option');
+            for (var i = 0; i < allColors.length; i++) {
+                allColors[i].classList.remove('selected');
+            }
+            
+            // Находим и выделяем выбранный цвет
+            var selectedColors = document.querySelectorAll('.color-option[data-value="' + value + '"]');
+            for (var i = 0; i < selectedColors.length; i++) {
+                selectedColors[i].classList.add('selected');
+            }
             
             document.getElementById('nextBtn').style.display = 'block';
         }
@@ -651,13 +885,17 @@
         function selectOption(value) {
             answers[questions[currentQuestion].id] = value;
             
-            var buttons = document.querySelectorAll('.option-btn');
-            for (var i = 0; i < buttons.length; i++) {
-                buttons[i].classList.remove('selected');
+            // Убираем выделение со всех элементов
+            var allItems = document.querySelectorAll('.bento-item');
+            for (var i = 0; i < allItems.length; i++) {
+                allItems[i].classList.remove('selected');
             }
             
-            var selectedBtn = document.querySelector('[data-value="' + value + '"]');
-            selectedBtn.classList.add('selected');
+            // Находим и выделяем выбранный элемент
+            var selectedItems = document.querySelectorAll('.bento-item[data-value="' + value + '"]');
+            for (var i = 0; i < selectedItems.length; i++) {
+                selectedItems[i].classList.add('selected');
+            }
             
             document.getElementById('nextBtn').style.display = 'block';
         }
@@ -679,16 +917,17 @@
             var support = answers.support;
             var month = answers.month;
             var weekday = answers.weekday;
+            var myname = answers.myname;
             
-            // Подсчет совпадений с красной струной (доминирование)
+            // Подсчет совпадений с красной струной (ведущая)
             var redStringMatches = 0;
             var totalRedChecks = 5;
             
-            if (month === 'normal') redStringMatches++; // ноябрь
-            if (weekday === 'normal') redStringMatches++; // воскресенье
-            if (health === 'normal') redStringMatches++; // крепкое здоровье
-            if (names === 'tense' || names === 'slack') redStringMatches++; // имена Елена-Дмитрий
-            if (support === 'normal') redStringMatches++; // оба родителя
+            if (month === 'normal') redStringMatches++;
+            if (weekday === 'normal') redStringMatches++;
+            if (health === 'normal') redStringMatches++;
+            if (myname === 'elena' || myname === 'dmitry') redStringMatches++;
+            if (support === 'normal') redStringMatches++;
             
             // Анализ по ключевым признакам состояния струны
             var tenseSigns = 0;
@@ -696,32 +935,28 @@
             var brokenSigns = 0;
             var normalSigns = 0;
             
-            // Движения - главный показатель
-            if (movement === 'tense') tenseSigns += 2; // ограниченные движения
-            if (movement === 'slack') slackSigns += 2; // хаотичные движения  
-            if (movement === 'broken') brokenSigns += 2; // мало движений
-            if (movement === 'normal') normalSigns += 2; // гармоничные движения
+            if (movement === 'tense') tenseSigns += 2;
+            if (movement === 'slack') slackSigns += 2;
+            if (movement === 'broken') brokenSigns += 2;
+            if (movement === 'normal') normalSigns += 2;
             
-            // Здоровье - важный показатель
             if (health === 'tense') tenseSigns++;
             if (health === 'slack') slackSigns++;
-            if (health === 'broken') brokenSigns += 2; // болезни = явный признак порванной
+            if (health === 'broken') brokenSigns += 2;
             if (health === 'normal') normalSigns++;
             
-            // Имена - признак по авторскому материалу
-            if (names === 'tense') tenseSigns++; // много Елен = натянутая
-            if (names === 'slack') slackSigns++; // много Дмитриев = провисшая
+            if (names === 'tense') tenseSigns++;
+            if (names === 'slack') slackSigns++;
             if (names === 'normal') normalSigns++;
+            if (names === 'few') normalSigns++; // "мало имен" = нормально
             
-            // Опора
-            if (support === 'tense') tenseSigns++; // только мама
-            if (support === 'slack') slackSigns++; // только папа  
-            if (support === 'normal') normalSigns++; // оба родителя
-            if (support === 'broken') brokenSigns++; // только себя
+            if (support === 'tense') tenseSigns++;
+            if (support === 'slack') slackSigns++;
+            if (support === 'normal') normalSigns++;
+            if (support === 'broken') brokenSigns++;
             
-            // Временные признаки (нейтральные если не совпадают)
-            if (month === 'normal') normalSigns++; // ноябрь
-            if (weekday === 'normal') normalSigns++; // воскресенье
+            if (month === 'normal') normalSigns++;
+            if (weekday === 'normal') normalSigns++;
             
             var maxSigns = Math.max(tenseSigns, slackSigns, brokenSigns, normalSigns);
             
@@ -735,7 +970,6 @@
                 return { state: 'contradiction', redMatches: redStringMatches, totalChecks: totalRedChecks };
             }
             
-            // Определение состояния струны
             var state = 'normal';
             if (normalSigns === maxSigns) state = 'normal';
             else if (brokenSigns === maxSigns) state = 'broken';
@@ -755,12 +989,12 @@
             var totalChecks = analysis.totalChecks;
             
             if (stateResult === 'contradiction') {
-                document.getElementById('stringState').innerHTML = '⚠️ ПРОТИВОРЕЧИВЫЕ ОТВЕТЫ';
-                document.getElementById('stringState').className = 'string-state';
+                document.getElementById('stringState').innerHTML = 'ПРОТИВОРЕЧИВЫЕ ОТВЕТЫ';
+                document.getElementById('stringState').className = 'result-title';
                 document.getElementById('stateDescription').innerHTML = 
                     'Ваши ответы расходятся между собой. Для получения точного результата просим быть честным в ответах и пройти тест еще раз.';
                 document.getElementById('bookRecommendation').innerHTML = 
-                    '<h3 style="color: #e74c3c;">🔄 Рекомендация:</h3>' +
+                    '<h3>Рекомендация</h3>' +
                     '<p>Пройдите тест повторно, отвечая максимально честно на каждый вопрос.</p>';
                 return;
             }
@@ -794,27 +1028,27 @@
             // Проверка на ведущую струну
             var dominantInfo = '';
             if (redMatches >= 1) {
-                dominantInfo = '<div style="background: rgba(231,76,60,0.3); padding: 20px; border-radius: 15px; border: 2px solid rgba(231,76,60,0.5); margin: 20px 0;">' +
-                    '<h3 style="color: #e74c3c;">🌟 КРАСНАЯ СТРУНА ВЕДУЩАЯ!</h3>' +
-                    '<p style="font-size: 1.2rem;">Найдено ' + redMatches + ' совпадений из ' + totalChecks + ' возможных</p>' +
+                dominantInfo = '<div style="background: rgba(220,38,38,0.3); backdrop-filter: blur(20px); padding: 30px; border-radius: 16px; border: 2px solid rgba(220,38,38,0.6); margin: 30px 0;">' +
+                    '<h3 style="color: #ffffff; margin-bottom: 15px; text-transform: uppercase; font-size: 1.6rem; font-weight: 700; text-shadow: 2px 2px 6px rgba(0,0,0,0.7);">Красная струна ведущая</h3>' +
+                    '<p style="font-size: 1.4rem; color: #ffffff; font-weight: 600; text-shadow: 2px 2px 6px rgba(0,0,0,0.5);">Найдено ' + redMatches + ' совпадений из ' + totalChecks + ' возможных</p>' +
                     '</div>';
             }
             
             document.getElementById('stringState').innerHTML = resultState.name;
-            document.getElementById('stringState').className = 'string-state ' + stateResult;
+            document.getElementById('stringState').className = 'result-title ' + stateResult;
             document.getElementById('stateDescription').innerHTML = resultState.description;
             document.getElementById('bookRecommendation').innerHTML = 
-                '<h3 style="color: #3498db;">📚 Рекомендуемая книга:</h3>' +
-                '<h4 style="color: #ecf0f1; font-size: 1.4rem;">🌿 ' + bookTitle + ' 🌿</h4>' +
+                '<h3 style="text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; font-size: 1.8rem; color: #ffffff; font-weight: 700; text-shadow: 2px 2px 6px rgba(0,0,0,0.7);">Рекомендуемая книга</h3>' +
+                '<h4 style="font-size: 2rem; margin: 20px 0; color: #ffffff; font-weight: 700; text-shadow: 2px 2px 8px rgba(0,0,0,0.8); background: rgba(239,68,68,0.4); padding: 20px; border-radius: 12px; border: 1px solid rgba(239,68,68,0.6);">' + bookTitle + '</h4>' +
                 dominantInfo +
-                '<br><div style="background: rgba(52,152,219,0.2); padding: 20px; border-radius: 15px; border: 1px solid rgba(52,152,219,0.3);">' +
-                '<p style="font-size: 1.1rem; font-style: italic;">💡 Для более точного определения состояния струны рекомендую обратиться к Ритмологу</p>' +
+                '<div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); padding: 30px; border-radius: 16px; border: 2px solid rgba(255,255,255,0.25); margin-top: 30px;">' +
+                '<p style="font-size: 1.4rem; font-style: italic; color: #ffffff; font-weight: 600; text-shadow: 2px 2px 6px rgba(0,0,0,0.5);">Для более точного определения состояния струны рекомендую обратиться к Ритмологу</p>' +
                 '</div>';
         }
 
         function showAnswers() {
-            var answersHtml = '<div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 20px; margin: 20px 0; border: 2px solid rgba(52,152,219,0.3);">';
-            answersHtml += '<h3 style="color: #3498db; margin-bottom: 20px;">📝 Ваши ответы:</h3>';
+            var answersHtml = '<div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(20px); padding: 40px; border-radius: 20px; margin: 40px 0; border: 2px solid rgba(255,255,255,0.25);">';
+            answersHtml += '<h3 style="margin-bottom: 30px; text-transform: uppercase; font-size: 1.8rem; color: #ffffff; font-weight: 700; text-shadow: 2px 2px 6px rgba(0,0,0,0.7);">Ваши ответы</h3>';
             
             // Цвет
             var colorNames = {
@@ -824,25 +1058,25 @@
                 'part1': 'Темно-красный (Часть 1)',
                 'matrix': 'Коричневый (Матрица)'
             };
-            answersHtml += '<p><strong>🎨 Выбранный цвет:</strong> ' + (colorNames[answers.color] || 'Не выбран') + '</p>';
+            answersHtml += '<p style="margin: 20px 0; font-size: 1.4rem; color: #ffffff; font-weight: 600; text-shadow: 2px 2px 6px rgba(0,0,0,0.5);"><strong>Выбранный цвет:</strong> ' + (colorNames[answers.color] || 'Не выбран') + '</p>';
             
             // Остальные ответы
             var questionTexts = {
-                'movement': '🏃‍♂️ Физическая активность',
-                'health': '💪 Здоровье', 
-                'names': '👥 Имена в окружении',
-                'redcolor': '🔴 Отношение к красному',
-                'providing': '💰 Обеспечение жизни',
-                'support': '🌳 Опора в жизни',
-                'month': '🍂 Месяц рождения',
-                'myname': '😊 Ваше имя',
-                'weekday': '☀️ День недели рождения'
+                'movement': 'Физическая активность',
+                'health': 'Здоровье', 
+                'names': 'Имена в окружении',
+                'redcolor': 'Отношение к красному',
+                'providing': 'Обеспечение жизни',
+                'support': 'Опора в жизни',
+                'month': 'Месяц рождения',
+                'myname': 'Ваше имя',
+                'weekday': 'День недели рождения'
             };
             
             for (var key in answers) {
                 if (key !== 'color' && questionTexts[key]) {
                     var selectedOption = getSelectedOptionText(key, answers[key]);
-                    answersHtml += '<p><strong>' + questionTexts[key] + ':</strong> ' + selectedOption + '</p>';
+                    answersHtml += '<p style="margin: 20px 0; font-size: 1.4rem; color: #ffffff; font-weight: 600; text-shadow: 2px 2px 6px rgba(0,0,0,0.5);"><strong>' + questionTexts[key] + ':</strong> ' + selectedOption + '</p>';
                 }
             }
             
@@ -865,7 +1099,6 @@
         }
 
         function restartTest() {
-            // Радикальная перезагрузка
             location.reload();
         }
 
