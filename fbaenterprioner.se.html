@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FBA Enterprioner Aktiebolag - Construction Company</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #ffcc00, #ff9900);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #1e3c72;
+            font-size: 18px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #ffcc00;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-btn:hover {
+            color: #ffcc00;
+        }
+
+        /* Language Toggle */
+        .language-toggle {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            background: #ffcc00;
+            color: #1e3c72;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 12px;
+        }
+
+        .lang-btn:hover {
+            background: #e6b800;
+            transform: scale(1.05);
+        }
+
+        .lang-btn.active {
+            background: #1e3c72;
+            color: #ffcc00;
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0 80px;
+            min-height: 100vh;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #1e3c72;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* About Section */
+        #about {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        #about .section-title {
+            color: white;
+        }
+
+        .company-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 50px;
+        }
+
+        .company-details, .services {
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .company-details h3, .services h3 {
+            color: #ffcc00;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .services ul {
+            list-style: none;
+        }
+
+        .services li {
+            margin: 8px 0;
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            border-left: 4px solid #ffcc00;
+        }
+
+        .services h4 {
+            color: #ffcc00;
+            margin: 25px 0 15px 0;
+            font-size: 1.2rem;
+            border-bottom: 2px solid rgba(255,204,0,0.3);
+            padding-bottom: 5px;
+        }
+
+        .services h4:first-of-type {
+            margin-top: 20px;
+        }
+
+        /* Portfolio Section */
+        #portfolio {
+            background: white;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .project-image {
+            height: 200px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .project-content {
+            padding: 25px;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .project-link {
+            display: inline-block;
+            background: #ffcc00;
+            color: #1e3c72;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .project-link:hover {
+            background: #e6b800;
+        }
+
+        /* Concrete Supply Section */
+        #concrete-supply {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        #concrete-supply .section-title {
+            color: white;
+        }
+
+        .supply-info {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .betoneks-link {
+            display: inline-block;
+            background: white;
+            color: #f5576c;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: transform 0.3s;
+        }
+
+        .betoneks-link:hover {
+            transform: scale(1.05);
+        }
+
+        /* Contact Section */
+        #contact {
+            background: #1e3c72;
+            color: white;
+        }
+
+        #contact .section-title {
+            color: white;
+        }
+
+        .contact-info {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-item {
+            margin: 20px 0;
+            font-size: 1.1rem;
+        }
+
+        .contact-item strong {
+            color: #ffcc00;
+        }
+
+        .contact-link {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+
+        .contact-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Hidden language versions */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #1e3c72;
+                flex-direction: column;
+                gap: 0;
+                padding: 20px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            }
+
+            .nav-links.mobile-active {
+                display: flex;
+            }
+
+            .nav-links li {
+                padding: 10px 0;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-links a {
+                font-size: 16px;
+                display: block;
+                padding: 5px 0;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .logo-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+
+            .company-info {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 80px 0 60px;
+            }
+
+            .language-toggle {
+                top: 70px;
+                right: 10px;
+                gap: 5px;
+            }
+
+            .lang-btn {
+                padding: 6px 10px;
+                font-size: 10px;
+            }
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
+        <button class="lang-btn" onclick="switchLanguage('sv')">SV</button>
+        <button class="lang-btn" onclick="switchLanguage('fi')">FI</button>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">FBA</div>
+                <span>FBA Enterprioner AB</span>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about" onclick="closeMobileMenu()"><span class="nav-about">About Company</span></a></li>
+                <li><a href="#portfolio" onclick="closeMobileMenu()"><span class="nav-portfolio">Portfolio</span></a></li>
+                <li><a href="#concrete-supply" onclick="closeMobileMenu()"><span class="nav-concrete">Concrete Supply</span></a></li>
+                <li><a href="#contact" onclick="closeMobileMenu()"><span class="nav-contact">Contact</span></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title about-title">About Company</h2>
+            <div class="company-info">
+                <div class="company-details">
+                    <h3 class="company-info-title">Company Information</h3>
+                    <div class="company-description">
+                        <p><strong>FBA Enterprioner Aktiebolag</strong> is a Sweden construction company, specializing in comprehensive concrete works and construction services. With years of experience and a commitment to quality, we deliver exceptional results for projects of all sizes.</p>
+                        <br>
+                        <p><strong>Organization Number:</strong> 559323-2449</p>
+                        <p><strong>Address:</strong> Lyftkransvägen, 142 50 Skogås</p>
+                        <p><strong>Director/Owner:</strong> Andrei Jantsuk</p>
+                    </div>
+                </div>
+                <div class="services">
+                    <h3 class="services-title">Our Services</h3>
+                    
+                    <h4 class="concrete-works-title">Concrete Works</h4>
+                    <ul class="concrete-works-list">
+                        <li class="service-item">Formwork assembly and dismantling</li>
+                        <li class="service-item">Reinforcement works</li>
+                        <li class="service-item">Concrete pouring</li>
+                        <li class="service-item">Columns construction</li>
+                        <li class="service-item">Slabs installation</li>
+                        <li class="service-item">Walls construction</li>
+                        <li class="service-item">Floor pouring</li>
+                    </ul>
+
+                    <h4 class="installation-title">Installation & Assembly</h4>
+                    <ul class="installation-list">
+                        <li class="service-item">Professional installation services</li>
+                        <li class="service-item">Module installation and dismantling</li>
+                        <li class="service-item">Structural assembly</li>
+                        <li class="service-item">Quality assurance</li>
+                        <li class="service-item">Safety compliance</li>
+                        <li class="service-item">Project management</li>
+                    </ul>
+
+                    <h4 class="specialized-title">Specialized Services</h4>
+                    <ul class="specialized-list">
+                        <li class="service-item">Industrial flooring</li>
+                        <li class="service-item">Commercial projects</li>
+                        <li class="service-item">Residential construction</li>
+                        <li class="service-item">Renovation works</li>
+                        <li class="service-item">Consultation services</li>
+                        <li class="service-item">Quality control</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio">
+        <div class="container">
+            <h2 class="section-title portfolio-title">Portfolio</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image project-gallery">Project Gallery</div>
+                    <div class="project-content">
+                        <h3 class="project-title">BRF Skokloster Sweden</h3>
+                        <a href="https://drive.google.com/drive/folders/1eliTm3-IKDFTrOwe7Ra3Nux9swoyO-SU?usp=sharing" target="_blank" class="project-link view-project">View Project</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image project-gallery">Project Gallery</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Fat PORI, Suomi</h3>
+                        <a href="https://drive.google.com/drive/folders/1_ycTGeKHv6aIgBw_svg5ZhasjwYwHpF_?usp=sharing" target="_blank" class="project-link view-project">View Project</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image project-gallery">Project Gallery</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Handenterminalen Stockholm</h3>
+                        <a href="https://drive.google.com/drive/folders/1TWSo-bwUxOz7TRoxr3uD5VTY-pn4z0z2?usp=sharing" target="_blank" class="project-link view-project">View Project</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image project-gallery">Project Gallery</div>
+                    <div class="project-content">
+                        <h3 class="project-title">HUSET, ESTONIA</h3>
+                        <a href="https://drive.google.com/drive/folders/1Nu2Ljfyq1by31Ex-JcPJJLz0_6p53Xmt?usp=sharing" target="_blank" class="project-link view-project">View Project</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image project-gallery">Project Gallery</div>
+                    <div class="project-content">
+                        <h3 class="project-title">SeaU Helsingborg</h3>
+                        <a href="https://drive.google.com/drive/folders/1GZpCXUd0l-vaXBeeuu1x8BOqgJpLGt_E?usp=sharing" target="_blank" class="project-link view-project">View Project</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image project-gallery">Project Gallery</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Tallinn, Estonia</h3>
+                        <a href="https://drive.google.com/drive/folders/1xHdfZKirAusxAcnHyzgroGBqviAx45OQ?usp=drive_link" target="_blank" class="project-link view-project">View Project</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Concrete Supply Section -->
+    <section id="concrete-supply">
+        <div class="container">
+            <h2 class="section-title concrete-supply-title">Concrete Elements Supply</h2>
+            <div class="supply-info">
+                <h3 class="partnership-title">Partnership with Betoneks AS</h3>
+                <p class="partnership-description">The owner of FBA Enterprioner Aktiebolag is one of the shareholders of Betoneks AS, providing us with direct access to high-quality concrete elements and production capabilities.</p>
+                <a href="https://www.betoneks.ee/" target="_blank" class="betoneks-link visit-betoneks">Visit Betoneks AS</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title contact-title">Contact</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <strong class="director-label">Director/Owner:</strong> Andrei Jantsuk
+                </div>
+                <div class="contact-item">
+                    <strong class="email-label">Email:</strong> <a href="mailto:fbaenterprionerab@gmail.com" class="contact-link">fbaenterprionerab@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <strong class="phone-sweden-label">Phone/WhatsApp (Sweden):</strong> <a href="tel:+46764257954" class="contact-link">+46 76 425 79 54</a>
+                </div>
+                <div class="contact-item">
+                    <strong class="phone-estonia-label">Phone/WhatsApp (Estonia):</strong> <a href="tel:+37250339431" class="contact-link">+372 50339431</a>
+                </div>
+                <div class="contact-item">
+                    <strong class="address-label">Address:</strong><br>
+                    Lyftkransvägen, 142 50 Skogås<br>
+                    <span class="country-label">Sweden</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Language content object
+        const translations = {
+            en: {
+                'nav-about': 'About Company',
+                'nav-portfolio': 'Portfolio',
+                'nav-concrete': 'Concrete Supply',
+                'nav-contact': 'Contact',
+                'about-title': 'About Company',
+                'company-info-title': 'Company Information',
+                'company-description': '<p><strong>FBA Enterprioner Aktiebolag</strong> is a Sweden construction company, specializing in comprehensive concrete works and construction services. With years of experience and a commitment to quality, we deliver exceptional results for projects of all sizes.</p><br><p><strong>Organization Number:</strong> 559323-2449</p><p><strong>Address:</strong> Lyftkransvägen, 142 50 Skogås</p><p><strong>Director/Owner:</strong> Andrei Jantsuk</p>',
+                'services-title': 'Our Services',
+                'concrete-works-title': 'Concrete Works',
+                'installation-title': 'Installation & Assembly',
+                'specialized-title': 'Specialized Services',
+                'portfolio-title': 'Portfolio',
+                'project-gallery': 'Project Gallery',
+                'view-project': 'View Project',
+                'concrete-supply-title': 'Concrete Elements Supply',
+                'partnership-title': 'Partnership with Betoneks AS',
+                'partnership-description': 'The owner of FBA Enterprioner Aktiebolag is one of the shareholders of Betoneks AS, providing us with direct access to high-quality concrete elements and production capabilities.',
+                'visit-betoneks': 'Visit Betoneks AS',
+                'contact-title': 'Contact',
+                'director-label': 'Director/Owner:',
+                'email-label': 'Email:',
+                'phone-sweden-label': 'Phone/WhatsApp (Sweden):',
+                'phone-estonia-label': 'Phone/WhatsApp (Estonia):',
+                'address-label': 'Address:',
+                'country-label': 'Sweden',
+                'concrete-works-list': [
+                    'Formwork assembly and dismantling',
+                    'Reinforcement works',
+                    'Concrete pouring',
+                    'Columns construction',
+                    'Slabs installation',
+                    'Walls construction',
+                    'Floor pouring'
+                ],
+                'installation-list': [
+                    'Professional installation services',
+                    'Module installation and dismantling',
+                    'Structural assembly',
+                    'Quality assurance',
+                    'Safety compliance',
+                    'Project management'
+                ],
+                'specialized-list': [
+                    'Industrial flooring',
+                    'Commercial projects',
+                    'Residential construction',
+                    'Renovation works',
+                    'Consultation services',
+                    'Quality control'
+                ]
+            },
+            sv: {
+                'nav-about': 'Om Företaget',
+                'nav-portfolio': 'Portfolio',
+                'nav-concrete': 'Betongleverans',
+                'nav-contact': 'Kontakt',
+                'about-title': 'Om Företaget',
+                'company-info-title': 'Företagsinformation',
+                'company-description': '<p><strong>FBA Enterprioner Aktiebolag</strong> är ett svenskt byggföretag som specialiserar sig på omfattande betongarbeten och byggnadstjänster. Med års erfarenhet och ett engagemang för kvalitet levererar vi exceptionella resultat för projekt av alla storlekar.</p><br><p><strong>Organisationsnummer:</strong> 559323-2449</p><p><strong>Adress:</strong> Lyftkransvägen, 142 50 Skogås</p><p><strong>VD/Ägare:</strong> Andrei Jantsuk</p>',
+                'services-title': 'Våra Tjänster',
+                'concrete-works-title': 'Betongarbeten',
+                'installation-title': 'Installation & Montering',
+                'specialized-title': 'Specialiserade Tjänster',
+                'portfolio-title': 'Portfolio',
+                'project-gallery': 'Projektgalleri',
+                'view-project': 'Visa Projekt',
+                'concrete-supply-title': 'Leverans av Betongelement',
+                'partnership-title': 'Partnerskap med Betoneks AS',
+                'partnership-description': 'Ägaren av FBA Enterprioner Aktiebolag är en av aktieägarna i Betoneks AS, vilket ger oss direkt tillgång till högkvalitativa betongelement och produktionskapacitet.',
+                'visit-betoneks': 'Besök Betoneks AS',
+                'contact-title': 'Kontakt',
+                'director-label': 'VD/Ägare:',
+                'email-label': 'E-post:',
+                'phone-sweden-label': 'Telefon/WhatsApp (Sverige):',
+                'phone-estonia-label': 'Telefon/WhatsApp (Estland):',
+                'address-label': 'Adress:',
+                'country-label': 'Sverige',
+                'concrete-works-list': [
+                    'Montering och demontering av formar',
+                    'Armeringsarbeten',
+                    'Betonggjutning',
+                    'Pelare konstruktion',
+                    'Plattinstallation',
+                    'Väggkonstruktion',
+                    'Golvgjutning'
+                ],
+                'installation-list': [
+                    'Professionella installationstjänster',
+                    'Modulinstallation och demontering',
+                    'Strukturell montering',
+                    'Kvalitetssäkring',
+                    'Säkerhetsefterlevnad',
+                    'Projektledning'
+                ],
+                'specialized-list': [
+                    'Industriella golv',
+                    'Kommersiella projekt',
+                    'Bostadskonstruktion',
+                    'Renoveringsarbeten',
+                    'Konsulttjänster',
+                    'Kvalitetskontroll'
+                ]
+            },
+            fi: {
+                'nav-about': 'Yritysinfo',
+                'nav-portfolio': 'Portfolio',
+                'nav-concrete': 'Betonituotteet',
+                'nav-contact': 'Yhteystiedot',
+                'about-title': 'Yritysinfo',
+                'company-info-title': 'Yritystiedot',
+                'company-description': '<p><strong>FBA Enterprioner Aktiebolag</strong> on ruotsalainen rakennusyritys, joka erikoistuu kattaviin betonitöihin ja rakennuspalveluihin. Vuosien kokemuksella ja laatusitoutumuksella toimitamme poikkeuksellisia tuloksia kaikenkokoisiin projekteihin.</p><br><p><strong>Y-tunnus:</strong> 559323-2449</p><p><strong>Osoite:</strong> Lyftkransvägen, 142 50 Skogås</p><p><strong>Toimitusjohtaja/Omistaja:</strong> Andrei Jantsuk</p>',
+                'services-title': 'Palvelumme',
+                'concrete-works-title': 'Betonityöt',
+                'installation-title': 'Asennus & Kokoonpano',
+                'specialized-title': 'Erikoispalvelut',
+                'portfolio-title': 'Portfolio',
+                'project-gallery': 'Projektigalleria',
+                'view-project': 'Katso Projekti',
+                'concrete-supply-title': 'Betonielementtien Toimitus',
+                'partnership-title': 'Kumppanuus Betoneks AS:n kanssa',
+                'partnership-description': 'FBA Enterprioner Aktiebolagin omistaja on yksi Betoneks AS:n osakkaista, mikä antaa meille suoran pääsyn korkealaatuisiin betonielementteihin ja tuotantokapasiteettiin.',
+                'visit-betoneks': 'Vieraile Betoneks AS',
+                'contact-title': 'Yhteystiedot',
+                'director-label': 'Toimitusjohtaja/Omistaja:',
+                'email-label': 'Sähköposti:',
+                'phone-sweden-label': 'Puhelin/WhatsApp (Ruotsi):',
+                'phone-estonia-label': 'Puhelin/WhatsApp (Viro):',
+                'address-label': 'Osoite:',
+                'country-label': 'Ruotsi',
+                'concrete-works-list': [
+                    'Muottien kokoaminen ja purku',
+                    'Raudoitustyöt',
+                    'Betonin valu',
+                    'Pilarirakentaminen',
+                    'Laattojen asennus',
+                    'Seinien rakentaminen',
+                    'Lattioiden valu'
+                ],
+                'installation-list': [
+                    'Ammattimaiset asennuspalvelut',
+                    'Moduulien asennus ja purku',
+                    'Rakenteellinen kokoonpano',
+                    'Laadunvarmistus',
+                    'Turvallisuuden noudattaminen',
+                    'Projektinhallinta'
+                ],
+                'specialized-list': [
+                    'Teollisuuslattiat',
+                    'Kaupalliset projektit',
+                    'Asuinrakentaminen',
+                    'Kunnostustyöt',
+                    'Konsultointipalvelut',
+                    'Laadunvalvonta'
+                ]
+            }
+        };
+
+        // Current language
+        let currentLanguage = 'en';
+
+        // Function to switch language
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[onclick="switchLanguage('${lang}')"]`).classList.add('active');
+            
+            // Update all text content
+            const translation = translations[lang];
+            
+            // Update navigation
+            Object.keys(translation).forEach(key => {
+                const elements = document.getElementsByClassName(key);
+                for (let element of elements) {
+                    if (key.includes('-list')) {
+                        // Handle lists
+                        element.innerHTML = '';
+                        translation[key].forEach(item => {
+                            const li = document.createElement('li');
+                            li.className = 'service-item';
+                            li.textContent = item;
+                            element.appendChild(li);
+                        });
+                    } else if (key === 'company-description') {
+                        // Handle HTML content
+                        element.innerHTML = translation[key];
+                    } else {
+                        // Handle regular text
+                        element.textContent = translation[key];
+                    }
+                }
+            });
+        }
+
+        // Mobile menu functions
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('mobile-active');
+        }
+
+        function closeMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.remove('mobile-active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navLinks = document.getElementById('navLinks');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (!navLinks.contains(event.target) && !menuBtn.contains(event.target)) {
+                navLinks.classList.remove('mobile-active');
+            }
+        });
+
+        // Initialize with English
+        document.addEventListener('DOMContentLoaded', function() {
+            switchLanguage('en');
+        });
+    </script>
+</body>
+</html>
