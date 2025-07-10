@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8 Ритмомер - Обучающая система</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #e8e8f0;
+            line-height: 1.7;
+            min-height: 100vh;
+            font-size: 18px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header h1 {
+            font-size: 3.2em;
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #fff9c4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+        
+        .header p {
+            font-size: 1.4em;
+            color: #b8c5d6;
+            font-style: italic;
+        }
+        
+        .rhythmomera-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .rhythmomera-card {
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .rhythmomera-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .rhythmomera-card:hover::before {
+            left: 100%;
+        }
+        
+        .rhythmomera-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+        
+        .rhythmomera-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #ffd700, #ff6b6b);
+            color: #1a1a2e;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .rhythmomera-title {
+            font-size: 1.6em;
+            color: #ffd700;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .rhythmomera-description {
+            color: #e0e0e8;
+            margin-bottom: 15px;
+            font-size: 1.15em;
+            font-weight: 500;
+        }
+        
+        .rhythmomera-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .keyword {
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 1em;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .rhythmomera-detail {
+            display: none;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .detail-title {
+            font-size: 2.2em;
+            color: #ffd700;
+        }
+        
+        .close-btn {
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid rgba(255, 107, 107, 0.5);
+            color: #ff6b6b;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            background: rgba(255, 107, 107, 0.3);
+            transform: scale(1.05);
+        }
+        
+        .detail-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .detail-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .section h3 {
+            color: #ffd700;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.4);
+            padding-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .section p, .section li {
+            color: #d0d0d8;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        
+        .section ul {
+            margin-left: 20px;
+        }
+        
+        .practice-exercise {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .practice-exercise h4 {
+            color: #4caf50;
+            margin-bottom: 10px;
+        }
+        
+        .warning {
+            background: rgba(255, 152, 0, 0.1);
+            border: 1px solid rgba(255, 152, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .warning h4 {
+            color: #ff9800;
+            margin-bottom: 10px;
+        }
+        
+        .navigation {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+        }
+        
+        .nav-info {
+            color: #b8c5d6;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>8 Ритмомер</h1>
+            <p>Обучающая система для изучения ритмологических практик</p>
+        </div>
+        
+        <div class="rhythmomera-grid">
+            <!-- Ритмомера 1 -->
+            <div class="rhythmomera-card" onclick="toggleDetail(1)">
+                <div class="rhythmomera-number">1</div>
+                <div class="rhythmomera-title">Влияние национальности</div>
+                <div class="rhythmomera-description">Освобождение от национальных стереотипов и переход в состояние озарения</div>
+                <div class="rhythmomera-keywords">
+                    <span class="keyword">кровь</span>
+                    <span class="keyword">стереотипы</span>
+                    <span class="keyword">озарение</span>
+                    <span class="keyword">множественность</span>
+                </div>
+            </div>
+            
+            <!-- Ритмомера 2 -->
+            <div class="rhythmomera-card" onclick="toggleDetail(2)">
+                <div class="rhythmomera-number">2</div>
+                <div class="rhythmomera-title">Вычленение зависти</div>
+                <div class="rhythmomera-description">Освобождение от разрушительной зависти и обретение личной свободы</div>
+                <div class="rhythmomera-keywords">
+                    <span class="keyword">зависть</span>
+                    <span class="keyword">свобода</span>
+                    <span class="keyword">счастье</span>
+                    <span class="keyword">разумность</span>
+                </div>
+            </div>
+            
+            <!-- Ритмомера 3 -->
+            <div class="rhythmomera-card" onclick="toggleDetail(3)">
+                <div class="rhythmomera-number">3</div>
+                <div class="rhythmomera-title">Государственное устройство</div>
+                <div class="rhythmomera-description">Понимание двух солнечных капель и перехода в шестую расу</div>
+                <div class="rhythmomera-keywords">
+                    <span class="keyword">солнечные капли</span>
+                    <span class="keyword">монархия</span>
+                    <span class="keyword">демократия</span>
+                    <span class="keyword">трансмутация</span>
+                </div>
+            </div>
+            
+            <!-- Ритмомера 4 -->
+            <div class="rhythmomera-card" onclick="toggleDetail(4)">
+                <div class="rhythmomera-number">4</div>
+                <div class="rhythmomera-title">Данное возрастом</div>
+                <div class="rhythmomera-description">Освоение четвертой координаты - времени через принятие своего возраста</div>
+                <div class="rhythmomera-keywords">
+                    <span class="keyword">время</span>
+                    <span class="keyword">возраст</span>
+                    <span class="keyword">календарь</span>
+                    <span class="keyword">соответствие</span>
+                </div>
+            </div>
+            
+            <!-- Ритмомера 5 -->
+            <div class="rhythmomera-card" onclick="toggleDetail(5)">
+                <div class="rhythmomera-number">5</div>
+                <div class="rhythmomera-title">Деньги. Эквивалент</div>
+                <div class="rhythmomera-description">Понимание денег как эквивалента времени и разумного обмена</div>
+                <div class="rhythmomera-keywords">
+                    <span class="keyword">деньги</span>
+                    <span class="keyword">эквивалент</span>
+                    <span class="keyword">время</span>
+                    <span class="keyword">обмен</span>
+                </div>
+            </div>
+            
+            <!-- Ритмомера 6 -->
+            <div class="rhythmomera-card" onclick="toggleDetail(6)">
+                <div class="rhythmomera-number">6</div>
+                <div class="rhythmomera-title">Для чего мы учим мир</div>
+                <div class="rhythmomера-description">Понимание оси поворота между телом и именем, взаимодействие с миром</div>
+                <div class="rhythmomera-keywords">
+                    <span class="keyword">ось</span>
+                    <span class="keyword">тело</span>
+                    <span class="keyword">имя</span>
+                    <span class="keyword">мир</span>
+                </div>
+            </div>
+            
+            <!-- Ритмомера 7 -->
+            <div class="rhythmomera-card" onclick="toggleDetail(7)">
+                <div class="rhythmomera-number">7</div>
+                <div class="rhythmomera-title">Достижение бессмертия</div>
+                <div class="rhythmomera-description">Подготовка к переходу границы и пониманию природы смерти</div>
+                <div class="rhythmomera-keywords">
+                    <span class="keyword">бессмертие</span>
+                    <span class="keyword">переход</span>
+                    <span class="keyword">световой коридор</span>
+                    <span class="keyword">задачи жизни</span>
+                </div>
+            </div>
+            
+            <!-- Ритмомера 8 -->
+            <div class="rhythmomera-card" onclick="toggleDetail(8)">
+                <div class="rhythmomera-number">8</div>
+                <div class="rhythmomera-title">Аномальные зоны</div>
+                <div class="rhythmomera-description">Работа с аномальными зонами и использование ритмов для коррекции</div>
+                <div class="rhythmomera-keywords">
+                    <span class="keyword">аномалии</span>
+                    <span class="keyword">зоны</span>
+                    <span class="keyword">коррекция</span>
+                    <span class="keyword">ритмы</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Детальные описания ритмомер -->
+        
+        <!-- Ритмомера 1 - Детали -->
+        <div id="detail-1" class="rhythmomera-detail">
+            <div class="detail-header">
+                <div class="detail-title">Ритмомера 1: Влияние национальности</div>
+                <button class="close-btn" onclick="toggleDetail(1)">Закрыть</button>
+            </div>
+            <div class="detail-content">
+                <div class="section">
+                    <h3>Суть ритмомеры</h3>
+                    <p>Ритмомера направлена на освобождение от национальных стереотипов, заложенных в крови. Кровь разносит не только микроэлементы, но и поведенческие ситуации предков.</p>
+                    
+                    <div class="practice-exercise">
+                        <h4>Практическое упражнение</h4>
+                        <p>Проведите ритмомеру с подготовкой скафандра со звуками «ийийе»:</p>
+                        <ul>
+                            <li>«И» - единяющий и вытягивающий звук</li>
+                            <li>«Й» - подводящий итоги</li>
+                            <li>«Е» - выведение в энергию</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Ключевые концепции</h3>
+                    <ul>
+                        <li><strong>Кровь как носитель стереотипов:</strong> В крови закреплены поведенческие паттерны предков</li>
+                        <li><strong>Национальные проявления:</strong> Различное отношение к деньгам, словам, еде</li>
+                        <li><strong>Освобождение:</strong> Переход в Событийный мир, где проблемы остаются в прошлом</li>
+                        <li><strong>Озарение:</strong> Состояние множественности восприятия</li>
+                    </ul>
+                    
+                    <div class="warning">
+                        <h4>Важно помнить</h4>
+                        <p>Сделайте снимок и запишите оценку себя до ритмомеры, а затем повторите после - будут заметны изменения.</p>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Результаты применения</h3>
+                    <ul>
+                        <li>Освобождение от застоев крови</li>
+                        <li>Молодение и расправление тела</li>
+                        <li>Гармонизация разнесения веществ</li>
+                        <li>Изменение отношения к прошлым событиям</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h3>Техника выполнения</h3>
+                    <p>Представьте все сосудики крови и проведите струночки. Просмотрите узелки-комочки и расчешите их. Переведите эмоциональные выплески на звуковые или цветовые струны.</p>
+                    
+                    <div class="practice-exercise">
+                        <h4>Проведение нитей</h4>
+                        <p>По каждой национальности проведите две нити:</p>
+                        <ol>
+                            <li>Проявление поведенческой структуры изнутри</li>
+                            <li>Нахождение себя внутри этнического образования</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Ритмомера 2 - Детали -->
+        <div id="detail-2" class="rhythmomera-detail">
+            <div class="detail-header">
+                <div class="detail-title">Ритмомера 2: Вычленение зависти</div>
+                <button class="close-btn" onclick="toggleDetail(2)">Закрыть</button>
+            </div>
+            <div class="detail-content">
+                <div class="section">
+                    <h3>Природа зависти</h3>
+                    <p>Зависть "сгрызает" жизнь человека, не даёт наслаждаться и заставляет мозг убегать на чужие цели. Она делает человека злым, эгоцентричным и глубоко несчастным.</p>
+                    
+                    <div class="warning">
+                        <h4>Признаки зависти</h4>
+                        <ul>
+                            <li>Постоянно горящие глаза</li>
+                            <li>Требование сравнений</li>
+                            <li>Потеря собственной ценностной ориентации</li>
+                            <li>Активная ревность и внимание к чужому</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Две части зависти</h3>
+                    <p>Разделите свою зависть на две неравные части:</p>
+                    <ul>
+                        <li><strong>Собственная зависть:</strong> Когда вы сами завидуете</li>
+                        <li><strong>Этническая зависть:</strong> Когда другие навязывают ценности ("ты с нами - ты наш")</li>
+                    </ul>
+                    
+                    <div class="practice-exercise">
+                        <h4>Упражнение по анализу</h4>
+                        <p>Вспомните всех, кому вы завидовали. Определите, какая зависть была вашей, а какая - навязанной обществом.</p>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Преобразование зависти</h3>
+                    <p>Представьте зависть как ожерелье, которое очень сильно блестит. Постепенно всё ваше ожерелье уходит в сторону - теперь все завидуют вам, а вы больше никому не завидуете.</p>
+                    
+                    <ul>
+                        <li>Зависть разрушает и даёт поверхностные цели</li>
+                        <li>Свобода проникает глубоко и даёт наслаждение</li>
+                        <li>Освобождение от зависти ведёт к собственной Ленте жизни</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h3>Результат освобождения</h3>
+                    <p>Когда вы освободитесь от зависти, вы ощутите свободу собственной жизни. Знаки станут роскошью, а не мода будет подстраиваться под вас, а вы под неё.</p>
+                    
+                    <div class="practice-exercise">
+                        <h4>Итоговое состояние</h4>
+                        <p>После ритмомеры вы сможете:</p>
+                        <ul>
+                            <li>Выйти на свой Осевой ритм</li>
+                            <li>Жить в собственных знакорядах</li>
+                            <li>Наслаждаться полноценной жизнью</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Ритмомера 3 - Детали -->
+        <div id="detail-3" class="rhythmomera-detail">
+            <div class="detail-header">
+                <div class="detail-title">Ритмомера 3: Государственное устройство</div>
+                <button class="close-btn" onclick="toggleDetail(3)">Закрыть</button>
+            </div>
+            <div class="detail-content">
+                <div class="section">
+                    <h3>Две Солнечные капли</h3>
+                    <p>Планета Земля зависима от Солнца, у которого есть две границы:</p>
+                    
+                    <ul>
+                        <li><strong>Первая капля (монархическая):</strong> Сначала греет, потом сжигает. Состоит из кармы, энергий Земли и сердца человеческого</li>
+                        <li><strong>Вторая капля (демократическая):</strong> Сначала даёт свободу, потом создаёт хаос. Охлаждает эмоциональные порывы</li>
+                    </ul>
+                    
+                    <div class="warning">
+                        <h4>Опасность крайностей</h4>
+                        <p>Нельзя полностью припадать ни к одной капле. Между ними есть треугольник равновесия.</p>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Треугольник между каплями</h3>
+                    <p>Треугольник закрепляется:</p>
+                    <ul>
+                        <li>С одной стороны за карму</li>
+                        <li>С другой стороны на судьбу</li>
+                        <li>В центре - информо-энергетический обмен</li>
+                    </ul>
+                    
+                    <div class="practice-exercise">
+                        <h4>Три Страдастеи</h4>
+                        <ul>
+                            <li><strong>Страдастея Астрологиста:</strong> Настраивается на мозг, удерживает переход мозга в единый глаз</li>
+                            <li><strong>Страдастея Ресниц:</strong> Экранирует сердце, не пропускает дальше ушек сердца</li>
+                            <li><strong>Страдастея Памяти:</strong> Взывает к звёздной памяти каждого существа</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Переход в шестую расу</h3>
+                    <p>Переход практически заканчивается. Все метаются между двумя каплями - демократическая монархия или монархическая демократия.</p>
+                    
+                    <ul>
+                        <li>Каждая страна должна доработать то, что недоделано</li>
+                        <li>Искусственного единения достичь нельзя</li>
+                        <li>Кто успеет - перейдёт в новую расу</li>
+                        <li>Кто не успеет - останется "накипью" арийской расы</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h3>Практическое понимание</h3>
+                    <p>Каждый, кто смотрит на звёзды и ощущает течение времени внутри себя, уже ищет равновесие и в нём есть маленький новый человечек.</p>
+                    
+                    <div class="practice-exercise">
+                        <h4>Самопроверка</h4>
+                        <p>Определите, к какой капле вы склоняетесь больше и работайте над обретением равновесия между ними.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Ритмомера 4 - Детали -->
+        <div id="detail-4" class="rhythmomera-detail">
+            <div class="detail-header">
+                <div class="detail-title">Ритмомера 4: Данное возрастом</div>
+                <button class="close-btn" onclick="toggleDetail(4)">Закрыть</button>
+            </div>
+            <div class="detail-content">
+                <div class="section">
+                    <h3>Освоение времени</h3>
+                    <p>Первое знакомство со временем начинается с возраста. Каждый год - набор опыта. Грамотное соответствие своему возрасту - залог счастливой жизни.</p>
+                    
+                    <div class="practice-exercise">
+                        <h4>Календарная лента</h4>
+                        <p>Представьте три вехи:</p>
+                        <ol>
+                            <li>Дата рождения</li>
+                            <li>Текущая дата</li>
+                            <li>Проброс дня рождения через текущую дату</li>
+                        </ol>
+                        <p>Получили ленту времени или Ленту жизни.</p>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Работа с возрастными стереотипами</h3>
+                    <p>Люди часто:</p>
+                    <ul>
+                        <li>Женщины пытаются омолаживаться, скрывают возраст</li>
+                        <li>Мужчины прибавляют себе возраст для важности</li>
+                        <li>Некоторые меняют год рождения в паспорте</li>
+                    </ul>
+                    
+                    <div class="warning">
+                        <h4>Деформация времени</h4>
+                        <p>При несоответствии возрасту создаются фантомы отсутствия реальности. Человек не способен жить свою жизнь - он играет в жизнь.</p>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Четыре приглашения времени</h3>
+                    <p>Когда представляете себя в двойном возрасте, сделайте:</p>
+                    
+                    <ul>
+                        <li><strong>Приглашение времени в энергию</strong> (против страха старения)</li>
+                        <li><strong>Приглашение времени в информацию</strong> (против потери памяти)</li>
+                        <li><strong>Приглашение времени в пространство</strong> (против потери подвижности)</li>
+                        <li><strong>Приглашение времени во время</strong> (против потери ориентации)</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h3>Возрастная корреляция</h3>
+                    <p>Наблюдается относительность восприятия возраста:</p>
+                    <ul>
+                        <li>Кто младше - кажется ненамного младше</li>
+                        <li>Кто старше - воспринимается на больший интервал</li>
+                        <li>Коэффициент восприятия не менее двух</li>
+                    </ul>
+                    
+                    <div class="practice-exercise">
+                        <h4>Возрастные группы</h4>
+                        <p>Подсознательно мы выбираем:</p>
+                        <ul>
+                            <li>Ровесников для самооценки</li>
+                            <li>Людей на 20 лет старше для цели и коррекции</li>
+                            <li>Людей младше для передачи энергии</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Ритмомера 5 - Детали -->
+        <div id="detail-5" class="rhythmomera-detail">
+            <div class="detail-header">
+                <div class="detail-title">Ритмомера 5: Деньги. Эквивалент</div>
+                <button class="close-btn" onclick="toggleDetail(5)">Закрыть</button>
+            </div>
+            <div class="detail-content">
+                <div class="section">
+                    <h3>Природа денег</h3>
+                    <p>Деньги - ценностный эквивалент планеты, на который можно обменять мысль. Слово "деньги" содержит "день" - люди нуждаются в деньгах только днём, ночью деньги путешествуют по земному шару.</p>
+                    
+                    <div class="practice-exercise">
+                        <h4>Время как эквивалент</h4>
+                        <p>Основной эквивалент под деньгами - время. Всё стоит ровно столько, сколько на него затратили времени:</p>
+                        <ul>
+                            <li>Высшее образование дороже из-за затраченного времени</li>
+                            <li>Качественный жемчуг ценится за время подбора</li>
+                            <li>Быстрый специалист ценится выше медленного</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Закон денежного деления 3:7</h3>
+                    <p>Любую сумму нужно делить по закону природы:</p>
+                    
+                    <ul>
+                        <li><strong>3 части</strong> - на собственные материальные нужды</li>
+                        <li><strong>7 частей</strong> делятся на две части:
+                            <ul>
+                                <li>Развитие мозга, интеллекта, таланта</li>
+                                <li>Экологическое оздоровление планеты</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                    <div class="warning">
+                        <h4>Нарушение закона</h4>
+                        <p>Нарушающий этот закон не свободен от денег и начинает тонуть в денежной реке. Деньги становятся застоялой водой.</p>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Денежная река</h3>
+                    <p>Деньги должны быть проточными, не застаиваться. Представьте денежную реку с тремя возможностями:</p>
+                    
+                    <ul>
+                        <li>Плыть в денежной реке</li>
+                        <li>Утонуть в ней</li>
+                        <li>Быть над рекой и наблюдать</li>
+                    </ul>
+                    
+                    <div class="practice-exercise">
+                        <h4>Земные часы</h4>
+                        <p>У каждого есть ведущий микроэлемент - ось приближения к денежной реке. Левая сторона тела отвечает за ориентацию в денежном потоке.</p>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Результат ритмомеры</h3>
+                    <p>После применения вы:</p>
+                    <ul>
+                        <li>Увидите эквивалент человеческого труда</li>
+                        <li>Поймёте ценность времени</li>
+                        <li>Научитесь оценивать услуги через время</li>
+                        <li>Получите нужные знаки без обязательного прохождения денег</li>
+                    </ul>
+                    
+                    <div class="practice-exercise">
+                        <h4>Чтение денег</h4>
+                        <p>Ведите записи доходов и расходов во времени. Определите размер своей "лейки" и скорость наполнения/опустошения.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Ритмомера 6 - Детали -->
+        <div id="detail-6" class="rhythmomera-detail">
+            <div class="detail-header">
+                <div class="detail-title">Ритмомера 6: Для чего мы учим мир</div>
+                <button class="close-btn" onclick="toggleDetail(6)">Закрыть</button>
+            </div>
+            <div class="detail-content">
+                <div class="section">
+                    <h3>Ось между телом и именем</h3>
+                    <p>Тело и имя как два сосуда на оси. Тело - сосуд, который удерживает наполнитель (свет). Имя - сосуд, который этот наполнитель постоянно выливает.</p>
+                    
+                    <div class="practice-exercise">
+                        <h4>Поворот оси</h4>
+                        <p>При повороте оси:</p>
+                        <ul>
+                            <li>Из имени выливается всё накопленное</li>
+                            <li>Тело должно удержать свет внутри себя</li>
+                            <li>Ось поворачивает суть</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Мимикрия под мир</h3>
+                    <p>Чтобы тело не расплескало свет в момент поворота, оно должно не привлекать внимания. Поэтому одевается в стандарты мира:</p>
+                    
+                    <ul>
+                        <li>Кормление стандартами мира</li>
+                        <li>Стандартные размеры</li>
+                        <li>Привычные движения (танец, ходьба, бег)</li>
+                    </ul>
+                    
+                    <div class="warning">
+                        <h4>Запрет на соревнования</h4>
+                        <p>Никогда не участвовать в спортивных соревнованиях - в момент состязаний тело теряет свет.</p>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Работа имени</h3>
+                    <p>Пока имя собирает, положение внутри ритма естественно. В момент поворота имя проливает накопленный ритм в трещину времени для залечивания.</p>
+                    
+                    <ul>
+                        <li><strong>Александр</strong> - всегда закроет любую трещину</li>
+                        <li><strong>Ольга</strong> - даст выход пене, привлечёт внимание других имён</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h3>Правило трёх месяцев</h3>
+                    <p>Если вы что-то берёте из мира, через краткий срок (не более 3 месяцев) всё должно быть отдано обратно в момент поворота имени.</p>
+                    
+                    <div class="practice-exercise">
+                        <h4>Практическое применение</h4>
+                        <ul>
+                            <li>Выучили язык → будете рассказывать о ритмах на этом языке</li>
+                            <li>Овладели танцем → будете танцевать ритм для мира</li>
+                            <li>Изучили музыку → будете играть ритмические мелодии</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="warning">
+                        <h4>Опасность накопления</h4>
+                        <p>Нельзя учиться впрок. Если за 3 месяца не нашли применение - ось ржавеет, тело опустошается от света.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Ритмомера 7 - Детали -->
+        <div id="detail-7" class="rhythmomera-detail">
+            <div class="detail-header">
+                <div class="detail-title">Ритмомера 7: Достижение бессмертия</div>
+                <button class="close-btn" onclick="toggleDetail(7)">Закрыть</button>
+            </div>
+            <div class="detail-content">
+                <div class="section">
+                    <h3>Природа смерти</h3>
+                    <p>Смерть - "мера времени", отпущенная существу. Когда пространство достигает определённой величины, его нужно освобождать. Открывается дверь, выстраивается световой коридор.</p>
+                    
+                    <div class="warning">
+                        <h4>Главное условие</h4>
+                        <p>Нельзя оборачиваться! Если обернётесь, встретитесь взглядом с тем, кто не отпустит из земных объятий.</p>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Три точки выхода</h3>
+                    <p>У смерти есть три степени выхода:</p>
+                    
+                    <ul>
+                        <li><strong>Точка золотого сечения:</strong> Дверь Солнца, приглашение в далёкий полёт</li>
+                        <li><strong>Точка золотого равновесия:</strong> Выход в систему другого солнца</li>
+                        <li><strong>Полудвери:</strong> Неполный переход, возможность возврата</li>
+                    </ul>
+                    
+                    <div class="practice-exercise">
+                        <h4>Подготовка к переходу</h4>
+                        <p>Выплатить долги:</p>
+                        <ul>
+                            <li><strong>Хрональный долг</strong> - выплачивает мозг (цель прихода)</li>
+                            <li><strong>Пассионарный долг</strong> - благодарность всем участвовавшим в становлении</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Проблемы насильственной смерти</h3>
+                    <p>Смерть не должна быть насильственной. Вопросы эвтаназии и суицида:</p>
+                    
+                    <ul>
+                        <li>Без ритмологического анализа не откроются нужные двери</li>
+                        <li>Облегчение одной жизни может создать более жестокие страдания в следующей</li>
+                        <li>Смертная казнь недопустима - нарушает законы</li>
+                    </ul>
+                    
+                    <div class="warning">
+                        <h4>Права на жизнь</h4>
+                        <p>Тело принадлежит не только вам - маме, папе, няне, всем кормившим. Нужно поблагодарить всех участвовавших в становлении.</p>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Культура ухода и провожания</h3>
+                    <p>Поведение зависит от того, какая дверь открылась:</p>
+                    
+                    <ul>
+                        <li><strong>Полный уход:</strong> Светлое молчание, не мешать подняться</li>
+                        <li><strong>Полудвери:</strong> Можно плакать, кричать для вызова оборота</li>
+                    </ul>
+                    
+                    <div class="practice-exercise">
+                        <h4>Обряды</h4>
+                        <p>Обряды нужны больше живым, чем мёртвым. Они помогают пройти по сферам при неполном уходе и подготовиться к возврату.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Ритмомера 8 - Детали -->
+        <div id="detail-8" class="rhythmomera-detail">
+            <div class="detail-header">
+                <div class="detail-title">Ритмомера 8: Аномальные зоны</div>
+                <button class="close-btn" onclick="toggleDetail(8)">Закрыть</button>
+            </div>
+            <div class="detail-content">
+                <div class="section">
+                    <h3>Природа аномалий</h3>
+                    <p>Аномалия - не негатив. Это то, что подходит одним и не подходит другим. Аномальные зоны легко убираются или создаются ритмами.</p>
+                    
+                    <div class="practice-exercise">
+                        <h4>Типы аномалий</h4>
+                        <ul>
+                            <li><strong>Аномалия гениев</strong> - аномальное явление на Земле</li>
+                            <li><strong>Аномалия героев</strong> - героические проявления</li>
+                            <li><strong>Аномалия примитивизма</strong> - упрощение</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Природные vs человеческие аномалии</h3>
+                    <p>Важно различать два типа:</p>
+                    
+                    <ul>
+                        <li><strong>Природные аномалии:</strong> Всегда возвышают, дают дополнительный потенциал творческого развития</li>
+                        <li><strong>Человеческие аномалии:</strong> Всегда принижают, заставляют барахтаться и выживать (смог, казино)</li>
+                    </ul>
+                    
+                    <div class="warning">
+                        <h4>Направления движения</h4>
+                        <p>Вверх по кристаллу - в природе. В человеческий социум - в трещину, на самый низ.</p>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Работа с аномальными зонами</h3>
+                    <p>Выбросы из земной коры структурированы по кристаллам определённой формы (икосаэдр). Люди встают на расстоянии 3 метра друг от друга.</p>
+                    
+                    <ul>
+                        <li>Для творчества полезно размещаться на аномальной зоне</li>
+                        <li>Аномалии активизируют мозг</li>
+                        <li>Можно менять зоны в нужный момент ритмами</li>
+                    </ul>
+                    
+                    <div class="practice-exercise">
+                        <h4>Использование аномалий</h4>
+                        <p>Не аннигилировать, а умело пользоваться:</p>
+                        <ul>
+                            <li>Для написания сценариев</li>
+                            <li>Для съёмки репортажей</li>
+                            <li>Для творческого развития</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>Временные интервалы до и после</h3>
+                    <p>Ритмология использует два интервала времени, которые никем не использовались:</p>
+                    
+                    <ul>
+                        <li><strong>Время ДО</strong> события - для предотвращения или усиления</li>
+                        <li><strong>Время ПОСЛЕ</strong> события - для коррекции последствий</li>
+                    </ul>
+                    
+                    <div class="practice-exercise">
+                        <h4>Коррекция через время</h4>
+                        <p>Выход на источник времени даёт возможности творца. Можно корректировать любые частности через работу с самим временем.</p>
+                    </div>
+                    
+                    <div class="warning">
+                        <h4>Глобальное вмешательство</h4>
+                        <p>Космос вмешивается только при угрозе гибели генотипа в целом. В остальных случаях действует закон свободной воли.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <div class="nav-info">
+                <p>Нажмите на любую ритмомеру для подробного изучения</p>
+                <p>Каждая ритмомера содержит теорию, практические упражнения и предупреждения</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function toggleDetail(id) {
+            // Скрыть все детали
+            const allDetails = document.querySelectorAll('.rhythmomera-detail');
+            allDetails.forEach(detail => {
+                if (detail.id === `detail-${id}`) {
+                    detail.style.display = detail.style.display === 'block' ? 'none' : 'block';
+                } else {
+                    detail.style.display = 'none';
+                }
+            });
+            
+            // Прокрутка к детали
+            if (document.getElementById(`detail-${id}`).style.display === 'block') {
+                document.getElementById(`detail-${id}`).scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+        
+        // Добавим анимацию появления карточек
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.rhythmomera-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
