@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кейс по ритмологии - Защита</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #222;
+            font-size: 16px;
+        }
+
+        .presentation-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .slide {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            display: none;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide h2 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 35px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .info-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .info-item {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+
+        .info-item h3 {
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .info-item p, .info-item ul {
+            line-height: 1.7;
+            color: #34495e;
+            font-size: 1.1rem;
+        }
+
+        .info-item ul {
+            padding-left: 20px;
+        }
+
+        .info-item li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            border-left-color: #ff6b7a;
+        }
+
+        .success {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-left-color: #4ecdc4;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 15px 25px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-indicator {
+            display: flex;
+            gap: 8px;
+            margin: 0 20px;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        .slide-number {
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .terms {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            border-left-color: #fdcb6e;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .presentation-container {
+                padding: 10px;
+            }
+            
+            .slide {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .slide h2 {
+                font-size: 1.5rem;
+            }
+            
+            .navigation {
+                bottom: 20px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="header">
+            <h1>Защита кейса по Ритмомере</h1>
+            <p>Фундамент 2 ступень Институт ИрЛЕм - 20 июля 2025 года</p>
+            <p>Обучающийся на Ритмолога Личности - Данил Веллинг</p>
+        </div>
+
+        <!-- Слайд 1 -->
+        <div class="slide active">
+            <h2>Шаг 1. Диагностика. Выбор ритмомеры</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h3>Общая информация о клиенте</h3>
+                    <p>Возраст около 60 лет, пол женский, внешний вид – приятной внешности женщина, социальный статус – пенсионерка</p>
+                </div>
+                <div class="info-item highlight">
+                    <h3>Запрос клиента</h3>
+                    <p>Её волновал вопрос личного жилья, решение вопросов с недвижимостью, денежный вопрос на личное жильё, саженцы на продажу как бизнес</p>
+                </div>
+                <div class="info-item">
+                    <h3>Состояние на старте</h3>
+                    <p>Лёгкое напряжение, зажатость, речь приятная</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Слайд 2 -->
+        <div class="slide">
+            <h2>Диагностика. Основания для выбора</h2>
+            <div class="info-grid">
+                <div class="info-item terms">
+                    <h3>Предложенная ритмомера</h3>
+                    <p><strong>Растворение обиды, Жизнерадостность</strong></p>
+                </div>
+                <div class="info-item">
+                    <h3>Ключевые состояния в речи клиента</h3>
+                    <p>Клиент всем родственникам помогает. Когда задали вопрос о том, как она сама отдыхает, то отдых у неё был без тех, кому она помогает. И её в последнее время ничего не радовало. Она была грустная.</p>
+                </div>
+                <div class="info-item">
+                    <h3>Уточняющие вопросы ритмолога</h3>
+                    <p>Вопрос о том, как с другими окружающими вступает в связь, как отдыхает</p>
+                </div>
+                <div class="info-item highlight">
+                    <h3>Ключевые проявления</h3>
+                    <p>Клиент проговорила сама в речи в начале и название этой ритмомеры. Она другим приносит заботу, а взамен не получает благодарности. Она столько много рассказывала о других, а о себе её нужно было вытягивать.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Слайд 3 -->
+        <div class="slide">
+            <h2>Шаг 2. Ритмология. Ритмокоррекция</h2>
+            <div class="info-grid">
+                <div class="info-item terms">
+                    <h3>Проделана ритмокоррекция - ритмика</h3>
+                </div>
+                <div class="info-item">
+                    <h3>Состояние клиента на 2 встрече</h3>
+                    <p>Клиент продуктивно проработала тему ритмологии, вышла тема, что она оберегала мужа, а он её нет, что он у неё на коленках сидит – такая ассоциация у клиента. Она перестала вставлять свои пять копеек, перебивать, стала слушать. Если раньше она всё время пыталась сказать своё мнение, то тут она успокоилась, перестала перебивать, стала слушать.</p>
+                </div>
+                <div class="info-item highlight">
+                    <h3>Критерии для выбора ритмики</h3>
+                    <p>Во-первых, когда проделывал подготовку, то обратил внимание на изменения моего состояния – появилась лёгкая боль в горле и в сердце. Обратил на это сразу внимание, и это подтвердилось в беседе с клиентом. При уточнении её здоровья выяснилось, что всё время всё держала в себе, не говорила своё мнение мужу. И в итоге эта боль ушла в горло, а потом в сердце – она вырезала гланды.</p>
+                </div>
+                <div class="info-item success">
+                    <h3>Результат ритмокоррекции</h3>
+                    <p>Она прокашляла свою боль, самочувствие улучшилось</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Слайд 4 -->
+        <div class="slide">
+            <h2>Шаг 3. Вытягивание и закрепление нити</h2>
+            <div class="info-grid">
+                <div class="info-item success">
+                    <h3>Изменения в жизни после ритмокоррекции</h3>
+                    <p>Клиенту вернули деньги, клиент бодрая. По здоровью улучшилось самочувствие, стало легче.</p>
+                </div>
+                <div class="info-item">
+                    <h3>Осознания клиента</h3>
+                    <p>У неё стала уходить обида, мысли о том прошлом, когда она проживала эти состояния. Она приняла это и отпустила мужа.</p>
+                </div>
+                <div class="info-item highlight">
+                    <h3>Ключевая тема повторов</h3>
+                    <p>Тема того, что подруга в молодости ей сказала про её мужа, что с подругой ему было бы лучше. После этого она стала себе надумывать и выдумывать, что ему лучше со всеми, кроме неё. В её адрес не было благодарности, а она молчала и не говорила своё мнение. Всё держала в себе, ушла в минус.</p>
+                </div>
+                <div class="info-item terms">
+                    <h3>Работа с нитями и субстанциями</h3>
+                    <ul>
+                        <li><strong>Нить:</strong> мистериальная</li>
+                        <li><strong>Нить:</strong> струйная</li>
+                        <li><strong>Ритм:</strong> Том 4 Дыхание</li>
+                        <li><strong>Подобрана:</strong> Люблинка</li>
+                        <li><strong>Лучевая карта:</strong> 01 Изумрудной мудрости</li>
+                        <li><strong>Субстанция:</strong> Благотворительность</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Слайд 5 -->
+        <div class="slide">
+            <h2>Шаг 4. Ритм. Наблюдения клиента</h2>
+            <div class="info-grid">
+                <div class="info-item success">
+                    <h3>Изменения на стрелочке Ритм</h3>
+                    <p>Осмелела, окрепла, решилась с документами, стала увереннее. Продвигаются дела с документами, пошёл прогресс с недвижимостью. Она прочитала весь том ритмов. Понравилась страница «Ода Ритмики». Засияла, наполнилась жизненной силой. По пространству стали решаться дела. На дачу поставят счётчик и будет чистая вода – качественная информация пошла. Сестра предложила помощь, дать ей денег в долг, чтобы купить квартиру и не надо брать кредит – на розах-опорах так ярко у неё это проявилось.</p>
+                </div>
+                <div class="info-item highlight">
+                    <h3>Осознания и трансформации</h3>
+                    <p>Получила импульс пойти к ритмологу здоровья на подушку безопасности. На всех языках переизлучения у неё происходили ускорения и улучшения событий. Появилась забота окружающих к ней. Она прочитала за ночь книгу с ритмами, всё разуплотнила, и ей стало легче – ушёл камень, и она стала магнитом. Улучшились отношения с окружающими. Ушло уныние, она ощутила себя жизнерадостной. Стала понимать ритмы.</p>
+                </div>
+                <div class="info-item terms">
+                    <h3>Ключевая тема повторов</h3>
+                    <p><strong>Тема Здоровья</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Слайд 6 -->
+        <div class="slide">
+            <h2>Завершающая встреча</h2>
+            <div class="info-grid">
+                <div class="info-item success">
+                    <h3>Зафиксированные трансформации</h3>
+                    <p>Появилась уверенность, спокойствие, активность</p>
+                </div>
+                <div class="info-item highlight">
+                    <h3>Текущие ощущения клиента</h3>
+                    <p>Стойкость, в окружении любви и заботы. Улучшились связи, появились новые качественные (нужные). Клиент светится и радуется жизни. У клиента новизна во всём, всё улучшается.</p>
+                </div>
+                <div class="info-item terms">
+                    <h3>Планы и новые направления</h3>
+                    <p>Клиент занялась своим здоровьем. Планирует путешествия, откладывать деньги. У клиента появились планы на будущее!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Навигация -->
+        <div class="navigation">
+            <button class="nav-btn" onclick="previousSlide()">‹</button>
+            <div class="slide-indicator">
+                <div class="indicator active" onclick="goToSlide(0)"></div>
+                <div class="indicator" onclick="goToSlide(1)"></div>
+                <div class="indicator" onclick="goToSlide(2)"></div>
+                <div class="indicator" onclick="goToSlide(3)"></div>
+                <div class="indicator" onclick="goToSlide(4)"></div>
+                <div class="indicator" onclick="goToSlide(5)"></div>
+            </div>
+            <span class="slide-number">1 / 6</span>
+            <button class="nav-btn" onclick="nextSlide()">›</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator');
+        const slideNumber = document.querySelector('.slide-number');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            indicators[currentSlide].classList.remove('active');
+            
+            currentSlide = n;
+            
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+            slideNumber.textContent = `${currentSlide + 1} / ${totalSlides}`;
+            
+            // Обновляем состояние кнопок
+            document.querySelector('.nav-btn').disabled = currentSlide === 0;
+            document.querySelectorAll('.nav-btn')[1].disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        function goToSlide(n) {
+            showSlide(n);
+        }
+
+        // Клавиатурная навигация
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') previousSlide();
+        });
+
+        // Инициализация
+        showSlide(0);
+    </script>
+</body>
+</html>
