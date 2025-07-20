@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Защита кейса по ритмологии</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            color: #ffffff;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        .presentation-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, #00d4ff, #0099cc, #007acc);
+            border-radius: 2px;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00d4ff 0%, #ffffff 50%, #007acc 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+            letter-spacing: -1px;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #b8c5d6;
+        }
+
+        .slide {
+            background: linear-gradient(145deg, #1e1e3f 0%, #2a2a4a 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 50px;
+            margin-bottom: 30px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            display: none;
+            animation: slideIn 0.6s ease-out;
+            position: relative;
+            backdrop-filter: blur(20px);
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00d4ff, #007acc, #0056b3);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .slide h2 {
+            color: #ffffff;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            font-weight: 700;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .slide h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 60%;
+            background: linear-gradient(180deg, #00d4ff, #007acc);
+            border-radius: 3px;
+        }
+
+        .info-grid {
+            display: grid;
+            gap: 25px;
+        }
+
+        .info-item {
+            background: linear-gradient(145deg, #252545 0%, #1a1a35 100%);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .info-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0, 212, 255, 0.15);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+
+        .info-item h3 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-item p, .info-item ul {
+            line-height: 1.8;
+            color: #e2e8f0;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        .info-item ul {
+            padding-left: 25px;
+        }
+
+        .info-item li {
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .info-item li::marker {
+            color: #00d4ff;
+        }
+
+        .highlight {
+            background: linear-gradient(145deg, #2d1b69 0%, #1e1440 100%);
+            border-color: rgba(138, 43, 226, 0.3);
+        }
+
+        .highlight:hover {
+            box-shadow: 0 15px 30px rgba(138, 43, 226, 0.2);
+            border-color: rgba(138, 43, 226, 0.5);
+        }
+
+        .highlight h3 {
+            color: #da70d6;
+        }
+
+        .success {
+            background: linear-gradient(145deg, #0d4f3c 0%, #0a3d2e 100%);
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        .success:hover {
+            box-shadow: 0 15px 30px rgba(34, 197, 94, 0.2);
+            border-color: rgba(34, 197, 94, 0.5);
+        }
+
+        .success h3 {
+            color: #22c55e;
+        }
+
+        .terms {
+            background: linear-gradient(145deg, #4a3728 0%, #3d2b1f 100%);
+            border-color: rgba(251, 191, 36, 0.3);
+        }
+
+        .terms:hover {
+            box-shadow: 0 15px 30px rgba(251, 191, 36, 0.2);
+            border-color: rgba(251, 191, 36, 0.5);
+        }
+
+        .terms h3 {
+            color: #fbbf24;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 15, 35, 0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 60px;
+            padding: 20px 30px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .nav-btn {
+            background: linear-gradient(145deg, #2a2a4a 0%, #1e1e3f 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: linear-gradient(145deg, #00d4ff 0%, #007acc 100%);
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .slide-indicator {
+            display: flex;
+            gap: 12px;
+            margin: 0 25px;
+        }
+
+        .indicator {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .indicator:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+        }
+
+        .indicator.active {
+            background: linear-gradient(135deg, #00d4ff, #007acc);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.2);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.6);
+        }
+
+        .slide-number {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1.2rem;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        strong {
+            color: #00d4ff;
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            .presentation-container {
+                padding: 20px;
+            }
+            
+            .slide {
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .slide h2 {
+                font-size: 2rem;
+            }
+            
+            .navigation {
+                bottom: 25px;
+                padding: 15px 25px;
+            }
+
+            .nav-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Глич эффект для заголовка */
+        @keyframes glitch {
+            0% { text-shadow: 0 0 5px rgba(0, 212, 255, 0.8); }
+            25% { text-shadow: -2px 0 5px rgba(0, 212, 255, 0.8), 2px 0 5px rgba(0, 122, 204, 0.8); }
+            50% { text-shadow: 0 0 5px rgba(0, 212, 255, 0.8); }
+            75% { text-shadow: 2px 0 5px rgba(0, 212, 255, 0.8), -2px 0 5px rgba(0, 122, 204, 0.8); }
+            100% { text-shadow: 0 0 5px rgba(0, 212, 255, 0.8); }
+        }
+
+        .header h1:hover {
+            animation: glitch 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="header">
+            <h1>Защита кейса по Ритмомере</h1>
+            <p>Фундамент 2 ступень Институт ИрЛЕм - 20 июля 2025 года</p>
+            <p>Обучающийся на Ритмолога Личности - Данил Веллинг</p>
+        </div>
+
+        <!-- Слайд 1 -->
+        <div class="slide active">
+            <h2>Шаг 1. Диагностика. Выбор ритмомеры</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h3>Общая информация о клиенте</h3>
+                    <p>Возраст около 60 лет, пол женский, внешний вид – приятной внешности женщина, социальный статус – пенсионерка</p>
+                </div>
+                <div class="info-item highlight">
+                    <h3>Запрос клиента</h3>
+                    <p>Её волновал вопрос личного жилья, решение вопросов с недвижимостью, денежный вопрос на личное жильё, саженцы на продажу как бизнес</p>
+                </div>
+                <div class="info-item">
+                    <h3>Состояние на старте</h3>
+                    <p>Лёгкое напряжение, зажатость, речь приятная</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Слайд 2 -->
+        <div class="slide">
+            <h2>Диагностика. Основания для выбора</h2>
+            <div class="info-grid">
+                <div class="info-item terms">
+                    <h3>Предложенная ритмомера</h3>
+                    <p><strong>Растворение обиды, Жизнерадостность</strong></p>
+                </div>
+                <div class="info-item">
+                    <h3>Ключевые состояния в речи клиента</h3>
+                    <p>Клиент всем родственникам помогает. Когда задали вопрос о том, как она сама отдыхает, то отдых у неё был без тех, кому она помогает. И её в последнее время ничего не радовало. Она была грустная.</p>
+                </div>
+                <div class="info-item">
+                    <h3>Уточняющие вопросы ритмолога</h3>
+                    <p>Вопрос о том, как с другими окружающими вступает в связь, как отдыхает</p>
+                </div>
+                <div class="info-item highlight">
+                    <h3>Ключевые проявления</h3>
+                    <p>Клиент проговорила сама в речи в начале и название этой ритмомеры. Она другим приносит заботу, а взамен не получает благодарности. Она столько много рассказывала о других, а о себе её нужно было вытягивать.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Слайд 3 -->
+        <div class="slide">
+            <h2>Шаг 2. Ритмология. Ритмокоррекция</h2>
+            <div class="info-grid">
+                <div class="info-item terms">
+                    <h3>Проделана ритмокоррекция - ритмика</h3>
+                </div>
+                <div class="info-item">
+                    <h3>Состояние клиента на 2 встрече</h3>
+                    <p>Клиент продуктивно проработала тему ритмологии, вышла тема, что она оберегала мужа, а он её нет, что он у неё на коленках сидит – такая ассоциация у клиента. Она перестала вставлять свои пять копеек, перебивать, стала слушать. Если раньше она всё время пыталась сказать своё мнение, то тут она успокоилась, перестала перебивать, стала слушать.</p>
+                </div>
+                <div class="info-item highlight">
+                    <h3>Критерии для выбора ритмики</h3>
+                    <p>Во-первых, когда проделывал подготовку, то обратил внимание на изменения моего состояния – появилась лёгкая боль в горле и в сердце. Обратил на это сразу внимание, и это подтвердилось в беседе с клиентом. При уточнении её здоровья выяснилось, что всё время всё держала в себе, не говорила своё мнение мужу. И в итоге эта боль ушла в горло, а потом в сердце – она вырезала гланды.</p>
+                </div>
+                <div class="info-item success">
+                    <h3>Результат ритмокоррекции</h3>
+                    <p>Она прокашляла свою боль, самочувствие улучшилось</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Слайд 4 -->
+        <div class="slide">
+            <h2>Шаг 3. Вытягивание и закрепление нити</h2>
+            <div class="info-grid">
+                <div class="info-item success">
+                    <h3>Изменения в жизни после ритмокоррекции</h3>
+                    <p>Клиенту вернули деньги, клиент бодрая. По здоровью улучшилось самочувствие, стало легче.</p>
+                </div>
+                <div class="info-item">
+                    <h3>Осознания клиента</h3>
+                    <p>У неё стала уходить обида, мысли о том прошлом, когда она проживала эти состояния. Она приняла это и отпустила мужа.</p>
+                </div>
+                <div class="info-item highlight">
+                    <h3>Ключевая тема повторов</h3>
+                    <p>Тема того, что подруга в молодости ей сказала про её мужа, что с подругой ему было бы лучше. После этого она стала себе надумывать и выдумывать, что ему лучше со всеми, кроме неё. В её адрес не было благодарности, а она молчала и не говорила своё мнение. Всё держала в себе, ушла в минус.</p>
+                </div>
+                <div class="info-item terms">
+                    <h3>Работа с нитями и субстанциями</h3>
+                    <ul>
+                        <li><strong>Нить:</strong> мистериальная</li>
+                        <li><strong>Нить:</strong> струйная</li>
+                        <li><strong>Ритм:</strong> Том 4 Дыхание</li>
+                        <li><strong>Подобрана:</strong> Люблинка</li>
+                        <li><strong>Лучевая карта:</strong> 01 Изумрудной мудрости</li>
+                        <li><strong>Субстанция:</strong> Благотворительность</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Слайд 5 -->
+        <div class="slide">
+            <h2>Шаг 4. Ритм. Наблюдения клиента</h2>
+            <div class="info-grid">
+                <div class="info-item success">
+                    <h3>Изменения на стрелочке Ритм</h3>
+                    <p>Осмелела, окрепла, решилась с документами, стала увереннее. Продвигаются дела с документами, пошёл прогресс с недвижимостью. Она прочитала весь том ритмов. Понравилась страница «Ода Ритмики». Засияла, наполнилась жизненной силой. По пространству стали решаться дела. На дачу поставят счётчик и будет чистая вода – качественная информация пошла. Сестра предложила помощь, дать ей денег в долг, чтобы купить квартиру и не надо брать кредит – на розах-опорах так ярко у неё это проявилось.</p>
+                </div>
+                <div class="info-item highlight">
+                    <h3>Осознания и трансформации</h3>
+                    <p>Получила импульс пойти к ритмологу здоровья на подушку безопасности. На всех языках переизлучения у неё происходили ускорения и улучшения событий. Появилась забота окружающих к ней. Она прочитала за ночь книгу с ритмами, всё разуплотнила, и ей стало легче – ушёл камень, и она стала магнитом. Улучшились отношения с окружающими. Ушло уныние, она ощутила себя жизнерадостной. Стала понимать ритмы.</p>
+                </div>
+                <div class="info-item terms">
+                    <h3>Ключевая тема повторов</h3>
+                    <p><strong>Тема Здоровья</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Слайд 6 -->
+        <div class="slide">
+            <h2>Завершающая встреча</h2>
+            <div class="info-grid">
+                <div class="info-item success">
+                    <h3>Зафиксированные трансформации</h3>
+                    <p>Появилась уверенность, спокойствие, активность</p>
+                </div>
+                <div class="info-item highlight">
+                    <h3>Текущие ощущения клиента</h3>
+                    <p>Стойкость, в окружении любви и заботы. Улучшились связи, появились новые качественные (нужные). Клиент светится и радуется жизни. У клиента новизна во всём, всё улучшается.</p>
+                </div>
+                <div class="info-item terms">
+                    <h3>Планы и новые направления</h3>
+                    <p>Клиент занялась своим здоровьем. Планирует путешествия, откладывать деньги. У клиента появились планы на будущее!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Навигация -->
+        <div class="navigation">
+            <button class="nav-btn" onclick="previousSlide()">‹</button>
+            <div class="slide-indicator">
+                <div class="indicator active" onclick="goToSlide(0)"></div>
+                <div class="indicator" onclick="goToSlide(1)"></div>
+                <div class="indicator" onclick="goToSlide(2)"></div>
+                <div class="indicator" onclick="goToSlide(3)"></div>
+                <div class="indicator" onclick="goToSlide(4)"></div>
+                <div class="indicator" onclick="goToSlide(5)"></div>
+            </div>
+            <span class="slide-number">1 / 6</span>
+            <button class="nav-btn" onclick="nextSlide()">›</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator');
+        const slideNumber = document.querySelector('.slide-number');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            indicators[currentSlide].classList.remove('active');
+            
+            currentSlide = n;
+            
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+            slideNumber.textContent = `${currentSlide + 1} / ${totalSlides}`;
+            
+            // Обновляем состояние кнопок
+            document.querySelector('.nav-btn').disabled = currentSlide === 0;
+            document.querySelectorAll('.nav-btn')[1].disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        function goToSlide(n) {
+            showSlide(n);
+        }
+
+        // Клавиатурная навигация
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') previousSlide();
+        });
+
+        // Инициализация
+        showSlide(0);
+    </script>
+</body>
+</html>
